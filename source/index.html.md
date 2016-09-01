@@ -1,128 +1,263 @@
----
-title: 4 Pay - Digital Commerce
+Welcome to StackEdit!
+===================
 
-language_tabs:
-  - HTML
-  - Javascript
 
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+Hey! I'm your first Markdown document in **StackEdit**[^stackedit]. Don't delete me, I'm very helpful! I can be recovered anyway in the **Utils** tab of the <i class="icon-cog"></i> **Settings** dialog.
 
-includes:
-  - errors
+----------
 
-search: true
----
 
-**4 Pay - Digital Commerce**
+Documents
+-------------
 
-Manual de Uso - Web/Javascript - Versão 0.1
+StackEdit stores your documents in your browser, which means all your documents are automatically saved locally and are accessible **offline!**
 
-# 1 Introdução
+> **Note:**
 
-Com o 4 Pay - Digital Commerce, você pode configurar seu website para aceitar pagamentos de cartões de crédito e débito de maneira fácil e rápida.
+> - StackEdit is accessible offline after the application has been loaded for the first time.
+> - Your local documents are not shared between different browsers or computers.
+> - Clearing your browser's data may **delete all your local documents!** Make sure your documents are synchronized with **Google Drive** or **Dropbox** (check out the [<i class="icon-refresh"></i> Synchronization](#synchronization) section).
 
-Para aceitar pagamentos de Cartão em seu site, você só precisa executar dois passos:
+#### <i class="icon-file"></i> Create a document
 
- 1. Incluir o arquivo do Checkout em seu site;
- 2. Capturar a transação no seu servidor.
+The document panel is accessible using the <i class="icon-folder-open"></i> button in the navigation bar. You can create a new document by clicking <i class="icon-file"></i> **New document** in the document panel.
 
-2 Chaves de API
-TODO: <Colocar procedimento de como obter as chaves no Portal do EC>
+#### <i class="icon-folder-open"></i> Switch to another document
 
-# 3 Pagamentos
-## 3.1 Janela de Checkout
-A Janela de Checkout é apresentada quando o cliente confirma a compra (no *submit* do formulário de fechar pedido, por exemplo) ou seleciona a forma de pagamento "Cartão de Crédito ou Débito via 4all" (quando o seu site permite mais de uma forma de pagamento). 
+All your local documents are listed in the document panel. You can switch from one to another by clicking a document in the list or you can toggle documents using <kbd>Ctrl+[</kbd> and <kbd>Ctrl+]</kbd>.
 
-O *dialog* permite que o usuário informe os dados do cartão ou se autentique com sua Conta 4all para buscar seus dados de pagamento já cadastrado. 
+#### <i class="icon-pencil"></i> Rename a document
 
-<TODO: inserir imagem do dialog sobre um site de compras>
-<TODO: no site, inserir botão com demo do dialog>
+You can rename the current document by clicking the document title in the navigation bar.
 
-Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**, ou via **Biblioteca Javascript**.
+#### <i class="icon-trash"></i> Delete a document
 
-### 3.1.1 Embedded Form
+You can delete the current document by clicking <i class="icon-trash"></i> **Delete document** in the document panel.
 
-> Inclua o código do checkout na sua página, como no exemplo:
+#### <i class="icon-hdd"></i> Export a document
 
-```HTML
-<form action="pedido_concluido.php" method="POST">
+You can save the current document to a file by clicking <i class="icon-hdd"></i> **Export to disk** from the <i class="icon-provider-stackedit"></i> menu panel.
 
-  <!-- … demais inputs do formulário … -->
-  
-  <script
-    src="endereco_4all_checkout"
-    data-public-api-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-    data-amount="5999"
-    >
-  </script>
-</form>
+> **Tip:** Check out the [<i class="icon-upload"></i> Publish a document](#publish-a-document) section for a description of the different output formats.
+
+
+----------
+
+
+Synchronization
+-------------------
+
+StackEdit can be combined with <i class="icon-provider-gdrive"></i> **Google Drive** and <i class="icon-provider-dropbox"></i> **Dropbox** to have your documents saved in the *Cloud*. The synchronization mechanism takes care of uploading your modifications or downloading the latest version of your documents.
+
+> **Note:**
+
+> - Full access to **Google Drive** or **Dropbox** is required to be able to import any document in StackEdit. Permission restrictions can be configured in the settings.
+> - Imported documents are downloaded in your browser and are not transmitted to a server.
+> - If you experience problems saving your documents on Google Drive, check and optionally disable browser extensions, such as Disconnect.
+
+#### <i class="icon-refresh"></i> Open a document
+
+You can open a document from <i class="icon-provider-gdrive"></i> **Google Drive** or the <i class="icon-provider-dropbox"></i> **Dropbox** by opening the <i class="icon-refresh"></i> **Synchronize** sub-menu and by clicking **Open from...**. Once opened, any modification in your document will be automatically synchronized with the file in your **Google Drive** / **Dropbox** account.
+
+#### <i class="icon-refresh"></i> Save a document
+
+You can save any document by opening the <i class="icon-refresh"></i> **Synchronize** sub-menu and by clicking **Save on...**. Even if your document is already synchronized with **Google Drive** or **Dropbox**, you can export it to a another location. StackEdit can synchronize one document with multiple locations and accounts.
+
+#### <i class="icon-refresh"></i> Synchronize a document
+
+Once your document is linked to a <i class="icon-provider-gdrive"></i> **Google Drive** or a <i class="icon-provider-dropbox"></i> **Dropbox** file, StackEdit will periodically (every 3 minutes) synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be detected.
+
+If you just have modified your document and you want to force the synchronization, click the <i class="icon-refresh"></i> button in the navigation bar.
+
+> **Note:** The <i class="icon-refresh"></i> button is disabled when you have no document to synchronize.
+
+#### <i class="icon-refresh"></i> Manage document synchronization
+
+Since one document can be synchronized with multiple locations, you can list and manage synchronized locations by clicking <i class="icon-refresh"></i> **Manage synchronization** in the <i class="icon-refresh"></i> **Synchronize** sub-menu. This will let you remove synchronization locations that are associated to your document.
+
+> **Note:** If you delete the file from **Google Drive** or from **Dropbox**, the document will no longer be synchronized with that location.
+
+----------
+
+
+Publication
+-------------
+
+Once you are happy with your document, you can publish it on different websites directly from StackEdit. As for now, StackEdit can publish on **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **Tumblr**, **WordPress** and on any SSH server.
+
+#### <i class="icon-upload"></i> Publish a document
+
+You can publish your document by opening the <i class="icon-upload"></i> **Publish** sub-menu and by choosing a website. In the dialog box, you can choose the publication format:
+
+- Markdown, to publish the Markdown text on a website that can interpret it (**GitHub** for instance),
+- HTML, to publish the document converted into HTML (on a blog for example),
+- Template, to have a full control of the output.
+
+> **Note:** The default template is a simple webpage wrapping your document in HTML format. You can customize it in the **Advanced** tab of the <i class="icon-cog"></i> **Settings** dialog.
+
+#### <i class="icon-upload"></i> Update a publication
+
+After publishing, StackEdit will keep your document linked to that publication which makes it easy for you to update it. Once you have modified your document and you want to update your publication, click on the <i class="icon-upload"></i> button in the navigation bar.
+
+> **Note:** The <i class="icon-upload"></i> button is disabled when your document has not been published yet.
+
+#### <i class="icon-upload"></i> Manage document publication
+
+Since one document can be published on multiple locations, you can list and manage publish locations by clicking <i class="icon-upload"></i> **Manage publication** in the <i class="icon-provider-stackedit"></i> menu panel. This will let you remove publication locations that are associated to your document.
+
+> **Note:** If the file has been removed from the website or the blog, the document will no longer be published on that location.
+
+----------
+
+
+Markdown Extra
+--------------------
+
+StackEdit supports **Markdown Extra**, which extends **Markdown** syntax with some nice features.
+
+> **Tip:** You can disable any **Markdown Extra** feature in the **Extensions** tab of the <i class="icon-cog"></i> **Settings** dialog.
+
+> **Note:** You can find more information about **Markdown** syntax [here][2] and **Markdown Extra** extension [here][3].
+
+
+### Tables
+
+**Markdown Extra** has a special syntax for tables:
+
+Item     | Value
+-------- | ---
+Computer | $1600
+Phone    | $12
+Pipe     | $1
+
+You can specify column alignment with one or two colons:
+
+| Item     | Value | Qty   |
+| :------- | ----: | :---: |
+| Computer | $1600 |  5    |
+| Phone    | $12   |  12   |
+| Pipe     | $1    |  234  |
+
+
+### Definition Lists
+
+**Markdown Extra** has a special syntax for definition lists too:
+
+Term 1
+Term 2
+:   Definition A
+:   Definition B
+
+Term 3
+
+:   Definition C
+
+:   Definition D
+
+	> part of definition D
+
+
+### Fenced code blocks
+
+GitHub's fenced code blocks are also supported with **Highlight.js** syntax highlighting:
+
+```
+// Foo
+var bar = 0;
 ```
 
-**Como funciona:** Nesta modalidade de checkout, você adiciona à sua página um formulário que efetua, de forma segura, todo o processo de captura e validação dos dados de pagamento do cliente, assim, as informações sensíveis do seu cliente nunca entram em contato com ambientes não-seguros. Após a captura e validação dos dados, é adicionado ao formulário um token de pagamento (válido para apenas **uma** transação) que deverá ser utilizado para efetuar a confirmação na API de pagamentos 4all.
+> **Tip:** To use **Prettify** instead of **Highlight.js**, just configure the **Markdown Extra** extension in the <i class="icon-cog"></i> **Settings** dialog.
 
-No evento de *submit* do seu formulário, a Janela de Checkout será apresentada para o cliente inserir os dados de pagamento.
+> **Note:** You can find more information:
 
-Substitua o valor de cada atributo de acordo com o pagamento a ser efetuado. Os atributos aceitos são:
+> - about **Prettify** syntax highlighting [here][5],
+> - about **Highlight.js** syntax highlighting [here][6].
 
 
-**Requisição:**
+### Footnotes
 
-Atributo    |Descrição  |Formato    |Obrigatório 
-------------|-----------|-----------|--------------
-data-public-api-key|
-Chave de API pública do Checkout 4all.|String|Sim
-data-amount|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
+You can create footnotes like this[^footnote].
 
-### 3.1.2 Biblioteca Javascript
+  [^footnote]: Here is the *text* of the **footnote**.
 
-```HTML
-<script src="endereco_4all_checkout"></script>
+
+### SmartyPants
+
+SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
+
+|                  | ASCII                        | HTML              |
+ ----------------- | ---------------------------- | ------------------
+| Single backticks | `'Isn't this fun?'`            | 'Isn't this fun?' |
+| Quotes           | `"Isn't this fun?"`            | "Isn't this fun?" |
+| Dashes           | `-- is en-dash, --- is em-dash` | -- is en-dash, --- is em-dash |
+
+
+### Table of contents
+
+You can insert a table of contents using the marker `[TOC]`:
+
+[TOC]
+
+
+### MathJax
+
+You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com][1]:
+
+The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
+
+$$
+\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
+$$
+
+> **Tip:** To make sure mathematical expressions are rendered properly on your website, include **MathJax** into your template:
+
 ```
-Para fazer a integração via javascript, você deve primeiramente importar o arquivo da biblioteca na sua página, adicionando a seguinte linha ao seu HTML:
-
-```Javascript
-function onSuccess(paymentToken) {
-  //esta função será chamada ao completar o checkout
-}
-
-function onCancel() {
-  // esta funcão será chamada caso o cliente cancele o checkout
-}
-
-Var options = {
-  amount: 2500,
-  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
-  successCallback: onSuccess,
-  cancelCallback: onCancel
-};
-
-Checkout4all.startCheckout(options);
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 ```
 
-Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startCheckout** da biblioteca.:
+> **Note:** You can find more information about **LaTeX** mathematical expressions [here][4].
 
-Os parâmetros dessa função são:
 
-Atributo    |Descrição  |Formato    |Obrigatório 
-------------|-----------|-----------|--------------
-amount|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
-publicApiKey|Chave de API pública do Checkout 4all.|String|Sim
-options|Objeto com opções do pagamento (mais detalhes na tabela abaixo).|String|Sim
-callbackAfterCheckout|Função que será chamada quando o checkout estiver finalizado. Recebe o paymentToken como parâmetro.|String|Sim
-cardType|Tipos aceitos de cartão. (1 para apenas crédito, 2 para apenas débito e 0 para ambos). Quando não informado, serão aceitos ambos os tipos.|String|Não
-logoUrl|URL completa do logotipo da sua empresa.|String|Não
+### UML diagrams
 
-## 2.2 Capturando a transação
+You can also render sequence diagrams like this:
 
-Com o **payment_token**, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+```
 
-**Nota:** por motivos de segurança, você deve informar o valor total da transação novamente nesta chamada.
+And flow charts like this:
 
-Exemplos:
-`
-curl -X POST "https://api.pagar.me/1/transactions/{TOKEN}/capture"
-  -d 'amount=1000'
-  -d 'api_key=ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0'
-`
+```flow
+st=>start: Start
+e=>end
+op=>operation: My Operation
+cond=>condition: Yes or No?
+
+st->op->cond
+cond(yes)->e
+cond(no)->op
+```
+
+> **Note:** You can find more information:
+
+> - about **Sequence diagrams** syntax [here][7],
+> - about **Flow charts** syntax [here][8].
+
+### Support StackEdit
+
+[![](https://cdn.monetizejs.com/resources/button-32.png)](https://monetizejs.com/authorize?client_id=ESTHdCYOi18iLhhO&summary=true)
+
+  [^stackedit]: [StackEdit](https://stackedit.io/) is a full-featured, open-source Markdown editor based on PageDown, the Markdown library used by Stack Overflow and the other Stack Exchange sites.
+
+
+  [1]: http://math.stackexchange.com/
+  [2]: http://daringfireball.net/projects/markdown/syntax "Markdown"
+  [3]: https://github.com/jmcmanus/pagedown-extra "Pagedown Extra"
+  [4]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+  [5]: https://code.google.com/p/google-code-prettify/
+  [6]: http://highlightjs.org/
+  [7]: http://bramp.github.io/js-sequence-diagrams/
+  [8]: http://adrai.github.io/flowchart.js/
