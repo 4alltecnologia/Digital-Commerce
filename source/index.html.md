@@ -15,9 +15,7 @@ includes:
 search: true
 ---
 
-**4 Pay - Digital Commerce**
-----------------------------
-    Manual de Uso - Web/Javascript - Versão 0.1
+# Digital Commerce - 1.0
 
 # 1 Introdução
 
@@ -42,13 +40,11 @@ Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**P
 
 A Janela de Checkout é apresentada quando o cliente confirma a compra (no *submit* do formulário de fechar pedido, por exemplo) ou seleciona a forma de pagamento "Cartão de Crédito ou Débito via 4all" (quando o seu site permite mais de uma forma de pagamento). 
 
-O *dialog* permite que o usuário informe os dados do cartão ou se autentique com sua Conta 4all para buscar seus dados de pagamento já cadastrado. 
+O *dialog* permite que o usuário informe os dados do cartão ou se autentique com sua Conta 4all para buscar seus dados de pagamento já cadastrados. 
 
 Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**, ou via a nossa **Biblioteca Javascript**.
 
 ##3.1 Embedded Form
-
-> Inclua o código do checkout na sua página, como no exemplo:
 
 ```html
 <form action="pedido_concluido.php" method="POST">
@@ -75,7 +71,7 @@ Substitua o valor de cada atributo de acordo com o pagamento a ser efetuado. Os 
 |`data-public-api-key`| Chave de API pública do Checkout all.|String|Sim
 |`data-amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
 
-Se o cliente efetuar o pagamento, um novo campo `<input type="hidden" id="payment_token">` contendo o **payment_token** é adicionado ao seu formulário, e o submit é efetuado.
+Se o cliente efetuar o pagamento, um novo campo `<input type="hidden" id="payment_token">` contendo o **payment_token** é adicionado ao seu formulário, e o *submit* é efetuado.
 
 ## 3.2 Biblioteca Javascript
 
@@ -83,7 +79,7 @@ Se o cliente efetuar o pagamento, um novo campo `<input type="hidden" id="paymen
 <script src="https://lib.4all.com/lib/checkout-lib.js"></script>
 ```
 
-Para fazer a integração via javascript, você deve primeiramente importar o arquivo da biblioteca na sua página, adicionando a seguinte linha ao seu HTML:
+Para fazer a integração via javascript, você deve primeiramente importar o arquivo da biblioteca na sua página, adicionando ao seu HTML a linha abaixo ou ao lado.
 
 ```javascript
 	function onSuccess(paymentToken) {
@@ -104,7 +100,7 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 Checkout4all.startCheckout(options);
 ```
 
-Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startCheckout** da biblioteca:
+Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startCheckout** da biblioteca, como demonstrado abaixo ou ao lado (código javascript).
 
 Os parâmetros dessa função são:
 
@@ -124,8 +120,6 @@ Com o **payment_token** em mãos, você pode capturar a transação (efetuar a c
 Nota:  por motivos de segurança, você deve informar o valor total da transação novamente nesta chamada.
 </aside>
 
-> Exemplo:
-
 ```shell
 curl -H "Content-Type: application/json" 
 -X POST 
@@ -135,8 +129,6 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 
 **Caminho**: https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 **Descrição**: Captura uma transação pelo **paymentToken**
-
-> Exemplo de requisição:
 
 ```json
 {
@@ -164,8 +156,6 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
  - O parâmetro "transactionAuthorizationToken" deve ser obtido através da Biblioteca Javascript ou Embedded Form.
  - O chamador deve estar preparado para lidar com tempos de resposta longos, de até 30 segundos (a menos que o parâmetro `returnImmediatly` seja passado como `true`. 
 
-> Exemplo de resposta:
-
 ```json
 {
 	"transactionId": "2181486",
@@ -185,8 +175,6 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ## 4.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-> Exemplo:
-
 ```shell
 curl -H "Content-Type: application/json" 
 -X POST 
@@ -198,7 +186,6 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 
 **Descrição**:  Retorna os detalhes de uma transação.
 
-> Exemplo de requisição:
 
 ```json
 {
@@ -215,7 +202,6 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 |`transactionId`|Identificador da transação|String|20|Depende
 |`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
 
-> Exemplo de resposta:
 
 ```javascript
 {
