@@ -2,15 +2,15 @@
 title: 4 Pay - Digital Commerce
 
 language_tabs:
-  - HTML
+  - html: HTML
   - javascript
   - shell
+  - json
 
 toc_footers:
-  - <a href='http://4all.com'>4ll.com</a>
+  - <a href='http://4all.com'>4all.com</a>
 
 includes:
-  - errors
 
 search: true
 ---
@@ -24,6 +24,7 @@ search: true
 Com o 4 Pay - Digital Commerce, você pode configurar seu website para aceitar pagamentos de cartões de crédito e débito de maneira fácil e rápida.
 
 Para aceitar pagamentos de Cartão em seu site, você precisa executar os passos:
+
 1. Obter chaves de API no Portal do EC;
 2. Incluir o a Janela de Checkout em seu site;
 3. Capturar a transação no seu servidor.
@@ -49,7 +50,7 @@ Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**,
 
 > Inclua o código do checkout na sua página, como no exemplo:
 
-```HTML
+```html
 <form action="pedido_concluido.php" method="POST">
 
   <!-- … demais inputs do formulário … -->
@@ -69,16 +70,16 @@ No evento de *submit* do seu formulário, a Janela de Checkout será apresentada
 
 Substitua o valor de cada atributo de acordo com o pagamento a ser efetuado. Os atributos aceitos são:
 
-Atributo    |Descrição  |Formato    |Obrigatório 
-------------|-----------|-----------|--------------
-`data-public-api-key`| Chave de API pública do Checkout all.|String|Sim
-`data-amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
+|Atributo    |Descrição  |Formato    |Obrigatório 
+|------------|-----------|-----------|--------------
+|`data-public-api-key`| Chave de API pública do Checkout all.|String|Sim
+|`data-amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
 
 Se o cliente efetuar o pagamento, um novo campo `<input type="hidden" id="payment_token">` contendo o **payment_token** é adicionado ao seu formulário, e o submit é efetuado.
 
 ## 3.2 Biblioteca Javascript
 
-```HTML
+```html
 <script src="https://lib.4all.com/lib/checkout-lib.js"></script>
 ```
 
@@ -107,67 +108,65 @@ Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4a
 
 Os parâmetros dessa função são:
 
-Atributo    |Descrição  |Formato    |Obrigatório 
-------------|-----------|-----------|--------------
-`amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
-`publicApiKey`|Chave de API pública do Checkout 4all.|String|Sim
-`successCallback` | Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o paymentToken como parâmetro. | Função | Sim
-`cancelCallback` | Função que será chamada caso o usuário cancele o processo de pagamento sem concluí-lo. | Função | Não
+|Atributo    |Descrição  |Formato    |Obrigatório 
+|------------|-----------|-----------|--------------
+|`amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
+|`publicApiKey`|Chave de API pública do Checkout 4all.|String|Sim
+|`successCallback` | Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o paymentToken como parâmetro. | Função | Sim
+|`cancelCallback` | Função que será chamada caso o usuário cancele o processo de pagamento sem concluí-lo. | Função | Não
 
 
 # 4 Capturando a transação
 
 Com o **payment_token** em mãos, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.
 
-**Nota:** por motivos de segurança, você deve informar o valor total da transação novamente nesta chamada.
+<aside class="notice">
+Nota:  por motivos de segurança, você deve informar o valor total da transação novamente nesta chamada.
+</aside>
 
 > Exemplo:
+
 ```shell
-curl -X POST "https://api.pagar.me/1/transactions/{TOKEN}/capture"
-  -d 'amount=1000'
-  -d 'api_key=ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0'
+curl -H "Content-Type: application/json" 
+-X POST 
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","paymentToken":"MDEyM...", "amount": 5000}' 
+https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
-## 4.1 Consultando uma transação
-Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
-
-## 4.2 Issue Authorized Transaction
-**Caminho**: <endpoint>/merchant/issueAuthorizedTransaction
-**Descrição**: Emite uma transação previamente autorizada
+**Caminho**: https://conta.api.4all.com/merchant/issueAuthorizedTransaction
+**Descrição**: Captura uma transação pelo **paymentToken**
 
 > Exemplo de requisição:
 
-```javascript
+```json
 {
 	"merchantKey": "MDEyMzQ1Njc4OTAxMjMN...",
-	"transactionAuthorizationToken": "MDEyM...",
+	"paymentToken": "MDEyM...",
 	"amount": 5000,
 	"merchantMetaId": "1259",
-	"waitForTransaction": true,
-	"postbackURL": "www.example.com/postback/"
+	"returnImmediatly": false
 }
 ```
 
 **Requisição**:
 
-Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
-----------------|-----------|-----------|-------|-------------
-`merchantKey`|Chave de acesso do estabelecimento à API|String|44|Sim
-`transactionAuthorizationToken`|Token da autorização prévia|String|44|Sim
-`amount`|Valor da transação, em centavos.|Number|*|Sim
-`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta transação em caso de nãorecebimento da resposta desta chamada (contendo o transactionId). Deve ser um valor numérico inteiro (representado como string).|String|20|Não
-`waitForTransaction`|Quando presente e com valor **true** , a chamada não retorna enquanto a transação estiver com status pendente de pagamento (estados 0, 1 ou 2 vide **Anexo B Tabela B.2**). O chamador deve estar preparado para lidar com tempos de resposta longos, de até 30 segundos. Existe um timeout de 30 segundos quando a chamada retorna independente do estado da transação.|Boolean||Não
-`postbackURL`|Endereço a ser chamado quando o estado da transação mudar (vide seção 1.2 deste documento).|URL|250|Não
+|Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
+|----------------|-----------|-----------|-------|-------------
+|`merchantKey`|Chave de acesso do estabelecimento à API|String|44|Sim
+|`paymentToken`|Token da autorização de pagamento, obtido do Checkout.|String|44|Sim
+|`amount`|Valor da transação, em centavos.|Number|*|Sim
+|`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta transação em caso de não recebimento da resposta desta chamada (contendo o transactionId). Deve ser um valor numérico inteiro (representado como string).|String|20|Não
+|`returnImmediatly`|Quando presente e com valor **true** , a chamada retorna imediatamente. Neste caso, a transação estará com um status pendente (estados 0, 1 ou 2 vide **seção 6 desta documentação**). |Boolean||Não
+
 
 **Observações**:
 
- - O parâmetro "transactionAuthorizationToken" deve ser obtido através da biclioteca de pagamentos
- - O sistema deve registrar, com base na sessão do usuário que está fazendo o pagamento, a partir de
-qual aplicativo o pagamento foi executado.
+ - O parâmetro "transactionAuthorizationToken" deve ser obtido através da Biblioteca Javascript ou Embedded Form.
+ - O chamador deve estar preparado para lidar com tempos de resposta longos, de até 30 segundos (a menos que o parâmetro `returnImmediatly` seja passado como `true`. 
 
 > Exemplo de resposta:
 
-```javascript
+```json
 {
 	"transactionId": "2181486",
 	"status": 3,
@@ -177,33 +176,44 @@ qual aplicativo o pagamento foi executado.
 
 **Resposta**:
 
-Atributo        |Descrição  |Formato    |Tamanho|Presente
-----------------|-----------|-----------|-------|-------------
-`transactionId`|Identificador da transação.|String|20|Sempre
-`status`|Estado da transação (conforme Anexo B Tabela B.2).|Number|*|Sempre
-`datetime`|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ.|String|20|Sempre
+|Atributo        |Descrição  |Formato    |Tamanho|Presente
+|----------------|-----------|-----------|-------|-------------
+|`transactionId`|Identificador da transação.|String|20|Sempre
+|`status`|Estado da transação (ver **seção 6 desta documentação**).|Number|*|Sempre
+|`datetime`|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ (Formato ISO 8601 https://en.wikipedia.org/wiki/ISO_8601).|String|20|Sempre
 
-## 4.3 Get Transaction Details
+## 4.1 Consultando uma transação
+Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-**Caminho**: `<endpoint>/merchant/getTransactionDetails`
+> Exemplo:
+
+```shell
+curl -H "Content-Type: application/json" 
+-X POST 
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}' 
+https://conta.api.4all.com/merchant/getTransactionDetails
+```
+
+**Caminho**: `https://conta.api.4all.com/merchant/getTransactionDetails`
+
 **Descrição**:  Retorna os detalhes de uma transação.
 
 > Exemplo de requisição:
 
-```javascript
+```json
 {
-	"merchantKey": "MDEyMzQ1Njc4OTAxMjMNT...",
-	"transactionId": "2181486"
+	"merchantKey": "MDEyMzQ1Njc4OTAxMjMN...",
+	"merchantMetaId": "1259"
 }
 ```
 
 **Requisição**:
 
-Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
-----------------|-----------|-----------|-------|-------------
-`merchantKey`|Chave de acesso do merchant à API|String|44|Sim
-`transactionId`|Identificador da transação|String|20|Depende
-`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
+|Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
+|----------------|-----------|-----------|-------|-------------
+|`merchantKey`|Chave de acesso do merchant à API|String|44|Sim
+|`transactionId`|Identificador da transação|String|20|Depende
+|`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
 
 > Exemplo de resposta:
 
@@ -225,38 +235,37 @@ Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
 
 **Resposta:**
 
-Atributo        |Descrição  |Formato    |Tamanho|Presente
-----------------|-----------|-----------|-------|-----------
-`transactionId`|Identificador da transação|String|20|Sempre
-`subscriptionId`|Quando presente, informa o identificador da assinatura que gerou esta transação.|String|20|Depende
-`amount`|Valor da transação, em centavos.|Number||Sempre
-`status`|Estado da transação (conforme Anexo B Tabela B.2).|Number||Sempre
-`createdAt`|Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).|String|20|Sempre
-`paidAt`|Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.|String|20|Depende
-`authorizationInfo`|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
-`transactionToken`|Chave para consulta da transação pela chamada "Wait For Transaction".|String|44|Sempre
+|Atributo        |Descrição  |Formato    |Tamanho|Presente
+|----------------|-----------|-----------|-------|-----------
+|`transactionId`|Identificador da transação|String|20|Sempre
+|`subscriptionId`|Quando presente, informa o identificador da assinatura que gerou esta transação.|String|20|Depende
+|`amount`|Valor da transação, em centavos.|Number||Sempre
+|`status`|Estado da transação (ver **seção 6 desta documentação**).|Number||Sempre
+|`createdAt`|Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).|String|20|Sempre
+|`paidAt`|Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.|String|20|Depende
+|`authorizationInfo`|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
 
 **authorizationInfo**:
 
-Atributo        |Descrição  |Formato    |Tamanho|Presente
-----------------|-----------|-----------|-------|-----------
-`acquirerId`|Identificador do adquirente.|Number||Sempre
-`acquirerUsn`|Identificador/NSU do adquirente para a transação.|String|50|Sempre
-`acquirerTimestamp`|Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.|String|50|Depende
-`brandId`|Identificador da bandeira do cartão que foi usado no pagamento.|Number||sempre
+|Atributo        |Descrição  |Formato    |Tamanho|Presente
+|----------------|-----------|-----------|-------|-----------
+|`acquirerId`|Identificador do adquirente.|Number||Sempre
+|`acquirerUsn`|Identificador/NSU do adquirente para a transação.|String|50|Sempre
+|`acquirerTimestamp`|Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.|String|50|Depende
+|`brandId`|Identificador da bandeira do cartão que foi usado no pagamento.|Number||sempre
 
 **Observações**
 
- - Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos
+ Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos
 estiverem presentes, esta chamada falha com um erro específico.
 
-- Adquirentes:
-1. Stone
-2. Pagar.me
+* Adquirentes:
+	1. Stone
+	2. Pagar.me
 
-- Bandeiras:
-1. Visa
-2. Mastercard
+* Bandeiras:
+	1. Visa
+	2. Mastercard
 
 # 5 Ambiente de Homologação
 
@@ -269,3 +278,18 @@ No ambiente de Homologação, você pode utilizar cartões de qualquer número d
 
 **Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
 **Cartões de final ÍMPAR sempre resultam em transações negadas.**
+
+#6. Estados de uma Transação
+
+|Estado | Descrição
+|-------|-----------
+|0 | Transação criada. Aguardando pagamento por uma conta 4all.
+|1 | Transação em processo de pagamento por uma conta 4all.
+|2 | Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.
+|3 | Transação paga (capturada).
+|4 | Transação em processo de cancelamento.
+|5 | Transação cancelada.
+|6 | Transação paga ­ cancelamento falhou.
+|7 | Transação contestada pelo portador do cartão (chargeback).
+|8 | Transação paga ­ reapresentada após contestação (chargeback refund).
+|9 | Transação em processo de pagamento por débito
