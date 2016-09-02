@@ -3,12 +3,11 @@ title: 4 Pay - Digital Commerce
 
 language_tabs:
   - HTML
-  - Javascript
+  - javascript
   - shell
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='http://4all.com'>4ll.com</a>
 
 includes:
   - errors
@@ -36,7 +35,7 @@ Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e f
 
 Nesta página você pode obter pares de chaves no ambiente de Homologação ou no Ambiente de Produção.
 
-Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública e a Privada.
+Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**PublicApiKey**) e a Privada (**MerchantKey**).
 
 # 3 Incluindo a Janela de Checkout em seu Site
 
@@ -82,23 +81,24 @@ Se o cliente efetuar o pagamento, um novo campo `<input type="hidden" id="paymen
 ```HTML
 <script src="https://lib.4all.com/lib/checkout-lib.js"></script>
 ```
+
 Para fazer a integração via javascript, você deve primeiramente importar o arquivo da biblioteca na sua página, adicionando a seguinte linha ao seu HTML:
 
-```Javascript
-function onSuccess(paymentToken) {
-  //esta função será chamada ao completar o checkout
-}
+```javascript
+	function onSuccess(paymentToken) {
+	  //esta função será chamada ao completar o checkout
+	}
 
-function onCancel() {
-  // esta funcão será chamada caso o cliente cancele o checkout
-}
+	function onCancel() {
+	  // esta funcão será chamada caso o cliente cancele o checkout
+	}
 
-Var options = {
-  amount: 2500,
-  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
-  successCallback: onSuccess,
-  cancelCallback: onCancel
-};
+	Var options = {
+	  amount: 2500,
+	  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
+	  successCallback: onSuccess,
+	  cancelCallback: onCancel
+	};
 
 Checkout4all.startCheckout(options);
 ```
@@ -131,11 +131,12 @@ curl -X POST "https://api.pagar.me/1/transactions/{TOKEN}/capture"
 ## 4.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-### 4.2 Issue Authorized Transaction
+## 4.2 Issue Authorized Transaction
 **Caminho**: <endpoint>/merchant/issueAuthorizedTransaction
 **Descrição**: Emite uma transação previamente autorizada
 
 > Exemplo de requisição:
+
 ```javascript
 {
 	"merchantKey": "MDEyMzQ1Njc4OTAxMjMN...",
@@ -148,8 +149,9 @@ Em caso de erro na chamada de captura de transação, você pode consultar o est
 ```
 
 **Requisição**:
-Atributo    |Descrição  |Formato    |Tamanho|Obrigatório 
-------------|-----------|-----------|-------|-----------
+
+Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
+----------------|-----------|-----------|-------|-------------
 `merchantKey`|Chave de acesso do estabelecimento à API|String|44|Sim
 `transactionAuthorizationToken`|Token da autorização prévia|String|44|Sim
 `amount`|Valor da transação, em centavos.|Number|*|Sim
@@ -164,6 +166,7 @@ Atributo    |Descrição  |Formato    |Tamanho|Obrigatório
 qual aplicativo o pagamento foi executado.
 
 > Exemplo de resposta:
+
 ```javascript
 {
 	"transactionId": "2181486",
@@ -171,18 +174,22 @@ qual aplicativo o pagamento foi executado.
 	"datetime": "2016-08-31T20:12:31Z"
 }
 ```
+
 **Resposta**:
-Atributo    |Descrição  |Formato    |Tamanho|Presente
-------------|-----------|-----------|-------|-----------
+
+Atributo        |Descrição  |Formato    |Tamanho|Presente
+----------------|-----------|-----------|-------|-------------
 `transactionId`|Identificador da transação.|String|20|Sempre
 `status`|Estado da transação (conforme Anexo B Tabela B.2).|Number|*|Sempre
 `datetime`|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ.|String|20|Sempre
 
-### 4.3 Get Transaction Details
+## 4.3 Get Transaction Details
+
 **Caminho**: `<endpoint>/merchant/getTransactionDetails`
 **Descrição**:  Retorna os detalhes de uma transação.
 
 > Exemplo de requisição:
+
 ```javascript
 {
 	"merchantKey": "MDEyMzQ1Njc4OTAxMjMNT...",
@@ -191,13 +198,15 @@ Atributo    |Descrição  |Formato    |Tamanho|Presente
 ```
 
 **Requisição**:
-Atributo    |Descrição  |Formato    |Tamanho|Obrigatório 
-------------|-----------|-----------|-------|-----------
+
+Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
+----------------|-----------|-----------|-------|-------------
 `merchantKey`|Chave de acesso do merchant à API|String|44|Sim
 `transactionId`|Identificador da transação|String|20|Depende
 `merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
 
 > Exemplo de resposta:
+
 ```javascript
 {
 	"transactionId": "854383518",
@@ -216,21 +225,21 @@ Atributo    |Descrição  |Formato    |Tamanho|Obrigatório
 
 **Resposta:**
 
-Atributo    |Descrição  |Formato    |Tamanho|Presente
-------------|-----------|-----------|-------|-----------
+Atributo        |Descrição  |Formato    |Tamanho|Presente
+----------------|-----------|-----------|-------|-----------
 `transactionId`|Identificador da transação|String|20|Sempre
 `subscriptionId`|Quando presente, informa o identificador da assinatura que gerou esta transação.|String|20|Depende
 `amount`|Valor da transação, em centavos.|Number||Sempre
 `status`|Estado da transação (conforme Anexo B Tabela B.2).|Number||Sempre
 `createdAt`|Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).|String|20|Sempre
 `paidAt`|Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.|String|20|Depende
-`authorizationInfo`*|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
+`authorizationInfo`|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
 `transactionToken`|Chave para consulta da transação pela chamada "Wait For Transaction".|String|44|Sempre
 
-***authorizationInfo**:
+**authorizationInfo**:
 
-Atributo    |Descrição  |Formato    |Tamanho|Presente
-------------|-----------|-----------|-------|-----------
+Atributo        |Descrição  |Formato    |Tamanho|Presente
+----------------|-----------|-----------|-------|-----------
 `acquirerId`|Identificador do adquirente.|Number||Sempre
 `acquirerUsn`|Identificador/NSU do adquirente para a transação.|String|50|Sempre
 `acquirerTimestamp`|Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.|String|50|Depende
@@ -240,12 +249,23 @@ Atributo    |Descrição  |Formato    |Tamanho|Presente
 
  - Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos
 estiverem presentes, esta chamada falha com um erro específico.
+
 - Adquirentes:
 1. Stone
 2. Pagar.me
+
 - Bandeiras:
 1. Visa
 2. Mastercard
 
 # 5 Ambiente de Homologação
-alo teste
+
+No Ambiente de Homologação, as transações efetuadas não geram cobranças, de modo que você pode testar a integração de seu Site com o Digital Commerce 4all.
+
+No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.
+
+##5.1 Cartões de Teste
+No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
+
+**Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
+**Cartões de final ÍMPAR sempre resultam em transações negadas.**
