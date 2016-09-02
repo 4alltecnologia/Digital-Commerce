@@ -127,6 +127,7 @@ curl -X POST "https://api.pagar.me/1/transactions/{TOKEN}/capture"
   -d 'amount=1000'
   -d 'api_key=ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0'
 ```
+
 ## 4.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
@@ -145,6 +146,7 @@ Em caso de erro na chamada de captura de transação, você pode consultar o est
 	"postbackURL": "www.example.com/postback/"
 }
 ```
+
 **Requisição**:
 Atributo    |Descrição  |Formato    |Tamanho|Obrigatório 
 ------------|-----------|-----------|-------|-----------
@@ -187,6 +189,7 @@ Atributo    |Descrição  |Formato    |Tamanho|Presente
 	"transactionId": "2181486"
 }
 ```
+
 **Requisição**:
 Atributo    |Descrição  |Formato    |Tamanho|Obrigatório 
 ------------|-----------|-----------|-------|-----------
@@ -210,6 +213,7 @@ Atributo    |Descrição  |Formato    |Tamanho|Obrigatório
 	}
 }
 ```
+
 **Resposta:**
 
 Atributo    |Descrição  |Formato    |Tamanho|Presente
