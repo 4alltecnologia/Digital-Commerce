@@ -2,10 +2,6 @@
 title: 4 Pay - Digital Commerce
 
 language_tabs:
-  - html: HTML
-  - javascript
-  - shell
-  - json
 
 toc_footers:
   - <a href='http://4all.com'>4all.com</a>
