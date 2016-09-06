@@ -115,6 +115,9 @@ Com o **payment_token** em mãos, você pode capturar a transação (efetuar a c
 <aside class="notice">
 Nota:  por motivos de segurança, você deve informar o valor total da transação novamente nesta chamada.
 </aside>
+<aside class="notice">
+Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da transação utilizando a chamada descrita na seção 4.1 para verificar se a transação foi capturada com sucesso ou não.
+</aside>
 
 ```shell
 curl -H "Content-Type: application/json" 
@@ -167,6 +170,19 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 |`transactionId`|Identificador da transação.|String|20|Sempre
 |`status`|Estado da transação (ver **seção 6 desta documentação**).|Number|*|Sempre
 |`datetime`|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ (Formato ISO 8601 https://en.wikipedia.org/wiki/ISO_8601).|String|20|Sempre
+
+**Tratamento de Erro**
+Em caso de erro na chamada, o status HTTP retornado será diferente de **200**,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto **error** contendo um código(**code**) e uma mensagem(**message**).
+
+```json
+{
+	error: {
+		"code": 2318,
+		"message": "Payment Token inválido."
+	}
+}
+```
+
 
 ## 4.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
@@ -249,11 +265,36 @@ estiverem presentes, esta chamada falha com um erro específico.
 	1. Visa
 	2. Mastercard
 
+**Tratamento de Erro**
+Em caso de erro na chamada, o status HTTP retornado será diferente de **200**,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto **error** contendo um código(**code**) e uma mensagem(**message**).
+
+```json
+{
+	error: {
+		"code": 2318,
+		"message": "Payment Token inválido."
+	}
+}
+```
+TODO: pegar os códigos.
+**Tabela de Erros Relevantes**
+|Código (code) | Mensagem (message)
+|------------------|--------------------
+|1234|Transação não encontrada.
+
 # 5 Ambiente de Homologação
+
+<aside class="notice">
+Para realizar transações no ambiente de Homologação, utilize um par de chaves de Homologação, obtidas no Portal do EC.
+</aside>
 
 No Ambiente de Homologação, as transações efetuadas não geram cobranças, de modo que você pode testar a integração de seu Site com o Digital Commerce 4all.
 
 No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.
+
+##5.1 Conta 4all no Ambiente de Homologação
+
+Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
 
 ##5.1 Cartões de Teste
 No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
