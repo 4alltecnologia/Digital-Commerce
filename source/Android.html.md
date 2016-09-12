@@ -1,11 +1,7 @@
 ---
-title: 4 Pay - Mobile Payment - Android - 1.0
+title: Digital Commerce - Android - 1.0
 
 language_tabs:
-  - html: HTML
-  - javascript
-  - shell
-  - json
 
 toc_footers:
   - <a href='http://4all.com'>4all.com</a>
@@ -46,7 +42,7 @@ A inclusão da biblioteca no projeto é através da inclusão de sua dependênci
 
  build.gradle(Projeto:`<nome do projeto>`) : 
 
-```gradle
+```Gradle
 allprojects {
   repositories {
     jcenter()
@@ -60,7 +56,8 @@ allprojects {
 No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a linha abaixo:
 
 build.gradle(Module:app) :
-```gradle
+
+```Gradle
 compile 'com.4all.libs:digital_commerce:1.0.0'
 ```
 
@@ -70,7 +67,8 @@ compile 'com.4all.libs:digital_commerce:1.0.0'
 Para obter o **payment_token**, crie uma instância o objeto Pay4all e faça a chamada getToken no exemplo abaixo:
 
 ```Java
-FourAll_DigitalCommerce pay4allObject = 	FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
+FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
  
 pay4allObject.getToken();
 ```
@@ -90,11 +88,13 @@ Com o **payment_token** em mãos, você pode capturar a transação (efetuar a c
 
 <aside class="notice">
 Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da transação utilizando a chamada descrita na seção 5.1 para verificar se a transação foi capturada com sucesso ou  não.
+</aside>
 
 ```shell
 curl -H "Content-Type: application/json" 
 -X POST 
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","paymentToken":"MDEyM...", "amount": 5000}' 
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
+"paymentToken":"MDEyM...", "amount": 5000}' 
 https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
@@ -162,7 +162,8 @@ Em caso de erro na chamada de captura de transação, você pode consultar o est
 ```shell
 curl -H "Content-Type: application/json" 
 -X POST 
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}' 
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
+"transactionId":"73423624"}' 
 https://conta.api.4all.com/merchant/getTransactionDetails
 ```
 
@@ -258,7 +259,8 @@ A Biblioteca Mobile Payment também dispõem os seguintes métodos:
 Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada `Pay4all.changePaymentMethod()`, como no exemplo abaixo:
 
 ```Java
-FourAll_DigitalCommerce pay4allObject = 	FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
+FourAll_DigitalCommerce pay4allObject = 
+FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
 
 pay4allObject.changePaymentMethod();
 ```
@@ -270,7 +272,8 @@ Para esta chamada, deve-se implementar a mesma interface já descrita para a ope
 Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada Pay4all.logout(), como no exemplo abaixo:
 
 ```Java
-FourAll_DigitalCommerce pay4allObject = 	FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
+FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
 
 pay4allObject.logout();
 ```
