@@ -1,5 +1,5 @@
 ---
-title: Digital Commerce - Android - 1.0
+title: Digital Commerce Android - 1.0
 
 language_tabs:
 
@@ -11,7 +11,7 @@ includes:
 search: true
 ---
 
-# Digital Commerce - Android - 1.0
+# Digital Commerce Android - 1.0
 
 # 1 Introdução
 
@@ -60,7 +60,6 @@ build.gradle(Module:app) :
 ```Gradle
 compile 'com.4all.libs:digital_commerce:1.0.0'
 ```
-
 
 # 4 Fazendo a chamada Pay4all.getToken()
 
@@ -186,7 +185,6 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 |`merchantKey`|Chave de acesso do merchant à API|String|44|Sim
 |`transactionId`|Identificador da transação|String|20|Depende
 |`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
-
 
 ```javascript
 {
