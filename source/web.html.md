@@ -1,5 +1,5 @@
 ---
-title: Digital Commerce - Android - 1.0
+title: 4 Pay - Digital Commerce Web
 
 language_tabs:
 
@@ -11,90 +11,118 @@ includes:
 search: true
 ---
 
-# Digital Commerce - Android - 1.0
+# Digital Commerce Web - 1.0
 
 # 1 Introdução
 
-Com o módulo de pagamento para Android, você pode configurar seu aplicativo para receber pagamentos de cartões de crédito de maneira fácil e rápida.
+Com o 4 Pay - Digital Commerce, você pode configurar seu website para aceitar pagamentos de cartões de crédito e débito de maneira fácil e rápida.
 
-Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:
+Para aceitar pagamentos de Cartão em seu site, você precisa executar os passos:
 
-1. Obter Chaves de API no Portal do EC;
-2. Importar o framework de Mobile Payment 4all;
-3. Quando for efetuar um pagamento, obter um paymentToken, usando a chamada Pay4all.getToken().
-4. Capturar a transação no seu servidor.
+1. Obter chaves de API no Portal do EC;
+2. Incluir o a Janela de Checkout em seu site;
+3. Capturar a transação no seu servidor.
 
 
 #2 Chaves de API
 
-Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login. 
-
-No menu lateral, clique na opção “Chaves de API” no sub-menu “Mobile Payment”.
+Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login. No menu lateral, clique na opção “Chaves de API” no sub-menu “Digital Commerce”.
 
 Nesta página você pode obter pares de chaves no ambiente de Homologação ou no Ambiente de Produção.
 
 Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**PublicApiKey**) e a Privada (**MerchantKey**).
 
+# 3 Incluindo a Janela de Checkout em seu Site
 
-# 3 Importando a Biblioteca de Mobile Payment
+A Janela de Checkout é apresentada quando o cliente confirma a compra (no *submit* do formulário de fechar pedido, por exemplo) ou seleciona a forma de pagamento "Cartão de Crédito ou Débito via 4all" (quando o seu site permite mais de uma forma de pagamento). 
 
-A inclusão da biblioteca no projeto é através da inclusão de sua dependência no projeto via gradle. Desta maneira, inclui-se arquivo build.gradle do projeto inclui-se os seguintes respositórios ao projeto:
+O *dialog* permite que o usuário informe os dados do cartão ou se autentique com sua Conta 4all para buscar seus dados de pagamento já cadastrados. 
 
- build.gradle(Projeto:`<nome do projeto>`) : 
+Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**, ou via a nossa **Biblioteca Javascript**.
 
-```Gradle
-allprojects {
-  repositories {
-    jcenter()
+##3.1 Embedded Form
 
-    maven {
-      url 's3://utilitarios/android/libs'
-   }
-}
+```html
+<form action="pedido_concluido.php" method="POST">
+
+  <!-- … demais inputs do formulário … -->
+  
+  <script
+    src="https://lib.4all.com/lib/checkout-express.js"
+    data-public-api-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+    data-amount="5999"
+    >
+  </script>
+</form>
 ```
 
-No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a linha abaixo:
+**Como funciona:** Nesta modalidade de checkout, você adiciona à sua página um formulário que efetua, de forma segura, todo o processo de captura e validação dos dados de pagamento do cliente, assim, as informações sensíveis do seu cliente nunca entram em contato com ambientes não-seguros. Após a captura e validação dos dados, é adicionado ao formulário um token de pagamento (válido para apenas **uma** transação) que deverá ser utilizado para efetuar a confirmação na API de pagamentos 4all.
 
-build.gradle(Module:app) :
+No evento de *submit* do seu formulário, a Janela de Checkout será apresentada para o cliente inserir os dados de pagamento.
 
-```Gradle
-compile 'com.4all.libs:digital_commerce:1.0.0'
+Substitua o valor de cada atributo de acordo com o pagamento a ser efetuado. Os atributos aceitos são:
+
+|Atributo    |Descrição  |Formato    |Obrigatório 
+|------------|-----------|-----------|--------------
+|`data-public-api-key`| Chave de API pública do Checkout all.|String|Sim
+|`data-amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
+
+Se o cliente efetuar o pagamento, um novo campo `<input type="hidden" id="payment_token">` contendo o **payment_token** é adicionado ao seu formulário, e o *submit* é efetuado.
+
+## 3.2 Biblioteca Javascript
+
+```html
+<script src="https://lib.4all.com/lib/checkout-lib.js"></script>
 ```
 
+Para fazer a integração via javascript, você deve primeiramente importar o arquivo da biblioteca na sua página, adicionando ao seu HTML a linha abaixo ou ao lado.
 
-# 4 Fazendo a chamada Pay4all.getToken()
+```javascript
+	function onSuccess(paymentToken) {
+	  //esta função será chamada ao completar o checkout
+	}
 
-Para obter o **payment_token**, crie uma instância o objeto Pay4all e faça a chamada getToken no exemplo abaixo:
+	function onCancel() {
+	  // esta funcão será chamada caso o cliente cancele o checkout
+	}
 
-```Java
-FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
- 
-pay4allObject.getToken();
+	Var options = {
+	  amount: 2500,
+	  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
+	  successCallback: onSuccess,
+	  cancelCallback: onCancel
+	};
+
+Checkout4all.startCheckout(options);
 ```
 
-Quando a função `Pay4all.getToken()` é chamada pela primeira vez, ele é direcionado para uma tela onde se autentica e cadastra um cartão de crédito a ser usado em todas as compras no seu aplicativo.  Devido a natureza assíncrona da chamada,  a Activity a exibir DialogFragment para a inserção de dados do usuário deve implementar a interface desta:   OneTouch_WebPayFragment.OnOneTouchPaymentListener. A interface possui dois métodos: onSucess e onFail. Em caso de sucesso, o método onSucess será chamado, recebendo como parâmetro a chave do usuário, que também será salva na persistência do aplicativo para futuras utilizações. Já a chamada onFail, utilizada em caso de falhas na operação ou cancelamento pelo usuário não possui nenhum tipo de parâmetro.  
+Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startCheckout** da biblioteca, como demonstrado abaixo ou ao lado (código javascript).
 
-Nas chamadas subsequentes, o usuário não precisará efetuar a autenticação novamente, e o **payment_token** é retornado de maneira transparente.
+Os parâmetros dessa função são:
 
-Se o cartão de crédito cadastrado é excluido pelo usuário, vence ou de qualquer outra maneira fica inválido, o framework se encarrega de pedir ao usuário que cadastre um novo cartão.
+|Atributo    |Descrição  |Formato    |Obrigatório 
+|------------|-----------|-----------|--------------
+|`amount`|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
+|`publicApiKey`|Chave de API pública do Checkout 4all.|String|Sim
+|`successCallback` | Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o paymentToken como parâmetro. | Função | Sim
+|`cancelCallback` | Função que será chamada caso o usuário cancele o processo de pagamento sem concluí-lo. | Função | Não
 
-A chamada `Pay4all.getToken()` deve ser efetuada a cada compra do usuário.
 
-
-# 5 Capturando a transação
+# 4 Capturando a transação
 
 Com o **payment_token** em mãos, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.
 
 <aside class="notice">
-Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da transação utilizando a chamada descrita na seção 5.1 para verificar se a transação foi capturada com sucesso ou  não.
+Nota:  por motivos de segurança, você deve informar o valor total da transação novamente nesta chamada.
+</aside>
+<aside class="notice">
+Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da transação utilizando a chamada descrita na seção 4.1 para verificar se a transação foi capturada com sucesso ou não.
 </aside>
 
 ```shell
 curl -H "Content-Type: application/json" 
 -X POST 
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
-"paymentToken":"MDEyM...", "amount": 5000}' 
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","paymentToken":"MDEyM...", "amount": 5000}' 
 https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
@@ -115,8 +143,8 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 
 |Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
 |----------------|-----------|-----------|-------|-------------
-|`merchantKey`|Chave privada de acesso do estabelecimento à API|String|44|Sim
-|`paymentToken`|Token da autorização de pagamento, obtido da biblioteca mobile. |String|44|Sim
+|`merchantKey`|Chave de acesso do estabelecimento à API|String|44|Sim
+|`paymentToken`|Token da autorização de pagamento, obtido do Checkout.|String|44|Sim
 |`amount`|Valor da transação, em centavos.|Number|*|Sim
 |`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta transação em caso de não recebimento da resposta desta chamada (contendo o transactionId). Deve ser um valor numérico inteiro (representado como string).|String|20|Não
 |`returnImmediatly`|Quando presente e com valor **true** , a chamada retorna imediatamente. Neste caso, a transação estará com um status pendente (estados 0, 1 ou 2 vide **seção 6 desta documentação**). |Boolean||Não
@@ -141,7 +169,7 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 |Atributo        |Descrição  |Formato    |Tamanho|Presente
 |----------------|-----------|-----------|-------|-------------
 |`transactionId`|Identificador da transação.|String|20|Sempre
-|`status`|Estado da transação (ver **seção 8 desta documentação**).|Number|*|Sempre
+|`status`|Estado da transação (ver **seção 6 desta documentação**).|Number|*|Sempre
 |`datetime`|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ (Formato ISO 8601 https://en.wikipedia.org/wiki/ISO_8601).|String|20|Sempre
 
 **Tratamento de Erro**
@@ -156,14 +184,14 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 }
 ```
 
-## 5.1 Consultando uma transação
+
+## 4.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
 ```shell
 curl -H "Content-Type: application/json" 
 -X POST 
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
-"transactionId":"73423624"}' 
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}' 
 https://conta.api.4all.com/merchant/getTransactionDetails
 ```
 
@@ -211,7 +239,7 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 |`transactionId`|Identificador da transação|String|20|Sempre
 |`subscriptionId`|Quando presente, informa o identificador da assinatura que gerou esta transação.|String|20|Depende
 |`amount`|Valor da transação, em centavos.|Number||Sempre
-|`status`|Estado da transação (ver **seção 8 desta documentação**).|Number||Sempre
+|`status`|Estado da transação (ver **seção 6 desta documentação**).|Number||Sempre
 |`createdAt`|Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).|String|20|Sempre
 |`paidAt`|Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.|String|20|Depende
 |`authorizationInfo`|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
@@ -249,37 +277,13 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 	}
 }
 ```
+TODO: pegar os códigos.
+**Tabela de Erros Relevantes**
+|Código (code) | Mensagem (message)
+|------------------|--------------------
+|1234|Transação não encontrada.
 
-# 6 Gerência de Meios de Pagamento
-
-A Biblioteca Mobile Payment também dispõem os seguintes métodos:
-
-## 6.1 Troca de meio de Pagamento
-
-Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada `Pay4all.changePaymentMethod()`, como no exemplo abaixo:
-
-```Java
-FourAll_DigitalCommerce pay4allObject = 
-FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
-
-pay4allObject.changePaymentMethod();
-```
-
-Para esta chamada, deve-se implementar a mesma interface já descrita para a operação de obter o token do usuário.  Os mesmos métodos serão utilizados para a comunicação do DialogFragment com a Activity que a exibe.
-
-## 6.2 Logout
-
-Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada Pay4all.logout(), como no exemplo abaixo:
-
-```Java
-FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
-
-pay4allObject.logout();
-```
-
-
-# 7 Ambiente de Homologação
+# 5 Ambiente de Homologação
 
 <aside class="notice">
 Para realizar transações no ambiente de Homologação, utilize um par de chaves de Homologação, obtidas no Portal do EC.
@@ -289,17 +293,17 @@ No Ambiente de Homologação, as transações efetuadas não geram cobranças, d
 
 No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.
 
-##7.1 Conta 4all no Ambiente de Homologação
+##5.1 Conta 4all no Ambiente de Homologação
 
 Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
 
-##7.1 Cartões de Teste
+##5.1 Cartões de Teste
 No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
 
 **Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
 **Cartões de final ÍMPAR sempre resultam em transações negadas.**
 
-#8. Estados de uma Transação
+#6. Estados de uma Transação
 
 |Estado | Descrição
 |-------|-----------
