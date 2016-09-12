@@ -16,18 +16,18 @@ search: true
 A 4all disponibiliza integração nas seguintes plataformas:
 
 
-##![](https://4alltecnologia.github.io/Digital-Commerce/images/web_icon.png)E-commerce Web
+![](https://4alltecnologia.github.io/Digital-Commerce/images/web_icon.png)**E-commerce Web**
 
 * Link para [Documentação](https://4alltecnologia.github.io/Digital-Commerce/web.html) 
 * Git-hub
  
-##![](https://4alltecnologia.github.io/Digital-Commerce/images/android_icon.png) Android
+![](https://4alltecnologia.github.io/Digital-Commerce/images/android_icon.png) **Android**
 
 * Link para  [Documentação](https://4alltecnologia.github.io/Digital-Commerce/Android.html)
 * Git-hub
 
 
-##![](https://4alltecnologia.github.io/Digital-Commerce/images/ios_icon.png)iOS
+![](https://4alltecnologia.github.io/Digital-Commerce/images/ios_icon.png)**iOS**
 
 * Link para Documentação
 * Git-hub
