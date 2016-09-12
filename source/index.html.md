@@ -5,6 +5,7 @@ language_tabs:
 
 toc_footers:
   - <a href='http://4all.com'>4all.com</a>
+  - <a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a>
 
 includes:
 
