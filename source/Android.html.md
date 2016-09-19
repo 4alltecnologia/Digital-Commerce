@@ -26,7 +26,7 @@ Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:
 4. Capturar a transação no seu servidor.
 
 
-#2 Chaves de API
+# 2 Chaves de API
 
 Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login. 
 
@@ -279,7 +279,7 @@ FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
 pay4allObject.logout();
 ```
 
-#7. Estados de uma Transação
+# 7 Estados de uma Transação
 
 |Estado | Descrição
 |-------|-----------
@@ -293,3 +293,23 @@ pay4allObject.logout();
 |7 | Transação contestada pelo portador do cartão (chargeback).
 |8 | Transação paga ­ reapresentada após contestação (chargeback refund).
 |9 | Transação em processo de pagamento por débito
+
+# Homologação
+
+<aside class="notice">
+Para realizar transações no ambiente de Homologação, utilize um par de chaves de Homologação, obtidas no Portal do EC.
+</aside>
+
+No Ambiente de Homologação, as transações efetuadas não geram cobranças, de modo que você pode testar a integração de seu Site com o Digital Commerce 4all.
+
+No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.
+
+## Conta 4all no Ambiente de Homologação
+
+Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
+
+## Cartões de Teste
+No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
+
+**Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
+**Cartões de final ÍMPAR sempre resultam em transações negadas.**
