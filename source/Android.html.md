@@ -8,6 +8,7 @@ toc_footers:
   - <a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a>
 
 includes:
+  - _homologacao.md
 
 search: true
 ---
@@ -160,13 +161,13 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 ## 5.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-```shell
+`shell
 curl -H "Content-Type: application/json" 
 -X POST 
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
 "transactionId":"73423624"}' 
 https://conta.api.4all.com/merchant/getTransactionDetails
-```
+`
 
 **Caminho**: `https://conta.api.4all.com/merchant/getTransactionDetails`
 
@@ -197,10 +198,10 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 	"createdAt": "2016-01-31T20:12:31Z",
 	"paidAt": "2016-01-31T20:33:12Z",
 	"authorizationInfo": {
-	"acquirerId": 1,
-	"acquirerUsn": "18318318",
-	"acquirerTimestamp": "20161231125959",
-	"brandId": 1
+		"acquirerId": 1,
+		"acquirerUsn": "18318318",
+		"acquirerTimestamp": "20161231125959",
+		"brandId": 1
 	}
 }
 ```
@@ -279,28 +280,7 @@ FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
 pay4allObject.logout();
 ```
 
-
-# 7 Ambiente de Homologação
-
-<aside class="notice">
-Para realizar transações no ambiente de Homologação, utilize um par de chaves de Homologação, obtidas no Portal do EC.
-</aside>
-
-No Ambiente de Homologação, as transações efetuadas não geram cobranças, de modo que você pode testar a integração de seu Site com o Digital Commerce 4all.
-
-No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.
-
-##7.1 Conta 4all no Ambiente de Homologação
-
-Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
-
-##7.1 Cartões de Teste
-No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
-
-**Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
-**Cartões de final ÍMPAR sempre resultam em transações negadas.**
-
-#8. Estados de uma Transação
+#7. Estados de uma Transação
 
 |Estado | Descrição
 |-------|-----------

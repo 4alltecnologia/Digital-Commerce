@@ -30,5 +30,5 @@ A 4all disponibiliza integração nas seguintes plataformas:
 
 ![](https://4alltecnologia.github.io/Digital-Commerce/images/ios_icon.png)**iOS**
 
-* Link para Documentação
+* Link para [Documentação](https://4alltecnologia.github.io/Digital-Commerce/iOS.html)
 * Git-hub
