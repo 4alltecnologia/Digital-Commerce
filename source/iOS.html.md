@@ -116,26 +116,23 @@ Com o **paymentToken** em mãos, ele deve ser transferido ao seu servidor de man
 
 Exemplos:
 
-    curl -X POST "https://api.pagar.me/1/transactions/{TOKEN}/capture"
-    -d 'amount=1000'
-    -d 'api_key=ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0'
+`curl -X POST "https://api.pagar.me/1/transactions/{TOKEN}/capture"
+-d 'amount=1000'
+-d 'api_key=ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0'`
 
 ## 7.1 Consulta de Transação
 
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-`
-curl -H "Content-Type: application/json" 
+`curl -H "Content-Type: application/json" 
 -X POST 
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
 "transactionId":"73423624"}' 
-https://conta.api.4all.com/merchant/getTransactionDetails
-`
+https://conta.api.4all.com/merchant/getTransactionDetails`
 
 **Caminho**: `https://conta.api.4all.com/merchant/getTransactionDetails`
 
 **Descrição**:  Retorna os detalhes de uma transação.
-
 
 ```json
 {
@@ -151,7 +148,6 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 |`merchantKey`|Chave de acesso do merchant à API|String|44|Sim
 |`transactionId`|Identificador da transação|String|20|Depende
 |`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
-
 
 ```json
 {
@@ -215,7 +211,6 @@ estiverem presentes, esta chamada falha com um erro específico.
 ```
 
 Em caso de erro na chamada, o status HTTP retornado será diferente de **200**,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto **error** contendo um código(**code**) e uma mensagem(**message**).
-
 
 # 8 Gerência de Meios de Pagamento
 O framework também dispõem os seguintes métodos:
