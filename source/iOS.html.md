@@ -2,15 +2,14 @@
 title: Digital Commerce - iOS - 1.0
 
 language_tabs:
- - Objective-C
- - Swift
+  - Objective-C
+  - Swift
 
 toc_footers:
   - <a href='http://4all.com'>4all.com</a>
   - <a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a>
 
 includes:
-  - _homologacao.md
  
 search: true
 ---

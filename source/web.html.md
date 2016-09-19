@@ -8,8 +8,7 @@ toc_footers:
   - <a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a>
 
 includes:
-  - _homologacao.md
-  
+
 search: true
 ---
 
