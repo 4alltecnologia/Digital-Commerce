@@ -24,6 +24,15 @@ Para aceitar pagamentos de Cartão em seu site, você precisa executar os passos
 2. Incluir o a Janela de Checkout em seu site;
 3. Capturar a transação no seu servidor.
 
+## 1.1 Endereços dos servidores de Homologação e de Produção
+
+Os seguintes endpoints devem ser usados para executar as chamadas:
+
+| Ambiente  | URL
+|-----------|-------------------
+|Homologação|conta.homolog.4all.com
+|Produção|conta.api.4all.com
+
 
 # 2 Chaves de API
 
@@ -127,7 +136,8 @@ curl -H "Content-Type: application/json"
 https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
-**Caminho**: https://conta.api.4all.com/merchant/issueAuthorizedTransaction
+**Caminho**: `<endpoint>/merchant/issueAuthorizedTransaction`
+
 **Descrição**: Captura uma transação pelo **paymentToken**
 
 ```json
@@ -196,7 +206,7 @@ curl -H "Content-Type: application/json"
 https://conta.api.4all.com/merchant/getTransactionDetails
 `
 
-**Caminho**: `https://conta.api.4all.com/merchant/getTransactionDetails`
+**Caminho**: `<endpoint>/merchant/getTransactionDetails`
 
 **Descrição**:  Retorna os detalhes de uma transação.
 

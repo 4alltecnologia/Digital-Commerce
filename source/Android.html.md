@@ -25,6 +25,15 @@ Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:
 3. Quando for efetuar um pagamento, obter um paymentToken, usando a chamada Pay4all.getToken().
 4. Capturar a transação no seu servidor.
 
+## 1.1 Endereços dos servidores de Homologação e de Produção
+
+Os seguintes endpoints devem ser usados para executar as chamadas:
+
+| Ambiente  | URL
+|-----------|-------------------
+|Homologação|conta.homolog.4all.com
+|Produção|conta.api.4all.com
+
 
 # 2 Chaves de API
 
@@ -99,7 +108,8 @@ curl -H "Content-Type: application/json"
 https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
-**Caminho**: https://conta.api.4all.com/merchant/issueAuthorizedTransaction
+**Caminho**: `<endpoint>/merchant/issueAuthorizedTransaction`
+
 **Descrição**: Captura uma transação pelo **paymentToken**
 
 ```json
@@ -168,7 +178,7 @@ curl -H "Content-Type: application/json"
 https://conta.api.4all.com/merchant/getTransactionDetails
 `
 
-**Caminho**: `https://conta.api.4all.com/merchant/getTransactionDetails`
+**Caminho**: `<endpoint>/merchant/getTransactionDetails`
 
 **Descrição**:  Retorna os detalhes de uma transação.
 
