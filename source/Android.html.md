@@ -22,7 +22,7 @@ Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:
 
 1. Obter Chaves de API no Portal do EC;
 2. Importar o framework de Mobile Payment 4all;
-3. Quando for efetuar um pagamento, obter um paymentToken, usando a chamada Pay4all.getToken().
+3. Quando for efetuar um pagamento, obter um ***paymentToken***, usando a chamada `Pay4all.getToken()`.
 4. Capturar a transação no seu servidor.
 
 ## 1.1 Endereços dos servidores de Homologação e de Produção
@@ -31,8 +31,8 @@ Os seguintes endpoints devem ser usados para executar as chamadas:
 
 | Ambiente  | URL
 |-----------|-------------------
-|Homologação|conta.homolog.4all.com
-|Produção|conta.api.4all.com
+|**Homologação**|conta.homolog.4all.com
+|**Produção**|conta.api.4all.com
 
 
 # 2 Chaves de API
@@ -126,11 +126,11 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 
 |Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
 |----------------|-----------|-----------|-------|-------------
-|`merchantKey`|Chave privada de acesso do estabelecimento à API|String|44|Sim
-|`paymentToken`|Token da autorização de pagamento, obtido da biblioteca mobile. |String|44|Sim
-|`amount`|Valor da transação, em centavos.|Number|*|Sim
-|`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta transação em caso de não recebimento da resposta desta chamada (contendo o transactionId). Deve ser um valor numérico inteiro (representado como string).|String|20|Não
-|`returnImmediatly`|Quando presente e com valor **true** , a chamada retorna imediatamente. Neste caso, a transação estará com um status pendente (estados 0, 1 ou 2 vide **seção 6 desta documentação**). |Boolean||Não
+|**merchantKey**|Chave privada de acesso do estabelecimento à API|String|44|Sim
+|**paymentToken**|Token da autorização de pagamento, obtido da biblioteca mobile. |String|44|Sim
+|**amount**|Valor da transação, em centavos.|Number|*|Sim
+|**merchantMetaId**|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta transação em caso de não recebimento da resposta desta chamada (contendo o transactionId). Deve ser um valor numérico inteiro (representado como string).|String|20|Não
+|**returnImmediatly**|Quando presente e com valor **true** , a chamada retorna imediatamente. Neste caso, a transação estará com um status pendente (estados 0, 1 ou 2 vide **seção 6 desta documentação**). |Boolean||Não
 
 
 **Observações**:
@@ -151,11 +151,12 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 
 |Atributo        |Descrição  |Formato    |Tamanho|Presente
 |----------------|-----------|-----------|-------|-------------
-|`transactionId`|Identificador da transação.|String|20|Sempre
-|`status`|Estado da transação (ver **seção 8 desta documentação**).|Number|*|Sempre
-|`datetime`|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ (Formato ISO 8601 https://en.wikipedia.org/wiki/ISO_8601).|String|20|Sempre
+|**transactionId**|Identificador da transação.|String|20|Sempre
+|**status**|Estado da transação (ver **seção 8 desta documentação**).|Number|*|Sempre
+|**datetime**|Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ (Formato ISO 8601 https://en.wikipedia.org/wiki/ISO_8601).|String|20|Sempre
 
 **Tratamento de Erro**
+
 Em caso de erro na chamada, o status HTTP retornado será diferente de **200**,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto **error** contendo um código(**code**) e uma mensagem(**message**).
 
 ```json
@@ -194,9 +195,9 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 
 |Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
 |----------------|-----------|-----------|-------|-------------
-|`merchantKey`|Chave de acesso do merchant à API|String|44|Sim
-|`transactionId`|Identificador da transação|String|20|Depende
-|`merchantMetaId`|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
+|**merchantKey**|Chave de acesso do merchant à API|String|44|Sim
+|**transactionId**|Identificador da transação|String|20|Depende
+|**merchantMetaId**|Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.|String|20|Depende
 
 
 ```javascript
@@ -219,37 +220,37 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 
 |Atributo        |Descrição  |Formato    |Tamanho|Presente
 |----------------|-----------|-----------|-------|-----------
-|`transactionId`|Identificador da transação|String|20|Sempre
-|`subscriptionId`|Quando presente, informa o identificador da assinatura que gerou esta transação.|String|20|Depende
-|`amount`|Valor da transação, em centavos.|Number||Sempre
-|`status`|Estado da transação (ver **seção 8 desta documentação**).|Number||Sempre
-|`createdAt`|Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).|String|20|Sempre
-|`paidAt`|Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.|String|20|Depende
-|`authorizationInfo`|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
+|**transactionId**|Identificador da transação|String|20|Sempre
+|**subscriptionId**|Quando presente, informa o identificador da assinatura que gerou esta transação.|String|20|Depende
+|**amount**|Valor da transação, em centavos.|Number||Sempre
+|**status**|Estado da transação (ver **seção 8 desta documentação**).|Number||Sempre
+|**createdAt**|Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).|String|20|Sempre
+|**paidAt**|Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.|String|20|Depende
+|**authorizationInfo**|Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.|Object|*|Depende
 
-**authorizationInfo**:
+***authorizationInfo:***
 
 |Atributo        |Descrição  |Formato    |Tamanho|Presente
 |----------------|-----------|-----------|-------|-----------
-|`acquirerId`|Identificador do adquirente.|Number||Sempre
-|`acquirerUsn`|Identificador/NSU do adquirente para a transação.|String|50|Sempre
-|`acquirerTimestamp`|Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.|String|50|Depende
-|`brandId`|Identificador da bandeira do cartão que foi usado no pagamento.|Number||sempre
+|**acquirerId**|Identificador do adquirente.|Number||Sempre
+|**acquirerUsn**|Identificador/NSU do adquirente para a transação.|String|50|Sempre
+|**acquirerTimestamp**|Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.|String|50|Depende
+|**brandId**|Identificador da bandeira do cartão que foi usado no pagamento.|Number||sempre
 
 **Observações**
 
- Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos
-estiverem presentes, esta chamada falha com um erro específico.
+ Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos estiverem presentes, esta chamada falha com um erro específico.
 
-* Adquirentes:
+* **Adquirentes**:
 	1. Stone
 	2. Pagar.me
 
-* Bandeiras:
+* **Bandeiras**:
 	1. Visa
 	2. Mastercard
 
 **Tratamento de Erro**
+
 Em caso de erro na chamada, o status HTTP retornado será diferente de **200**,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto **error** contendo um código(**code**) e uma mensagem(**message**).
 
 ```json
