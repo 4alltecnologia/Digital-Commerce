@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements DigitalCommerce_W
 ...
 
 @Override
-public void onPaymentSuccess(String key) {
-    Toast.makeText(this, "Sucesso ao realizar a operação 4all " + key, Toast.LENGTH_LONG).show();
+public void onPaymentSuccess(String paymentToken) {
+    Toast.makeText(this, "Sucesso ao realizar a operação 4all " + paymentToken, Toast.LENGTH_LONG).show();
 	  }
 
 @Override
