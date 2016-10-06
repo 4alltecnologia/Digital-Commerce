@@ -12,11 +12,13 @@ includes:
 search: true
 ---
 
-# Digital Commerce - Android - 1.0
+# Digital Commerce - Android - 1.1
 
 # 1 Introdução
 
 Com o módulo de pagamento para Android, você pode configurar seu aplicativo para receber pagamentos de cartões de crédito de maneira fácil e rápida.
+
+A biblioteca Digital Commerce Android é compatível com as versões de Android 4.4 em diante (API LEVEL 19 ou superior)
 
 Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:
 
@@ -56,10 +58,13 @@ A inclusão da biblioteca no projeto é através da inclusão de sua dependênci
 allprojects {
   repositories {
     jcenter()
-
     maven {
-      url 's3://utilitarios/android/libs'
-   }
+	    url "s3://libs-externas"
+        credentials(AwsCredentials) {
+	        accessKey "AKIAJDFQCSKLOC5MRV3A"
+            secretKey "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"
+	    }
+	}
 }
 ```
 
@@ -68,22 +73,74 @@ No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a l
 build.gradle(Module:app) :
 
 ```Gradle
-compile 'com.4all.libs:digital_commerce:1.0.0'
+    compile 'com.4all.libs:4all_digitalCommerce:1.0.0'
+```
+
+# 4 Instanciando um objeto DigitalCommerce
+O objeto para as chamadas da biblioteca de DigitalCommerce da 4all possui seu construtor de forma privada. A fim de instanciar um objeto deste tipo, deve-se utilizar a chamada de método estático FourAll_DigitalCommerce.newInstance();
+Tal chamada possui sobrecarga em sua assinatura, de forma a aceitar três formatos diferentes de parâmetros, sendo estes:
+
+:: newInstance(AppCompatActivity activity) : O objeto será instanciado a utilizando suas configurações padrão. Recebe apenas a activity onde este é chamado a fim de utilizar desta seu fragmentManager e contexto
+
+```Java
+FourAll_DigitalCommerce digiCommerce = 	FourAll_DigitalCommerce.newInstance(MainActivity.this);        
 ```
 
 
-# 4 Fazendo a chamada Pay4all.getToken()
+:: newInstance(AppCompatActivity activity, String APIKEY) : Neste caso, recebe, além da activity onde está sendo chamado, também a APIKEY do cliente que a utiliza. A partir desta string, gerará uma nova instância de suas configurações.
+
+```Java
+FourAll_DigitalCommerce digiCommerce = 	FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY do cliente>>);        
+```
+
+:: newInstance(AppCompatActivity activity, DigitalCommerce_Config config) : Ao invés de receber a APIKEY, recebe já uma instância da classe config com as configurações a serem utilizadas;
+
+```Java
+FourAll_DigitalCommerce digiCommerce = 	FourAll_DigitalCommerce.newInstance(MainActivity.this, DigitalCommerce_Config.getDefaultConfig());        
+```
+
+
+##4.1 Configurações da classe DigitalCommerce
+A biblioteca possui uma classe de configurações para os atributos a serem utilizados pela classe principal da biblioteca. Embora ela possua um construtor, também possui métodos auxiliares para a geração de uma configuração padrão, a ser utilizados por várias instâncias da biblioteca.
+
+As o objeto com as configurações padrão pode ser acessado através do método estático DigitalCommerce_Config.getDefaultConfig(). Porém, a fim de ter acesso a este, deve-se primeiro definir uma chave de API para ela. Esta definição é feita através da chamada DigitalCommerce_Config.setDefaultAPIKey(String APIKey) que recebe a String com a chave de API.
+
+É possível também gerar novos objetos do tipo Config através da chamada do construtor estática DigitalCommerce_Config.newInstance(String APIKey), que recebe diretamente a String com a APIKEY
+
+
+
+
+# 5 Fazendo a chamada DigitalCommerce.getToken()
 
 Para obter o **payment_token**, crie uma instância o objeto Pay4all e faça a chamada getToken no exemplo abaixo:
 
 ```Java
 FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
  
 pay4allObject.getToken();
 ```
 
 Quando a função `Pay4all.getToken()` é chamada pela primeira vez, ele é direcionado para uma tela onde se autentica e cadastra um cartão de crédito a ser usado em todas as compras no seu aplicativo.  Devido a natureza assíncrona da chamada,  a Activity a exibir DialogFragment para a inserção de dados do usuário deve implementar a interface desta:   OneTouch_WebPayFragment.OnOneTouchPaymentListener. A interface possui dois métodos: onSucess e onFail. Em caso de sucesso, o método onSucess será chamado, recebendo como parâmetro a chave do usuário, que também será salva na persistência do aplicativo para futuras utilizações. Já a chamada onFail, utilizada em caso de falhas na operação ou cancelamento pelo usuário não possui nenhum tipo de parâmetro.  
+
+```Java
+public class MainActivity extends AppCompatActivity implements DigitalCommerce_WebPayFragment.OnOneTouchPaymentListener {
+
+...
+
+@Override
+public void onPaymentSuccess(String key) {
+    Toast.makeText(this, "Sucesso ao realizar a operação 4all " + key, Toast.LENGTH_LONG).show();
+	  }
+
+@Override
+public void onPaymentFail() {
+    Toast.makeText(this, "Falha ao realizar a operação 4all", Toast.LENGTH_LONG).show();
+	}
+ }
+```
+
+
 
 Nas chamadas subsequentes, o usuário não precisará efetuar a autenticação novamente, e o **payment_token** é retornado de maneira transparente.
 
@@ -92,7 +149,7 @@ Se o cartão de crédito cadastrado é excluido pelo usuário, vence ou de qualq
 A chamada `Pay4all.getToken()` deve ser efetuada a cada compra do usuário.
 
 
-# 5 Capturando a transação
+# 6 Capturando a transação
 
 Com o **payment_token** em mãos, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.
 
@@ -168,7 +225,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 }
 ```
 
-## 5.1 Consultando uma transação
+## 6.1 Consultando uma transação
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
 `shell
@@ -262,35 +319,35 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 }
 ```
 
-# 6 Gerência de Meios de Pagamento
+# 7 Gerência de Meios de Pagamento
 
 A Biblioteca Mobile Payment também dispõem os seguintes métodos:
 
-## 6.1 Troca de meio de Pagamento
+## 7.1 Troca de meio de Pagamento
 
 Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada `Pay4all.changePaymentMethod()`, como no exemplo abaixo:
 
 ```Java
 FourAll_DigitalCommerce pay4allObject = 
-FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 pay4allObject.changePaymentMethod();
 ```
 
 Para esta chamada, deve-se implementar a mesma interface já descrita para a operação de obter o token do usuário.  Os mesmos métodos serão utilizados para a comunicação do DialogFragment com a Activity que a exibe.
 
-## 6.2 Logout
+## 7.2 Logout
 
 Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada Pay4all.logout(), como no exemplo abaixo:
 
 ```Java
 FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this, <<APIKEY>>);
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 pay4allObject.logout();
 ```
 
-# 7 Estados de uma Transação
+# 8 Estados de uma Transação
 
 |Estado | Descrição
 |-------|-----------
