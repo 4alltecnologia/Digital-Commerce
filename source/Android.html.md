@@ -1,4 +1,3 @@
-----------
 ---
 title: Digital Commerce - Android - 1.0
 
