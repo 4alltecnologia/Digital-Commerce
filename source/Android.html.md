@@ -1,3 +1,4 @@
+----------
 ---
 title: Digital Commerce - Android - 1.0
 
@@ -39,7 +40,7 @@ Os seguintes endpoints devem ser usados para executar as chamadas:
 
 # 2 Chaves de API
 
-Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login. 
+Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login.
 
 No menu lateral, clique na opção “Chaves de API” no sub-menu “Mobile Payment”.
 
@@ -52,7 +53,7 @@ Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**P
 
 A inclusão da biblioteca no projeto é através da inclusão de sua dependência no projeto via gradle. Desta maneira, inclui-se arquivo build.gradle do projeto inclui-se os seguintes respositórios ao projeto:
 
- build.gradle(Projeto:`<nome do projeto>`) : 
+ build.gradle(Projeto:`<nome do projeto>`) :
 
 ```Gradle
 allprojects {
@@ -75,6 +76,7 @@ build.gradle(Module:app) :
 ```Gradle
     compile 'com.4all.libs:4all_digitalCommerce:1.0.0'
 ```
+
 
 # 4 Instanciando um objeto DigitalCommerce
 O objeto para as chamadas da biblioteca de DigitalCommerce da 4all possui seu construtor de forma privada. A fim de instanciar um objeto deste tipo, deve-se utilizar a chamada de método estático FourAll_DigitalCommerce.newInstance();
@@ -117,7 +119,7 @@ Para obter o **payment_token**, crie uma instância o objeto Pay4all e faça a c
 ```Java
 FourAll_DigitalCommerce pay4allObject =
 FourAll_DigitalCommerce.newInstance(MainActivity.this);
- 
+
 pay4allObject.getToken();
 ```
 
@@ -129,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements DigitalCommerce_W
 ...
 
 @Override
-public void onPaymentSuccess(String paymentToken) {
-    Toast.makeText(this, "Sucesso ao realizar a operação 4all " + paymentToken, Toast.LENGTH_LONG).show();
+public void onPaymentSuccess(String key) {
+    Toast.makeText(this, "Sucesso ao realizar a operação 4all " + key, Toast.LENGTH_LONG).show();
 	  }
 
 @Override
@@ -140,13 +142,72 @@ public void onPaymentFail() {
  }
 ```
 
-
-
 Nas chamadas subsequentes, o usuário não precisará efetuar a autenticação novamente, e o **payment_token** é retornado de maneira transparente.
 
 Se o cartão de crédito cadastrado é excluido pelo usuário, vence ou de qualquer outra maneira fica inválido, o framework se encarrega de pedir ao usuário que cadastre um novo cartão.
 
-A chamada `Pay4all.getToken()` deve ser efetuada a cada compra do usuário.
+A chamada `Pay4all.getToken()` deve ser efetuada a cada compra.  As operações com o servidor 4all solicitam os dados de geolocalização do usuário.  Desta maneira, deve-se adicionar ao manifesto da aplicação as solicitações de uso do GPS do sistema. Para tal, é necessário que sejam acrescentadas as seguintes linhas ao documento:
+
+```xml
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+```
+
+A partir da API de Android lvl 23, o sistema deve implementar também a verificação de permissões ao usuário durante runtime.  Ao invés de solicitar ao usuário a permissão aos recursos do aparelho no momento da instalação, os sistemas mais atuais fazem a requisição no momento de uso destas.
+Desta maneira, a activity onde será feita a chamada para a busca do token deverá implementar o código para o request de permissões, bem como o handler para a resposta do usuário, conforme o exemplo abaixo, retirado do site https://developer.android.com/training/permissions/requesting.html
+
+Para checar se há permissão para o uso da localização:
+```Java
+
+// Assume thisActivity is the current activity
+int permissionCheckCoarse = ContextCompat.checkSelfPermission(thisActivity,
+        Manifest.ACCESS_COARSE_LOCATION);
+
+int permissionCheckFine = ContextCompat.checkSelfPermission(thisActivity,
+        Manifest.ACCESS_FINE_LOCATION);
+```
+
+  Para definir a solicitação do uso dos recursos de GPS do aparelho pela aplicação:
+```Java
+      // Verifica se deve mostrar motivo de utilização do recurso de geolocalização
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+          Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+		// Mostra uma explicação assíncrona para o usuário. Ou seja, não bloqueia a thread principal.
+		// Após o usuário verificar a explicação apresentada, chama novamente o request para a permissão de uso do recurso
+      } else {
+        // Não exige explicação. Faz o request direto para a permissão do uso.
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+            FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION);
+       // MY_PERMISSIONS_REQUEST_LOCATION é um valor int constante na aplicaçnao. Este método de callback utiliza o resultado do request
+      }
+```
+
+Handler para o resultado obtido pela permissão:
+```java
+  @Override
+  public void onRequestPermissionsResult(int requestCode,
+                                         String permissions[], int[] grantResults) {
+    switch (requestCode) {
+      case FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION: {
+        // Se o request for cancelado, o vetor será vazio.
+        if (grantResults.length > 0
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          FourAll_Lib4all.getInstance().initLocationManager(this);
+          // Foi aprovada a permissão. Faz as ações solicitadas.
+        } else {
+          // A permissão não foi aprovada. Faz as ações de acordo.
+          }
+        }
+        return;
+      }
+
+      // outros casos
+      // utilize para chegar outras permissões
+    }
+  }
+```
 
 
 # 6 Capturando a transação
@@ -158,10 +219,10 @@ Em caso de erro de comunicação ao executar esta chamada, você deve consultar 
 </aside>
 
 ```shell
-curl -H "Content-Type: application/json" 
--X POST 
+curl -H "Content-Type: application/json"
+-X POST
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
-"paymentToken":"MDEyM...", "amount": 5000}' 
+"paymentToken":"MDEyM...", "amount": 5000}'
 https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
@@ -229,10 +290,10 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
 `shell
-curl -H "Content-Type: application/json" 
--X POST 
+curl -H "Content-Type: application/json"
+-X POST
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
-"transactionId":"73423624"}' 
+"transactionId":"73423624"}'
 https://conta.api.4all.com/merchant/getTransactionDetails
 `
 
@@ -296,7 +357,7 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 
 **Observações**
 
- Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos estiverem presentes, esta chamada falha com um erro específico.
+ Apenas um dos dois parâmetros, ***transactionId*** ou ***merchantMetaId***, pode ser usado; se ambos estiverem presentes, esta chamada falha com um erro específico.
 
 * **Adquirentes**:
 	1. Stone
@@ -328,7 +389,7 @@ A Biblioteca Mobile Payment também dispõem os seguintes métodos:
 Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada `Pay4all.changePaymentMethod()`, como no exemplo abaixo:
 
 ```Java
-FourAll_DigitalCommerce pay4allObject = 
+FourAll_DigitalCommerce pay4allObject =
 FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 pay4allObject.changePaymentMethod();
@@ -349,18 +410,18 @@ pay4allObject.logout();
 
 # 8 Estados de uma Transação
 
-|Estado | Descrição
+|Estado | Descrição
 |-------|-----------
-|0 | Transação criada. Aguardando pagamento por uma conta 4all.
-|1 | Transação em processo de pagamento por uma conta 4all.
-|2 | Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.
-|3 | Transação paga (capturada).
-|4 | Transação em processo de cancelamento.
-|5 | Transação cancelada.
-|6 | Transação paga ­ cancelamento falhou.
-|7 | Transação contestada pelo portador do cartão (chargeback).
-|8 | Transação paga ­ reapresentada após contestação (chargeback refund).
-|9 | Transação em processo de pagamento por débito
+|0 | Transação criada. Aguardando pagamento por uma conta 4all.
+|1 | Transação em processo de pagamento por uma conta 4all.
+|2 | Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.
+|3 | Transação paga (capturada).
+|4 | Transação em processo de cancelamento.
+|5 | Transação cancelada.
+|6 | Transação paga ­ cancelamento falhou.
+|7 | Transação contestada pelo portador do cartão (chargeback).
+|8 | Transação paga ­ reapresentada após contestação (chargeback refund).
+|9 | Transação em processo de pagamento por débito
 
 # Homologação
 
@@ -377,7 +438,7 @@ No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quand
 Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
 
 ## Cartões de Teste
-No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
+No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site.
 
 **Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
 **Cartões de final ÍMPAR sempre resultam em transações negadas.**
