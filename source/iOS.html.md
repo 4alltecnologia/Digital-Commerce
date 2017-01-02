@@ -8,11 +8,11 @@ toc_footers:
   - <a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a>
 
 includes:
- 
+
 search: true
 ---
 
-# Digital Commerce - iOS - 1.0
+# Digital Commerce - iOS - 1.1
 
 # 1 Introdução
 
@@ -37,7 +37,7 @@ Os seguintes endpoints devem ser usados para executar as chamadas:
 
 #2 Chaves de API
 
-Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login. 
+Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login.
 
 No menu lateral, clique na opção “Chaves de API” no sub-menu “Mobile Payment”.
 
@@ -48,7 +48,7 @@ Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**P
 
 # 3 Importando a Biblioteca de Mobile Payment
 
-1. Faça o download da [última versão do MobilePayment](https://lib.4all.com/mobile/ios/v1/MobilePayment.framework) e extraia o arquivo zip.
+1. Faça o download da [última versão do MobilePayment](https://lib.4all.com/mobile/ios/v1.1.0/MobilePayment.framework.zip) e extraia o arquivo zip.
 2.  Arraste o arquivo `MobilePayment.framework` extraído para o *File Navigator* do seu projeto no Xcode. Certifique-se de que a opção *Copy items if needed* está selecionada e clique em *Finish*.
 3. Clique no seu projeto no *File Navigator* do Xcode. Selecione o Target do seu aplicativo e clique na aba General. Abaixo de Embedded Binaries, clique em +, selecione o `MobilePayment.framework` e clique em Add.
 
@@ -61,7 +61,7 @@ Caso o framework esteja sendo utilizado em um projeto Swift, você deve inserir 
 3. Clique no seu projeto no *File Navigator* do Xcode. Selecione seu projeto e clique na aba *Build Settings*. Vá para a sessão *Swift Compiler - Code Generation* e, na linha O*bjective-C Bridging Header*, adicione o caminho para seu *Bridging Header* relativo ao seu projeto.
 
 Para maiores informações sobre utilização de **Swift** e **Objective-C** em um mesmo projeto, acesse a documentação fornecida pela Apple em [Swift and Objective-C in the Same Project](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
- 
+
 
 # 4 Importando o framework MobilePayment
 
@@ -90,7 +90,7 @@ Após ter instalado e importado o framework, configure-o com as Chaves de API ge
 
 ```Objective-C
 NSString *paymentToken = [[[P4APay4all alloc] init]
-getTokenWithViewController:self 
+getTokenWithViewController:self
   completionBlock:ˆ(NSString *paymentToken, NSError *error) {
     if (error != nil) {
       // Trate aqui o erro ocorrido…
@@ -133,10 +133,10 @@ Exemplos:
 
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-`curl -H "Content-Type: application/json" 
--X POST 
+`curl -H "Content-Type: application/json"
+-X POST
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
-"transactionId":"73423624"}' 
+"transactionId":"73423624"}'
 https://conta.api.4all.com/merchant/getTransactionDetails`
 
 **Caminho**: `<endpoint>/merchant/getTransactionDetails`
@@ -225,7 +225,41 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 # 8 Gerência de Meios de Pagamento
 O framework também dispõem os seguintes métodos:
 
-## 8.1 Troca de meio de pagamento
+## 8.1 Obtendo informações do cartão
+
+> Exemplo Objective-C
+
+```Objective-C
+P4APay4all *pay4all = [[P4APay4all alloc] init];
+
+P4AUserData *userData = [pay4all getUserData];
+
+if (userData != nil) {
+	NSString *brand      = userData.cardBrand; //"Visa"
+	NSString *lastDigits = userData.cardLastDigits; //"1234"
+}
+```
+
+> Exemplo Swift
+
+```Swift
+let pay4all = P4APay4all()
+let userData = pay4all?.getUserData()
+
+guard userData != nil else {
+	// Trate aqui quando não houver informações
+	return
+}
+
+let brand       = userData?.cardBrand
+let lastDigits  = userData?.cardLastDigits
+```
+
+Você pode exibir em seu aplicativo qual é a bandeira e os últimos 4 dígitos do cartão de crédito configurado pelo usuário utilizando a chamada `pay4allObject.getUserData()`, como no exemplo ao lado:
+
+
+
+## 8.2 Troca de meio de pagamento
 
 > Exemplo Objective-C
 
@@ -254,10 +288,10 @@ P4APay4all().changePaymentMethodWithViewController(self) {
 }
 ```
 Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para receber pagamentos, através da chamada **changePaymentMethod**, como no exemplo ao lado :
- 
+
 O *View Controller* passado por parâmetro é utilizado para apresentar a tela de troca do meio de pagamento.
 
-## 8.2 Logout
+## 8.3 Logout
 
 > Exemplo Objective-C
 
@@ -303,7 +337,7 @@ No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quand
 Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
 
 ## Cartões de Teste
-No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
+No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu App.
 
 **Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
 **Cartões de final ÍMPAR sempre resultam em transações negadas.**
