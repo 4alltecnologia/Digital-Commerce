@@ -482,7 +482,7 @@ No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quand
 Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
 
 ## Cartões de Teste
-No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site.
+No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu App.
 
 **Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
 **Cartões de final ÍMPAR sempre resultam em transações negadas.**
