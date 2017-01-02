@@ -12,7 +12,7 @@ includes:
 search: true
 ---
 
-# Digital Commerce - Android - 1.1
+# Digital Commerce - Android - 1.2
 
 # 1 Introdução
 
@@ -97,7 +97,7 @@ No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a l
 build.gradle(Module:app) :
 
 ```Gradle
-    compile 'com.4all.libs:4all_digitalCommerce:1.0.1'
+    compile 'com.4all.libs:4all_digitalCommerce:1.1.0'
 ```
 
 
@@ -410,9 +410,27 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 A Biblioteca Mobile Payment também dispõem os seguintes métodos:
 
-## 7.1 Troca de meio de Pagamento
+## 7.1 Obtendo informações do cartão
 
-Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada `Pay4all.changePaymentMethod()`, como no exemplo abaixo:
+Você pode exibir em seu aplicativo qual é a bandeira e os últimos 4 dígitos do cartão de crédito configurado pelo usuário utilizando a chamada `pay4allObject.getUserData()`, como no exemplo abaixo:
+
+```Java
+FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
+
+DigitalCommerce_CreditCardInfo cardInfo =  pay4allObject.getUserData();
+
+//pode ser null caso não tenha configurado meio de pagamento
+if (cardInfo != null) {
+	String brand = cardInfo.getBrandName(); // "Visa"
+	String lastDigits = cardInfo.getLastDigits(); // "1234"
+}
+
+```
+
+## 7.2 Troca de meio de Pagamento
+
+Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada `pay4allObject.changePaymentMethod()`, como no exemplo abaixo:
 
 ```Java
 FourAll_DigitalCommerce pay4allObject =
@@ -423,9 +441,9 @@ pay4allObject.changePaymentMethod();
 
 Para esta chamada, deve-se implementar a mesma interface já descrita para a operação de obter o token do usuário.  Os mesmos métodos serão utilizados para a comunicação do DialogFragment com a Activity que a exibe.
 
-## 7.2 Logout
+## 7.3 Logout
 
-Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada Pay4all.logout(), como no exemplo abaixo:
+Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada `pay4allObject.logout()`, como no exemplo abaixo:
 
 ```Java
 FourAll_DigitalCommerce pay4allObject =
