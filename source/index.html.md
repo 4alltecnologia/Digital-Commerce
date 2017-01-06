@@ -33,3 +33,10 @@ A 4all disponibiliza integração nas seguintes plataformas:
 * Link para  [Documentação](https://4alltecnologia.github.io/Digital-Commerce/iOS.html)
 * Git-hub
 
+# Subscription - 1.0
+
+![](https://4alltecnologia.github.io/Digital-Commerce/images/web_icon.png)**Subscription Web**
+
+* Link para [Documentação](https://4alltecnologia.github.io/Digital-Commerce/subscription-web.html) 
+* Git-hub
+ 
