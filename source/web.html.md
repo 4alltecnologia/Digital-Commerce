@@ -44,9 +44,9 @@ Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**P
 
 # 3 Incluindo a Janela de Checkout em seu Site
 
-A Janela de Checkout é apresentada quando o cliente confirma a compra (no *submit* do formulário de fechar pedido, por exemplo) ou seleciona a forma de pagamento "Cartão de Crédito ou Débito via 4all" (quando o seu site permite mais de uma forma de pagamento). 
+A Janela de Checkout é apresentada quando o cliente confirma a compra (no *submit* do formulário de fechar pedido, por exemplo) ou seleciona a forma de pagamento "Cartão de Crédito ou Débito via 4all" (quando o seu site permite mais de uma forma de pagamento).
 
-O *dialog* permite que o usuário informe os dados do cartão ou se autentique com sua Conta 4all para buscar seus dados de pagamento já cadastrados. 
+O *dialog* permite que o usuário informe os dados do cartão ou se autentique com sua Conta 4all para buscar seus dados de pagamento já cadastrados.
 
 Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**, ou via a nossa **Biblioteca Javascript**.
 
@@ -56,7 +56,7 @@ Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**,
 <form action="pedido_concluido.php" method="POST">
 
   <!-- … demais inputs do formulário … -->
-  
+
   <script
     src="https://lib.4all.com/lib/checkout-express.js"
     data-public-api-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
@@ -72,7 +72,7 @@ No evento de *submit* do seu formulário, a Janela de Checkout será apresentada
 
 Substitua o valor de cada atributo de acordo com o pagamento a ser efetuado. Os atributos aceitos são:
 
-|Atributo    |Descrição  |Formato    |Obrigatório 
+|Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
 |**data-public-api-key**| Chave de API pública do Checkout all.|String|Sim
 |**data-amount**|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
@@ -110,7 +110,7 @@ Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4a
 
 Os parâmetros dessa função são:
 
-|Atributo    |Descrição  |Formato    |Obrigatório 
+|Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
 |**amount**|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
 |**publicApiKey**|Chave de API pública do Checkout 4all.|String|Sim
@@ -130,9 +130,9 @@ Em caso de erro de comunicação ao executar esta chamada, você deve consultar 
 </aside>
 
 ```shell
-curl -H "Content-Type: application/json" 
--X POST 
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","paymentToken":"MDEyM...", "amount": 5000}' 
+curl -H "Content-Type: application/json"
+-X POST
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","paymentToken":"MDEyM...", "amount": 5000}'
 https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 ```
 
@@ -200,9 +200,9 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
 `shell
-curl -H "Content-Type: application/json" 
--X POST 
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}' 
+curl -H "Content-Type: application/json"
+-X POST
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'
 https://conta.api.4all.com/merchant/getTransactionDetails
 `
 
@@ -319,7 +319,13 @@ No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quand
 Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com "444444".
 
 ## Cartões de Teste
-No ambiente de Homologação, você pode utilizar cartões de qualquer número de 16 dígitos e qualquer CVV de 3 dígitos para testar compras em seu Site. 
+No ambiente de Homologação, você pode utilizar cartões de gerados e qualquer CVV de 3 dígitos para testar compras em seu Site.
 
 **Cartões de final PAR sempre resultam em compras efetivadas com sucesso.**
 **Cartões de final ÍMPAR sempre resultam em transações negadas.**
+
+Você pode utilizar o seguinte website para gerar cartões de teste: http://credit-card-generator.2-ee.com/
+
+<aside class="notice">
+Nota:  a 4all não permite que o mesmo cartão seja utilizado em duas contas diferentes. Este comportamento também é aplicado no ambiente de homologação.
+</aside>
