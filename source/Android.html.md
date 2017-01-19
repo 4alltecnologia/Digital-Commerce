@@ -97,7 +97,7 @@ No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a l
 build.gradle(Module:app) :
 
 ```Gradle
-    compile 'com.4all.libs:4all_digitalCommerce:1.1.0'
+    compile 'com.4all.libs:4all_digitalCommerce:1.1.2'
 ```
 
 
