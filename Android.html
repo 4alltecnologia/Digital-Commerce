@@ -1,0 +1,806 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:300,500,700" rel=stylesheet>
+    <title>Digital Commerce - Android - 1.0</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="Android" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Procurar">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='http://4all.com'>4all.com</a></li>
+            <li><a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="digital-commerce-android-1-2">Digital Commerce - Android - 1.2</h1>
+
+<h1 id="1-introdu-o">1 Introdução</h1>
+
+<p>Com o módulo de pagamento para Android, você pode configurar seu aplicativo para receber pagamentos de cartões de crédito de maneira fácil e rápida.</p>
+
+<p>A biblioteca Digital Commerce Android é compatível com as versões de Android 4.4 em diante (API LEVEL 19 ou superior)</p>
+
+<p>Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:</p>
+
+<ol>
+<li>Obter Chaves de API no Portal do EC;</li>
+<li>Importar o framework de Mobile Payment 4all;</li>
+<li>Quando for efetuar um pagamento, obter um <strong><em>paymentToken</em></strong>, usando a chamada <code class="prettyprint">Pay4all.getToken()</code>.</li>
+<li>Capturar a transação no seu servidor.</li>
+</ol>
+
+<h2 id="1-1-endere-os-dos-servidores-de-homologa-o-e-de-produ-o">1.1 Endereços dos servidores de Homologação e de Produção</h2>
+
+<p>Os seguintes endpoints devem ser usados para executar as chamadas:</p>
+
+<table><thead>
+<tr>
+<th>Ambiente</th>
+<th>URL</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Homologação</strong></td>
+<td>conta.homolog.4all.com</td>
+</tr>
+<tr>
+<td><strong>Produção</strong></td>
+<td>conta.api.4all.com</td>
+</tr>
+</tbody></table>
+
+<h2 id="1-2-postback">1.2. Postback</h2>
+
+<p>O postback é um mecanismo de comunicação com o merchant para informar sobre mudanças ocorridas no status de um pagamento ou assinatura.
+Quando um pagamento ou assinatura são criados pelo merchant, uma URL pode ser informada, para onde as mensagens de postback serão direcionadas. Esta URL deve estar num formato válido, apontar para um domínio autorizado no cadastro do merchant, e pode possuir até 250 caracteres.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17999999999999999999"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Sempre que ocorrer uma alteração no status de um pagamento ou assinatura que possuam as informações de postback configuradas, uma requisição POST será feita para a URL informada, contendo um corpo JSON (Contenttype:application/json) como pode ser visto no exemplo a seguir:</p>
+
+<p>O campo <strong><em>type</em></strong> pode assumir os valores 1 (para postback referente a pagamento) ou 2 (para assinatura).</p>
+
+<p>Para que seja considerado que a comunicação ocorreu com sucesso, o retorno dado à mensagem de postback deve possuir status 200 ou 204. Do contrário, serão efetuadas retentativas intervaladas entre si em pelo menos um minuto até um  máximo de cinco vezes. Caso ainda não se obtenha sucesso, NÃO serão feitas tentativas adicionais de comunicação da mudança de status.</p>
+
+<p>O recurso de postback é apenas uma conveniência para melhorar a integração com o sistema 4all, e está sujeito a falhas de comunicação, indisponibilidade de alguma das partes, etc. Desta forma, não elimina a necessidade de consultas periódicas ao status do pagamento ou da assinatura que se deseja monitorar.</p>
+
+<p>Para garantir a autenticidade da mensagem, é enviado no seu cabeçalho um campo <strong>Content-signature</strong>. Este contém um <em>hash</em> em <strong>HMAC-SHA-256</strong> em hexadecimal calculado sobre o corpo da mensagem, usando como chave a <em>signatureKey</em> do estabelecimento.</p>
+
+<h1 id="2-chaves-de-api">2 Chaves de API</h1>
+
+<p>Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login.</p>
+
+<p>No menu lateral, clique na opção “Chaves de API” no sub-menu “Mobile Payment”.</p>
+
+<p>Nesta página você pode obter pares de chaves no ambiente de Homologação ou no Ambiente de Produção.</p>
+
+<p>Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (<strong>PublicApiKey</strong>) e a Privada (<strong>MerchantKey</strong>).</p>
+
+<h1 id="3-importando-a-biblioteca-de-mobile-payment">3 Importando a Biblioteca de Mobile Payment</h1>
+
+<p>A inclusão da biblioteca no projeto é através da inclusão de sua dependência no projeto via gradle. Desta maneira, inclui-se arquivo build.gradle do projeto inclui-se os seguintes respositórios ao projeto:</p>
+
+<p>build.gradle(Projeto:<code class="prettyprint">&lt;nome do projeto&gt;</code>) :</p>
+<pre class="highlight plaintext"><code>allprojects {
+  repositories {
+    jcenter()
+    maven {
+        url "s3://libs-externas"
+        credentials(AwsCredentials) {
+            accessKey "AKIAJDFQCSKLOC5MRV3A"
+            secretKey "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"
+        }
+    }
+}
+</code></pre>
+
+<p>No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a linha abaixo:</p>
+
+<p>build.gradle(Module:app) :</p>
+<pre class="highlight plaintext"><code>    compile 'com.4all.libs:4all_digitalCommerce:1.1.2'
+</code></pre>
+
+<h1 id="4-instanciando-um-objeto-digitalcommerce">4 Instanciando um objeto DigitalCommerce</h1>
+
+<p>O objeto para as chamadas da biblioteca de DigitalCommerce da 4all possui seu construtor de forma privada. A fim de instanciar um objeto deste tipo, deve-se utilizar a chamada de método estático FourAll_DigitalCommerce.newInstance();
+Tal chamada possui sobrecarga em sua assinatura, de forma a aceitar três formatos diferentes de parâmetros, sendo estes:</p>
+
+<p>:: newInstance(AppCompatActivity activity) : O objeto será instanciado a utilizando suas configurações padrão. Recebe apenas a activity onde este é chamado a fim de utilizar desta seu fragmentManager e contexto</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce =  FourAll_DigitalCommerce.newInstance(MainActivity.this);        
+</code></pre>
+
+<p>:: newInstance(AppCompatActivity activity, String APIKEY) : Neste caso, recebe, além da activity onde está sendo chamado, também a APIKEY do cliente que a utiliza. A partir desta string, gerará uma nova instância de suas configurações.</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce =  FourAll_DigitalCommerce.newInstance(MainActivity.this, &lt;&lt;APIKEY do cliente&gt;&gt;);        
+</code></pre>
+
+<p>:: newInstance(AppCompatActivity activity, DigitalCommerce_Config config) : Ao invés de receber a APIKEY, recebe já uma instância da classe config com as configurações a serem utilizadas;</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce =  FourAll_DigitalCommerce.newInstance(MainActivity.this, DigitalCommerce_Config.getDefaultConfig());        
+</code></pre>
+
+<h2 id="4-1-configura-es-da-classe-digitalcommerce">4.1 Configurações da classe DigitalCommerce</h2>
+
+<p>A biblioteca possui uma classe de configurações para os atributos a serem utilizados pela classe principal da biblioteca. Embora ela possua um construtor, também possui métodos auxiliares para a geração de uma configuração padrão, a ser utilizados por várias instâncias da biblioteca.</p>
+
+<p>As o objeto com as configurações padrão pode ser acessado através do método estático DigitalCommerce_Config.getDefaultConfig(). Porém, a fim de ter acesso a este, deve-se primeiro definir uma chave de API para ela. Esta definição é feita através da chamada DigitalCommerce_Config.setDefaultAPIKey(String APIKey) que recebe a String com a chave de API.</p>
+
+<p>É possível também gerar novos objetos do tipo Config através da chamada do construtor estática DigitalCommerce_Config.newInstance(String APIKey), que recebe diretamente a String com a APIKEY</p>
+
+<h1 id="5-fazendo-a-chamada-digitalcommerce-gettoken">5 Fazendo a chamada DigitalCommerce.getToken()</h1>
+
+<p>Para obter o <strong>payment_token</strong>, crie uma instância o objeto Pay4all e faça a chamada getToken no exemplo abaixo:</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
+
+pay4allObject.getToken();
+</code></pre>
+
+<p>Quando a função <code class="prettyprint">Pay4all.getToken()</code> é chamada pela primeira vez, ele é direcionado para uma tela onde se autentica e cadastra um cartão de crédito a ser usado em todas as compras no seu aplicativo.  Devido a natureza assíncrona da chamada,  a Activity a exibir DialogFragment para a inserção de dados do usuário deve implementar a interface desta:   OneTouch_WebPayFragment.OnOneTouchPaymentListener. A interface possui dois métodos: onSucess e onFail. Em caso de sucesso, o método onSucess será chamado, recebendo como parâmetro a chave do usuário, que também será salva na persistência do aplicativo para futuras utilizações. Já a chamada onFail, utilizada em caso de falhas na operação ou cancelamento pelo usuário não possui nenhum tipo de parâmetro.  </p>
+<pre class="highlight plaintext"><code>public class MainActivity extends AppCompatActivity implements DigitalCommerce_WebPayFragment.OnOneTouchPaymentListener {
+
+...
+
+@Override
+public void onPaymentSuccess(String key) {
+    Toast.makeText(this, "Sucesso ao realizar a operação 4all " + key, Toast.LENGTH_LONG).show();
+      }
+
+@Override
+public void onPaymentFail() {
+    Toast.makeText(this, "Falha ao realizar a operação 4all", Toast.LENGTH_LONG).show();
+    }
+ }
+</code></pre>
+
+<p>Nas chamadas subsequentes, o usuário não precisará efetuar a autenticação novamente, e o <strong>payment_token</strong> é retornado de maneira transparente.</p>
+
+<p>Se o cartão de crédito cadastrado é excluido pelo usuário, vence ou de qualquer outra maneira fica inválido, o framework se encarrega de pedir ao usuário que cadastre um novo cartão.</p>
+
+<p>A chamada <code class="prettyprint">Pay4all.getToken()</code> deve ser efetuada a cada compra.  As operações com o servidor 4all solicitam os dados de geolocalização do usuário.  Desta maneira, deve-se adicionar ao manifesto da aplicação as solicitações de uso do GPS do sistema. Para tal, é necessário que sejam acrescentadas as seguintes linhas ao documento:</p>
+<pre class="highlight xml"><code>  <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.ACCESS_COARSE_LOCATION"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.ACCESS_FINE_LOCATION"</span><span class="nt">/&gt;</span>
+</code></pre>
+
+<p>A partir da API de Android lvl 23, o sistema deve implementar também a verificação de permissões ao usuário durante runtime.  Ao invés de solicitar ao usuário a permissão aos recursos do aparelho no momento da instalação, os sistemas mais atuais fazem a requisição no momento de uso destas.
+Desta maneira, a activity onde será feita a chamada para a busca do token deverá implementar o código para o request de permissões, bem como o handler para a resposta do usuário, conforme o exemplo abaixo, retirado do site https://developer.android.com/training/permissions/requesting.html</p>
+
+<p>Para checar se há permissão para o uso da localização:
+&ldquo;`Java</p>
+
+<p>// Assume thisActivity is the current activity
+int permissionCheckCoarse = ContextCompat.checkSelfPermission(thisActivity,
+        Manifest.ACCESS_COARSE_LOCATION);</p>
+
+<p>int permissionCheckFine = ContextCompat.checkSelfPermission(thisActivity,
+        Manifest.ACCESS_FINE_LOCATION);
+&rdquo;`</p>
+
+<p>Para definir a solicitação do uso dos recursos de GPS do aparelho pela aplicação:
+&ldquo;`Java
+      // Verifica se deve mostrar motivo de utilização do recurso de geolocalização
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+          Manifest.permission.ACCESS_COARSE_LOCATION)) {</p>
+
+<p>// Mostra uma explicação assíncrona para o usuário. Ou seja, não bloqueia a thread principal.
+        // Após o usuário verificar a explicação apresentada, chama novamente o request para a permissão de uso do recurso
+      } else {
+        // Não exige explicação. Faz o request direto para a permissão do uso.
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+            FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION);
+       // MY_PERMISSIONS_REQUEST_LOCATION é um valor int constante na aplicaçnao. Este método de callback utiliza o resultado do request
+      }
+&rdquo;`</p>
+
+<p>Handler para o resultado obtido pela permissão:
+&ldquo;`java
+  @Override
+  public void onRequestPermissionsResult(int requestCode,
+                                         String permissions[], int[] grantResults) {
+    switch (requestCode) {
+      case FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION: {
+        // Se o request for cancelado, o vetor será vazio.
+        if (grantResults.length &gt; 0
+            &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          FourAll_Lib4all.getInstance().initLocationManager(this);
+          // Foi aprovada a permissão. Faz as ações solicitadas.
+        } else {
+          // A permissão não foi aprovada. Faz as ações de acordo.
+          }
+        }
+        return;
+      }</p>
+
+<p>// outros casos
+      // utilize para chegar outras permissões
+    }
+  }
+&rdquo;`</p>
+
+<h1 id="6-capturando-a-transa-o">6 Capturando a transação</h1>
+
+<p>Com o <strong>payment_token</strong> em mãos, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.</p>
+
+<aside class="notice">
+Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da transação utilizando a chamada descrita na seção 5.1 para verificar se a transação foi capturada com sucesso ou  não.
+</aside>
+<pre class="highlight shell"><code>curl -H <span class="s2">"Content-Type: application/json"</span>
+-X POST
+-d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...",
+"paymentToken":"MDEyM...", "amount": 5000}'</span>
+https://conta.api.4all.com/merchant/issueAuthorizedTransaction
+</code></pre>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/issueAuthorizedTransaction</code></p>
+
+<p><strong>Descrição</strong>: Captura uma transação pelo <strong>paymentToken</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyMzQ1Njc4OTAxMjMN..."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"paymentToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyM..."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"returnImmediatly"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"postbackURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.example.com/postback/"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>merchantKey</strong></td>
+<td>Chave privada de acesso do estabelecimento à API</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>paymentToken</strong></td>
+<td>Token da autorização de pagamento, obtido da biblioteca mobile.</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>Valor da transação, em centavos.</td>
+<td>Number</td>
+<td>*</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>merchantMetaId</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta transação em caso de não recebimento da resposta desta chamada (contendo o transactionId). Deve ser um valor numérico inteiro (representado como string).</td>
+<td>String</td>
+<td>20</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>returnImmediatly</strong></td>
+<td>Quando presente e com valor <strong>true</strong> , a chamada retorna imediatamente. Neste caso, a transação estará com um status pendente (estados 0, 1 ou 2 vide <strong>seção 6 desta documentação</strong>).</td>
+<td>Boolean</td>
+<td></td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>postbackURL</strong></td>
+<td>Endereço a ser chamado quando o estado da transação mudar (vide seção 1.2 deste documento).</td>
+<td>URL</td>
+<td>250</td>
+<td>não</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p><strong>Observações</strong>:</p>
+
+<ul>
+<li>O parâmetro &ldquo;transactionAuthorizationToken&rdquo; deve ser obtido através da Biblioteca Javascript ou Embedded Form.</li>
+<li>O chamador deve estar preparado para lidar com tempos de resposta longos, de até 30 segundos (a menos que o parâmetro <code class="prettyprint">returnImmediatly</code> seja passado como <code class="prettyprint">true</code>, neste caso, a chamada retorna imediatamente).</li>
+<li>Caso o parâmetro <code class="prettyprint">returnImmediatly</code> seja passado como <code class="prettyprint">true</code>, a chamada retorna imediatamente, porém o resultado da transação deve ser consultada posteriormente utilizando a chamada descrita na seção 5.1.</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2181486"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-08-31T20:12:31Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Presente</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação.</td>
+<td>String</td>
+<td>20</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>Estado da transação (ver <strong>seção 8 desta documentação</strong>).</td>
+<td>Number</td>
+<td>*</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>datetime</strong></td>
+<td>Data e hora UTC em que a transação foi processada pelo servidor 4all. Formato YYYYMMDDThh:mm:ssZ (Formato ISO 8601 https://en.wikipedia.org/wiki/ISO_8601).</td>
+<td>String</td>
+<td>20</td>
+<td>Sempre</td>
+</tr>
+</tbody></table>
+
+<p><strong>Tratamento de Erro</strong></p>
+
+<p>Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="6-1-consultando-uma-transa-o">6.1 Consultando uma transação</h2>
+
+<p>Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.</p>
+
+<p><code class="prettyprint">shell
+curl -H &quot;Content-Type: application/json&quot;
+-X POST
+-d &#39;{&quot;merchantKey&quot;:&quot;MDEyMzQ1Njc4OTAxMjMN...&quot;,
+&quot;transactionId&quot;:&quot;73423624&quot;}&#39;
+https://conta.api.4all.com/merchant/getTransactionDetails
+</code></p>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/getTransactionDetails</code></p>
+
+<p><strong>Descrição</strong>:  Retorna os detalhes de uma transação.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyMzQ1Njc4OTAxMjMN..."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>merchantKey</strong></td>
+<td>Chave de acesso do merchant à API</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>merchantMetaId</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+<pre class="highlight javascript"><code><span class="p">{</span>
+    <span class="s2">"transactionId"</span><span class="err">:</span> <span class="s2">"854383518"</span><span class="p">,</span>
+    <span class="s2">"amount"</span><span class="err">:</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="s2">"status"</span><span class="err">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"createdAt"</span><span class="err">:</span> <span class="s2">"2016-01-31T20:12:31Z"</span><span class="p">,</span>
+    <span class="s2">"paidAt"</span><span class="err">:</span> <span class="s2">"2016-01-31T20:33:12Z"</span><span class="p">,</span>
+    <span class="s2">"authorizationInfo"</span><span class="err">:</span> <span class="p">{</span>
+        <span class="s2">"acquirerId"</span><span class="err">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"acquirerUsn"</span><span class="err">:</span> <span class="s2">"18318318"</span><span class="p">,</span>
+        <span class="s2">"acquirerTimestamp"</span><span class="err">:</span> <span class="s2">"20161231125959"</span><span class="p">,</span>
+        <span class="s2">"brandId"</span><span class="err">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><strong>Resposta:</strong></p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Presente</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação</td>
+<td>String</td>
+<td>20</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>Quando presente, informa o identificador da assinatura que gerou esta transação.</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>Valor da transação, em centavos.</td>
+<td>Number</td>
+<td></td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>Estado da transação (ver <strong>seção 8 desta documentação</strong>).</td>
+<td>Number</td>
+<td></td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>createdAt</strong></td>
+<td>Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).</td>
+<td>String</td>
+<td>20</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>paidAt</strong></td>
+<td>Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>authorizationInfo</strong></td>
+<td>Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.</td>
+<td>Object</td>
+<td>*</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong><em>authorizationInfo:</em></strong></p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Presente</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>acquirerId</strong></td>
+<td>Identificador do adquirente.</td>
+<td>Number</td>
+<td></td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>acquirerUsn</strong></td>
+<td>Identificador/NSU do adquirente para a transação.</td>
+<td>String</td>
+<td>50</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>acquirerTimestamp</strong></td>
+<td>Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.</td>
+<td>String</td>
+<td>50</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>brandId</strong></td>
+<td>Identificador da bandeira do cartão que foi usado no pagamento.</td>
+<td>Number</td>
+<td></td>
+<td>sempre</td>
+</tr>
+</tbody></table>
+
+<p><strong>Observações</strong></p>
+
+<p>Apenas um dos dois parâmetros, <strong><em>transactionId</em></strong> ou <strong><em>merchantMetaId</em></strong>, pode ser usado; se ambos estiverem presentes, esta chamada falha com um erro específico.</p>
+
+<ul>
+<li><p><strong>Adquirentes</strong>:</p>
+
+<ol>
+<li>Stone</li>
+<li>Pagar.me</li>
+</ol></li>
+<li><p><strong>Bandeiras</strong>:</p>
+
+<ol>
+<li>Visa</li>
+<li>Mastercard</li>
+</ol></li>
+</ul>
+
+<p><strong>Tratamento de Erro</strong></p>
+
+<p>Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<h1 id="7-ger-ncia-de-meios-de-pagamento">7 Gerência de Meios de Pagamento</h1>
+
+<p>A Biblioteca Mobile Payment também dispõem os seguintes métodos:</p>
+
+<h2 id="7-1-obtendo-informa-es-do-cart-o">7.1 Obtendo informações do cartão</h2>
+
+<p>Você pode exibir em seu aplicativo qual é a bandeira e os últimos 4 dígitos do cartão de crédito configurado pelo usuário utilizando a chamada <code class="prettyprint">pay4allObject.getUserData()</code>, como no exemplo abaixo:</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
+
+DigitalCommerce_CreditCardInfo cardInfo =  pay4allObject.getUserData();
+
+//pode ser null caso não tenha configurado meio de pagamento
+if (cardInfo != null) {
+    String brand = cardInfo.getBrandName(); // "Visa"
+    String lastDigits = cardInfo.getLastDigits(); // "1234"
+}
+
+</code></pre>
+
+<h2 id="7-2-troca-de-meio-de-pagamento">7.2 Troca de meio de Pagamento</h2>
+
+<p>Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada <code class="prettyprint">pay4allObject.changePaymentMethod()</code>, como no exemplo abaixo:</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
+
+pay4allObject.changePaymentMethod();
+</code></pre>
+
+<p>Para esta chamada, deve-se implementar a mesma interface já descrita para a operação de obter o token do usuário.  Os mesmos métodos serão utilizados para a comunicação do DialogFragment com a Activity que a exibe.</p>
+
+<h2 id="7-3-logout">7.3 Logout</h2>
+
+<p>Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada <code class="prettyprint">pay4allObject.logout()</code>, como no exemplo abaixo:</p>
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
+FourAll_DigitalCommerce.newInstance(MainActivity.this);
+
+pay4allObject.logout();
+</code></pre>
+
+<h1 id="8-estados-de-uma-transa-o">8 Estados de uma Transação</h1>
+
+<table><thead>
+<tr>
+<th>Estado</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>Transação criada. Aguardando pagamento por uma conta 4all.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Transação em processo de pagamento por uma conta 4all.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Transação paga (capturada).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transação em processo de cancelamento.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Transação cancelada.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Transação paga ­ cancelamento falhou.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Transação contestada pelo portador do cartão (chargeback).</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Transação paga ­ reapresentada após contestação (chargeback refund).</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Transação em processo de pagamento por débito</td>
+</tr>
+</tbody></table>
+
+<h1 id="homologa-o">Homologação</h1>
+
+<aside class="notice">
+Para realizar transações no ambiente de Homologação, utilize um par de chaves de Homologação, obtidas no Portal do EC.
+</aside>
+
+<p>No Ambiente de Homologação, as transações efetuadas não geram cobranças, de modo que você pode testar a integração de seu Site com o Digital Commerce 4all.</p>
+
+<p>No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.</p>
+
+<h2 id="conta-4all-no-ambiente-de-homologa-o">Conta 4all no Ambiente de Homologação</h2>
+
+<p>Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com &ldquo;444444&rdquo;.</p>
+
+<h2 id="cart-es-de-teste">Cartões de Teste</h2>
+
+<p>No ambiente de Homologação, você pode utilizar cartões de gerados e qualquer CVV de 3 dígitos para testar compras em seu Site.</p>
+
+<p><strong>Cartões de final PAR sempre resultam em compras efetivadas com sucesso.</strong>
+<strong>Cartões de final ÍMPAR sempre resultam em transações negadas.</strong></p>
+
+<p>Você pode utilizar o seguinte website para gerar cartões de teste: http://credit-card-generator.2-ee.com/</p>
+
+<aside class="notice">
+Nota:  a 4all não permite que o mesmo cartão seja utilizado em duas contas diferentes. Este comportamento também é aplicado no ambiente de homologação.
+</aside>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,631 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:300,500,700" rel=stylesheet>
+    <title>Digital Commerce - iOS - 1.0</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="iOS" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Procurar">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='http://4all.com'>4all.com</a></li>
+            <li><a href='https://4alltecnologia.github.io/Digital-Commerce/'>Home</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="digital-commerce-ios-1-1">Digital Commerce - iOS - 1.1</h1>
+
+<h1 id="1-introdu-o">1 Introdução</h1>
+
+<p>Com o módulo de pagamento para iOS, você pode configurar seu aplicativo para receber pagamentos de cartões de crédito de maneira fácil e rápida.</p>
+
+<p>Para aceitar pagamentos no seu App, você deve seguir os seguintes passos:</p>
+
+<ol>
+<li>Obter Chaves de API no Portal do EC;</li>
+<li>Importar o framework de Mobile Payment 4all;</li>
+<li>Quando for efetuar um pagamento, obter um <strong><em>paymentToken</em></strong>, usando a chamada <code class="prettyprint">Pay4all.getToken()</code>.</li>
+<li>Capturar a transação no seu servidor.</li>
+</ol>
+
+<h2 id="1-1-endere-os-dos-servidores-de-homologa-o-e-de-produ-o">1.1 Endereços dos servidores de Homologação e de Produção</h2>
+
+<p>Os seguintes endpoints devem ser usados para executar as chamadas:</p>
+
+<table><thead>
+<tr>
+<th>Ambiente</th>
+<th>URL</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Homologação</strong></td>
+<td>conta.homolog.4all.com</td>
+</tr>
+<tr>
+<td><strong>Produção</strong></td>
+<td>conta.api.4all.com</td>
+</tr>
+</tbody></table>
+
+<h1 id="2-chaves-de-api">2 Chaves de API</h1>
+
+<p>Para obter as Chaves de API, acesse o Portal do EC (https://portal.4all.com) e faça seu login.</p>
+
+<p>No menu lateral, clique na opção “Chaves de API” no sub-menu “Mobile Payment”.</p>
+
+<p>Nesta página você pode obter pares de chaves no ambiente de Homologação ou no Ambiente de Produção.</p>
+
+<p>Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (<strong>PublicApiKey</strong>) e a Privada (<strong>MerchantKey</strong>).</p>
+
+<h1 id="3-importando-a-biblioteca-de-mobile-payment">3 Importando a Biblioteca de Mobile Payment</h1>
+
+<ol>
+<li>Faça o download da <a href="https://lib.4all.com/mobile/ios/v1.1.0/MobilePayment.framework.zip">última versão do MobilePayment</a> e extraia o arquivo zip.</li>
+<li> Arraste o arquivo <code class="prettyprint">MobilePayment.framework</code> extraído para o <em>File Navigator</em> do seu projeto no Xcode. Certifique-se de que a opção <em>Copy items if needed</em> está selecionada e clique em <em>Finish</em>.</li>
+<li>Clique no seu projeto no <em>File Navigator</em> do Xcode. Selecione o Target do seu aplicativo e clique na aba General. Abaixo de Embedded Binaries, clique em +, selecione o <code class="prettyprint">MobilePayment.framework</code> e clique em Add.</li>
+</ol>
+
+<h2 id="3-1-instala-o-do-mobilepayment-em-um-projeto-swift">3.1 Instalação do MobilePayment em um projeto Swift</h2>
+
+<p>Caso o framework esteja sendo utilizado em um projeto Swift, você deve inserir <code class="prettyprint">#import &lt;MobilePayment/MobilePayment.h&gt;</code> ao <em>Bridging Header</em> de seu projeto. Se ainda não existe um <em>Bridging Header</em> em seu projeto, siga os seguintes passos após ter executado os 3 passos anteriores:</p>
+
+<ol>
+<li>Crie um header acessando <em>File &gt; New &gt; File &gt; (iOS, watchOS, tvOS ou OS X) &gt; Source &gt; Header File</em> no Xcode.  Dê ao arquivo o nome do seu <em>Product Module</em> seguido de <code class="prettyprint">“-Bridging-Header.h”</code>.</li>
+<li> No header criado, exponha o framework para ser utilizado em Swift adicionando a linha <code class="prettyprint">#import &lt;MobilePayment/MobilePayment.h&gt;.</code></li>
+<li>Clique no seu projeto no <em>File Navigator</em> do Xcode. Selecione seu projeto e clique na aba <em>Build Settings</em>. Vá para a sessão <em>Swift Compiler - Code Generation</em> e, na linha O*bjective-C Bridging Header*, adicione o caminho para seu <em>Bridging Header</em> relativo ao seu projeto.</li>
+</ol>
+
+<p>Para maiores informações sobre utilização de <strong>Swift</strong> e <strong>Objective-C</strong> em um mesmo projeto, acesse a documentação fornecida pela Apple em <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html">Swift and Objective-C in the Same Project</a>.</p>
+
+<h1 id="4-importando-o-framework-mobilepayment">4 Importando o framework MobilePayment</h1>
+
+<p>No início de seus arquivos Objective-C, insira <code class="prettyprint">#import &lt;MobilePayment/MobilePayment.h&gt;</code> para importar o framework e torná-lo disponível para uso em seu código. No caso de arquivos Swift, não é necessário adicionar declaração para importar o framework uma vez que ele já esteja em seu <em>Bridging Header</em>.</p>
+
+<h1 id="5-configurando-o-mobilepayment-para-uso">5 Configurando o MobilePayment para uso</h1>
+
+<blockquote>
+<p>Exemplo Objective-C</p>
+</blockquote>
+<pre class="highlight plaintext"><code>[[P4APay4all sharedConfiguration] setApiKey:@"I2G5XQu8o4237v82"];
+</code></pre>
+
+<blockquote>
+<p>Exemplo Swift</p>
+</blockquote>
+<pre class="highlight plaintext"><code>P4APay4all.sharedConfiguration().apiKey = "I2G5XQu8o4237v82"
+</code></pre>
+
+<p>Após ter instalado e importado o framework, configure-o com as Chaves de API geradas no Portal do EC no seu <em>App Delegate.</em></p>
+
+<h1 id="6-fazendo-a-chamada-gettoken">6 Fazendo a chamada getToken</h1>
+
+<blockquote>
+<p>Exemplo Objective-C</p>
+</blockquote>
+<pre class="highlight plaintext"><code>NSString *paymentToken = [[[P4APay4all alloc] init]
+getTokenWithViewController:self
+  completionBlock:ˆ(NSString *paymentToken, NSError *error) {
+    if (error != nil) {
+      // Trate aqui o erro ocorrido…
+      return;
+    }
+    // Utilize aqui o paymentToken...
+  }];
+</code></pre>
+
+<blockquote>
+<p>Exemplo Swift</p>
+</blockquote>
+<pre class="highlight plaintext"><code>let paymentToken = P4APay4all().getTokenWithViewController(self) {
+  paymentToken, error in
+  guard error == nil else {
+    // Trate aqui o erro ocorrido…
+    return
+  }
+  // Utilize aqui o paymentToken...
+}
+</code></pre>
+
+<p>Quando o método <strong>getToken</strong> é chamado pela primeira vez, ele é direcionado para uma tela onde se autentica e cadastra um cartão de crédito a ser usado em todas as compras no seu aplicativo. O <em>View Controller</em> passado por parâmetro é utilizado para apresentar esta tela. Nas chamadas subsequentes, o usuário não precisará efetuar a autenticação novamente, e o <strong>paymentToken</strong> é retornado de maneira transparente ao usuário.</p>
+
+<p>Se o cartão de crédito cadastrado é excluído pelo usuário, vence ou de qualquer outra maneira fica inválido, o framework se encarrega de pedir ao usuário que cadastre um novo cartão.</p>
+
+<p>A chamada <strong>getToken</strong> deve ser efetuada a cada compra do usuário visto que este é validado internamente.</p>
+
+<h1 id="7-capturando-a-transa-o-no-servidor">7 Capturando a Transação no Servidor</h1>
+
+<p>Com o <strong>paymentToken</strong> em mãos, ele deve ser transferido ao seu servidor de maneira segura, via conexão <strong>HTTPS</strong>, ou  <strong>SSL/TLS</strong>, e você pode capturar a transação (efetuar a cobrança do usuário) através de uma chamada à API Conta 4all.</p>
+
+<p>Exemplos:</p>
+
+<p><code class="prettyprint">curl -X POST &quot;https://api.pagar.me/1/transactions/{TOKEN}/capture&quot;
+-d &#39;amount=1000&#39;
+-d &#39;api_key=ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0&#39;</code></p>
+
+<h2 id="7-1-consulta-de-transa-o">7.1 Consulta de Transação</h2>
+
+<p>Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.</p>
+
+<p><code class="prettyprint">curl -H &quot;Content-Type: application/json&quot;
+-X POST
+-d &#39;{&quot;merchantKey&quot;:&quot;MDEyMzQ1Njc4OTAxMjMN...&quot;,
+&quot;transactionId&quot;:&quot;73423624&quot;}&#39;
+https://conta.api.4all.com/merchant/getTransactionDetails</code></p>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/getTransactionDetails</code></p>
+
+<p><strong>Descrição</strong>:  Retorna os detalhes de uma transação.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"merchantKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyMzQ1Njc4OTAxMjMN..."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>merchantKey</strong></td>
+<td>Chave de acesso do merchant à API</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>merchantMetaId</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa.</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"854383518"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-31T20:12:31Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"paidAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-31T20:33:12Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authorizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"acquirerId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"acquirerUsn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18318318"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"acquirerTimestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20161231125959"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"brandId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Resposta:</strong></p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Presente</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação</td>
+<td>String</td>
+<td>20</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>Quando presente, informa o identificador da assinatura que gerou esta transação.</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>Valor da transação, em centavos.</td>
+<td>Number</td>
+<td></td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>Estado da transação (ver <strong>seção 8 desta documentação</strong>).</td>
+<td>Number</td>
+<td></td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>createdAt</strong></td>
+<td>Data e hora UTC em que a transação foi criada no servidor 4all (formato YYYYMMDDThh:mm:ssZ).</td>
+<td>String</td>
+<td>20</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>paidAt</strong></td>
+<td>Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYYMMDDThh:mm:ssZ). Presente somente se a transação já foi paga.</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>authorizationInfo</strong></td>
+<td>Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga.</td>
+<td>Object</td>
+<td>*</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong><em>authorizationInfo:</em></strong></p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tamanho</th>
+<th>Presente</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>acquirerId</strong></td>
+<td>Identificador do adquirente.</td>
+<td>Number</td>
+<td></td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>acquirerUsn</strong></td>
+<td>Identificador/NSU do adquirente para a transação.</td>
+<td>String</td>
+<td>50</td>
+<td>Sempre</td>
+</tr>
+<tr>
+<td><strong>acquirerTimestamp</strong></td>
+<td>Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar.</td>
+<td>String</td>
+<td>50</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>brandId</strong></td>
+<td>Identificador da bandeira do cartão que foi usado no pagamento.</td>
+<td>Number</td>
+<td></td>
+<td>sempre</td>
+</tr>
+</tbody></table>
+
+<p><strong>Observações</strong></p>
+
+<p>Apenas um dos dois parâmetros, <strong><em>transactionId</em></strong> ou <strong><em>merchantMetaId</em></strong>, pode ser usado; se ambos
+estiverem presentes, esta chamada falha com um erro específico.</p>
+
+<ul>
+<li><p><strong>Adquirentes</strong>:</p>
+
+<ol>
+<li>Stone</li>
+<li>Pagar.me</li>
+</ol></li>
+<li><p><strong>Bandeiras</strong>:</p>
+
+<ol>
+<li>Visa</li>
+<li>Mastercard</li>
+</ol></li>
+</ul>
+
+<p><strong>Tratamento de Erro</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<p>Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
+
+<h1 id="8-ger-ncia-de-meios-de-pagamento">8 Gerência de Meios de Pagamento</h1>
+
+<p>O framework também dispõem os seguintes métodos:</p>
+
+<h2 id="8-1-obtendo-informa-es-do-cart-o">8.1 Obtendo informações do cartão</h2>
+
+<blockquote>
+<p>Exemplo Objective-C</p>
+</blockquote>
+<pre class="highlight plaintext"><code>P4APay4all *pay4all = [[P4APay4all alloc] init];
+
+P4AUserData *userData = [pay4all getUserData];
+
+if (userData != nil) {
+    NSString *brand      = userData.cardBrand; //"Visa"
+    NSString *lastDigits = userData.cardLastDigits; //"1234"
+}
+</code></pre>
+
+<blockquote>
+<p>Exemplo Swift</p>
+</blockquote>
+<pre class="highlight plaintext"><code>let pay4all = P4APay4all()
+let userData = pay4all?.getUserData()
+
+guard userData != nil else {
+    // Trate aqui quando não houver informações
+    return
+}
+
+let brand       = userData?.cardBrand
+let lastDigits  = userData?.cardLastDigits
+</code></pre>
+
+<p>Você pode exibir em seu aplicativo qual é a bandeira e os últimos 4 dígitos do cartão de crédito configurado pelo usuário utilizando a chamada <code class="prettyprint">pay4allObject.getUserData()</code>, como no exemplo ao lado:</p>
+
+<h2 id="8-2-troca-de-meio-de-pagamento">8.2 Troca de meio de pagamento</h2>
+
+<blockquote>
+<p>Exemplo Objective-C</p>
+</blockquote>
+<pre class="highlight plaintext"><code>[[[P4APay4all alloc] init]
+  changePaymentMethodWithViewController:self
+  completionBlock:ˆ(NSString *paymentToken, NSError *error) {
+    if (error != nil) {
+      // Trate aqui o erro ocorrido…
+      return;
+    }
+    // Utilize aqui o paymentToken...
+  }];
+</code></pre>
+
+<blockquote>
+<p>Exemplo Swift</p>
+</blockquote>
+<pre class="highlight plaintext"><code>P4APay4all().changePaymentMethodWithViewController(self) {
+  paymentToken, error in
+  guard error == nil else {
+    // Trate aqui o erro ocorrido…
+    return
+    }
+    // Utilize aqui o paymentToken...
+}
+</code></pre>
+
+<p>Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para receber pagamentos, através da chamada <strong>changePaymentMethod</strong>, como no exemplo ao lado :</p>
+
+<p>O <em>View Controller</em> passado por parâmetro é utilizado para apresentar a tela de troca do meio de pagamento.</p>
+
+<h2 id="8-3-logout">8.3 Logout</h2>
+
+<blockquote>
+<p>Exemplo Objective-C</p>
+</blockquote>
+<pre class="highlight plaintext"><code>[[[P4APay4all alloc] init] logout];
+</code></pre>
+
+<blockquote>
+<p>Exemplo Swift</p>
+</blockquote>
+<pre class="highlight plaintext"><code>P4APay4all().logout()
+</code></pre>
+
+<p>Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada <strong>logout</strong>, como no exemplo ao lado:</p>
+
+<h1 id="9-estados-de-uma-transa-o">9 Estados de uma Transação</h1>
+
+<table><thead>
+<tr>
+<th>Estado</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>Transação criada. Aguardando pagamento por uma conta 4all.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Transação em processo de pagamento por uma conta 4all.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Transação paga (capturada).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transação em processo de cancelamento.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Transação cancelada.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Transação paga ­ cancelamento falhou.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Transação contestada pelo portador do cartão (chargeback).</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Transação paga ­ reapresentada após contestação (chargeback refund).</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Transação em processo de pagamento por débito</td>
+</tr>
+</tbody></table>
+
+<h1 id="homologa-o">Homologação</h1>
+
+<aside class="notice">
+Para realizar transações no ambiente de Homologação, utilize um par de chaves de Homologação, obtidas no Portal do EC.
+</aside>
+
+<p>No Ambiente de Homologação, as transações efetuadas não geram cobranças, de modo que você pode testar a integração de seu Site com o Digital Commerce 4all.</p>
+
+<p>No Portal do EC, você pode gerar chaves para o ambiente de Homologação. Quando você usa uma chave de Homologação, aparecerá uma mensagem na Janela de Checkout indicando que você está no ambiente de Homologação e as transações efetuadas não resultarão em cobranças.</p>
+
+<h2 id="conta-4all-no-ambiente-de-homologa-o">Conta 4all no Ambiente de Homologação</h2>
+
+<p>Nas contas criadas no ambiente de Homologação, o envio de SMS não é disparado, e os desafios de SMS podem ser respondidos com &ldquo;444444&rdquo;.</p>
+
+<h2 id="cart-es-de-teste">Cartões de Teste</h2>
+
+<p>No ambiente de Homologação, você pode utilizar cartões de gerados e qualquer CVV de 3 dígitos para testar compras em seu Site.</p>
+
+<p><strong>Cartões de final PAR sempre resultam em compras efetivadas com sucesso.</strong>
+<strong>Cartões de final ÍMPAR sempre resultam em transações negadas.</strong></p>
+
+<p>Você pode utilizar o seguinte website para gerar cartões de teste: http://credit-card-generator.2-ee.com/</p>
+
+<aside class="notice">
+Nota:  a 4all não permite que o mesmo cartão seja utilizado em duas contas diferentes. Este comportamento também é aplicado no ambiente de homologação.
+</aside>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
