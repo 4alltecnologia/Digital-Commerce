@@ -188,7 +188,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Payment Token inválido."
 	}
@@ -197,14 +197,15 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 
 ## 4.1 Consultando uma transação
+
 Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.
 
-`shell
+```shell
 curl -H "Content-Type: application/json"
 -X POST
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'
 https://conta.api.4all.com/merchant/getTransactionDetails
-`
+```
 
 **Caminho**: `<endpoint>/merchant/getTransactionDetails`
 
@@ -282,27 +283,60 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Payment Token inválido."
 	}
 }
 ```
+## 4.2. Cancelamento uma transação
+
+Também é possível efetuar o cancelamento de uma transação previamente aprovada
+
+```shell
+curl -H "Content-Type: application/json"
+-X POST
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'
+https://conta.api.4all.com/merchant/refundTransaction
+```
+
+**Caminho**: `<endpoint>/merchant/refundTransaction`
+
+**Descrição**: Funcionalidade para estornar/cancelar uma transação.
+
+Em alguns casos, o cancelamento da transação pode não ser mais possível pois o prazo limite para realizar a operação já se esgotou.
+
+```json
+{
+  "merchantKey": "MDEyMzQ1Njc4OTAxMjMNT...",
+  "transactionId": "2181486"
+}
+```
+
+**REQUISIÇÃO:**
+
+|Campo |Descrição |Formato |Tam. |Obrigatório
+|------|----------|--------|-----|-------
+|**merchantKey**|Chave de acesso do merchant à API.|String|44|sim|
+|**transactionId**|Identificador da transação.|String|20|sim|
+||||||
+
+**RESPOSTA:** HTTP 204
 
 #6. Estados de uma Transação
 
 |Estado | Descrição
 |-------|-----------
-|0 | Transação criada. Aguardando pagamento por uma conta 4all.
-|1 | Transação em processo de pagamento por uma conta 4all.
-|2 | Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.
-|3 | Transação paga (capturada).
-|4 | Transação em processo de cancelamento.
-|5 | Transação cancelada.
-|6 | Transação paga ­ cancelamento falhou.
-|7 | Transação contestada pelo portador do cartão (chargeback).
-|8 | Transação paga ­ reapresentada após contestação (chargeback refund).
-|9 | Transação em processo de pagamento por débito
+|0 | Transação aguardando pagamento.
+|1 | Transação em processamento.
+|2 | Transação não aprovada.
+|3 | Transação aprovada.
+|4 | Transação em cancelamento.
+|5 | Transação cancelada.
+|6 | Transação aprovada (cancelamento falhou).
+|7 | Transação contestada.
+|8 | Transação reapresentada.
+|9 | Transação aguardando confirmação.
 
 # Homologação
 
