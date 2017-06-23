@@ -408,23 +408,21 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h2 id="4-1-consultando-uma-transa-o">4.1 Consultando uma transação</h2>
 
 <p>Em caso de erro na chamada de captura de transação, você pode consultar o estado da transação através do Meta ID passado na chamada de Captura.</p>
-
-<p><code class="prettyprint">shell
-curl -H &quot;Content-Type: application/json&quot;
+<pre class="highlight shell"><code>curl -H <span class="s2">"Content-Type: application/json"</span>
 -X POST
--d &#39;{&quot;merchantKey&quot;:&quot;MDEyMzQ1Njc4OTAxMjMN...&quot;,&quot;transactionId&quot;:&quot;73423624&quot;}&#39;
+-d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'</span>
 https://conta.api.4all.com/merchant/getTransactionDetails
-</code></p>
+</code></pre>
 
 <p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/getTransactionDetails</code></p>
 
@@ -609,12 +607,68 @@ estiverem presentes, esta chamada falha com um erro específico.</p>
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
+
+<h2 id="4-2-cancelamento-uma-transa-o">4.2. Cancelamento uma transação</h2>
+
+<p>Também é possível efetuar o cancelamento de uma transação previamente aprovada</p>
+<pre class="highlight shell"><code>curl -H <span class="s2">"Content-Type: application/json"</span>
+-X POST
+-d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'</span>
+https://conta.api.4all.com/merchant/refundTransaction
+</code></pre>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/refundTransaction</code></p>
+
+<p><strong>Descrição</strong>: Funcionalidade para estornar/cancelar uma transação.</p>
+
+<p>Em alguns casos, o cancelamento da transação pode não ser mais possível pois o prazo limite para realizar a operação já se esgotou.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"merchantKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyMzQ1Njc4OTAxMjMNT..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2181486"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>REQUISIÇÃO:</strong></p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam.</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>merchantKey</strong></td>
+<td>Chave de acesso do merchant à API.</td>
+<td>String</td>
+<td>44</td>
+<td>sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação.</td>
+<td>String</td>
+<td>20</td>
+<td>sim</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p><strong>RESPOSTA:</strong> HTTP 204</p>
 
 <h1 id="6-estados-de-uma-transa-o">6. Estados de uma Transação</h1>
 
@@ -626,43 +680,43 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>2
 </thead><tbody>
 <tr>
 <td>0</td>
-<td>Transação criada. Aguardando pagamento por uma conta 4all.</td>
+<td>Transação aguardando pagamento.</td>
 </tr>
 <tr>
 <td>1</td>
-<td>Transação em processo de pagamento por uma conta 4all.</td>
+<td>Transação em processamento.</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Última tentativa de pagamento falhou. Aguardando pagamento por uma conta 4all.</td>
+<td>Transação não aprovada.</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Transação paga (capturada).</td>
+<td>Transação aprovada.</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Transação em processo de cancelamento.</td>
+<td>Transação em cancelamento.</td>
 </tr>
 <tr>
 <td>5</td>
-<td>Transação cancelada.</td>
+<td>Transação cancelada.</td>
 </tr>
 <tr>
 <td>6</td>
-<td>Transação paga ­ cancelamento falhou.</td>
+<td>Transação aprovada (cancelamento falhou).</td>
 </tr>
 <tr>
 <td>7</td>
-<td>Transação contestada pelo portador do cartão (chargeback).</td>
+<td>Transação contestada.</td>
 </tr>
 <tr>
 <td>8</td>
-<td>Transação paga ­ reapresentada após contestação (chargeback refund).</td>
+<td>Transação reapresentada.</td>
 </tr>
 <tr>
 <td>9</td>
-<td>Transação em processo de pagamento por débito</td>
+<td>Transação aguardando confirmação.</td>
 </tr>
 </tbody></table>
 
