@@ -85,8 +85,8 @@ allprojects {
     maven {
 	    url "s3://libs-externas"
         credentials(AwsCredentials) {
-	        accessKey "AKIAJDFQCSKLOC5MRV3A"
-            secretKey "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"
+	        accessKey "AKIAJMX53DI7VWGFCSNA"
+            secretKey "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"
 	    }
 	}
 }
