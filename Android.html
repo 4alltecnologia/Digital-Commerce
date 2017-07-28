@@ -5,7 +5,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Dosis:300,500,700" rel=stylesheet>
-    <title>Digital Commerce - Android - 1.0</title>
+    <title>Digital Commerce - Android - 1.2</title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
@@ -198,19 +198,20 @@ Quando um pagamento ou assinatura são criados pelo merchant, uma URL pode ser i
   repositories {
     jcenter()
     maven {
-        url "s3://libs-externas"
-        credentials(AwsCredentials) {
-            accessKey "AKIAJMX53DI7VWGFCSNA"
-            secretKey "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"
-        }
+      url "s3://libs-externas"
+      credentials(AwsCredentials) {
+        accessKey "AKIAJMX53DI7VWGFCSNA"
+        secretKey "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"
+      }
     }
+  }
 }
 </code></pre>
 
 <p>No arquivo build.gradle referente ao módulo da aplicação, basta adicionar a linha abaixo:</p>
 
 <p>build.gradle(Module:app) :</p>
-<pre class="highlight plaintext"><code>    compile 'com.4all.libs:4all_digitalCommerce:1.1.2'
+<pre class="highlight plaintext"><code>compile 'com.4all.libs:4all_digitalCommerce:1.1.2'
 </code></pre>
 
 <h1 id="4-instanciando-um-objeto-digitalcommerce">4 Instanciando um objeto DigitalCommerce</h1>
@@ -219,15 +220,15 @@ Quando um pagamento ou assinatura são criados pelo merchant, uma URL pode ser i
 Tal chamada possui sobrecarga em sua assinatura, de forma a aceitar três formatos diferentes de parâmetros, sendo estes:</p>
 
 <p>:: newInstance(AppCompatActivity activity) : O objeto será instanciado a utilizando suas configurações padrão. Recebe apenas a activity onde este é chamado a fim de utilizar desta seu fragmentManager e contexto</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce =  FourAll_DigitalCommerce.newInstance(MainActivity.this);        
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce = FourAll_DigitalCommerce.newInstance(MainActivity.this);        
 </code></pre>
 
 <p>:: newInstance(AppCompatActivity activity, String APIKEY) : Neste caso, recebe, além da activity onde está sendo chamado, também a APIKEY do cliente que a utiliza. A partir desta string, gerará uma nova instância de suas configurações.</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce =  FourAll_DigitalCommerce.newInstance(MainActivity.this, &lt;&lt;APIKEY do cliente&gt;&gt;);        
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce = FourAll_DigitalCommerce.newInstance(MainActivity.this, &lt;&lt;APIKEY do cliente&gt;&gt;);        
 </code></pre>
 
 <p>:: newInstance(AppCompatActivity activity, DigitalCommerce_Config config) : Ao invés de receber a APIKEY, recebe já uma instância da classe config com as configurações a serem utilizadas;</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce =  FourAll_DigitalCommerce.newInstance(MainActivity.this, DigitalCommerce_Config.getDefaultConfig());        
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce digiCommerce = FourAll_DigitalCommerce.newInstance(MainActivity.this, DigitalCommerce_Config.getDefaultConfig());        
 </code></pre>
 
 <h2 id="4-1-configura-es-da-classe-digitalcommerce">4.1 Configurações da classe DigitalCommerce</h2>
@@ -241,8 +242,7 @@ Tal chamada possui sobrecarga em sua assinatura, de forma a aceitar três format
 <h1 id="5-fazendo-a-chamada-digitalcommerce-gettoken">5 Fazendo a chamada DigitalCommerce.getToken()</h1>
 
 <p>Para obter o <strong>payment_token</strong>, crie uma instância o objeto Pay4all e faça a chamada getToken no exemplo abaixo:</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this);
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject = FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 pay4allObject.getToken();
 </code></pre>
@@ -250,18 +250,18 @@ pay4allObject.getToken();
 <p>Quando a função <code class="prettyprint">Pay4all.getToken()</code> é chamada pela primeira vez, ele é direcionado para uma tela onde se autentica e cadastra um cartão de crédito a ser usado em todas as compras no seu aplicativo.  Devido a natureza assíncrona da chamada,  a Activity a exibir DialogFragment para a inserção de dados do usuário deve implementar a interface desta:   OneTouch_WebPayFragment.OnOneTouchPaymentListener. A interface possui dois métodos: onSucess e onFail. Em caso de sucesso, o método onSucess será chamado, recebendo como parâmetro a chave do usuário, que também será salva na persistência do aplicativo para futuras utilizações. Já a chamada onFail, utilizada em caso de falhas na operação ou cancelamento pelo usuário não possui nenhum tipo de parâmetro.  </p>
 <pre class="highlight plaintext"><code>public class MainActivity extends AppCompatActivity implements DigitalCommerce_WebPayFragment.OnOneTouchPaymentListener {
 
-...
+  ...
 
-@Override
-public void onPaymentSuccess(String key) {
+  @Override
+  public void onPaymentSuccess(String key) {
     Toast.makeText(this, "Sucesso ao realizar a operação 4all " + key, Toast.LENGTH_LONG).show();
-      }
+  }
 
-@Override
-public void onPaymentFail() {
+  @Override
+  public void onPaymentFail() {
     Toast.makeText(this, "Falha ao realizar a operação 4all", Toast.LENGTH_LONG).show();
-    }
- }
+  }
+}
 </code></pre>
 
 <p>Nas chamadas subsequentes, o usuário não precisará efetuar a autenticação novamente, e o <strong>payment_token</strong> é retornado de maneira transparente.</p>
@@ -290,16 +290,17 @@ int permissionCheckCoarse = ContextCompat.checkSelfPermission(thisActivity,
 <p>Para definir a solicitação do uso dos recursos de GPS do aparelho pela aplicação:
 &ldquo;`Java
       // Verifica se deve mostrar motivo de utilização do recurso de geolocalização
-      if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-          Manifest.permission.ACCESS_COARSE_LOCATION)) {</p>
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {</p>
 
 <p>// Mostra uma explicação assíncrona para o usuário. Ou seja, não bloqueia a thread principal.
         // Após o usuário verificar a explicação apresentada, chama novamente o request para a permissão de uso do recurso
       } else {
         // Não exige explicação. Faz o request direto para a permissão do uso.
-        ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-            FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION);
+        ActivityCompat.requestPermissions(
+          this,
+          new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+          FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION
+        );
        // MY_PERMISSIONS_REQUEST_LOCATION é um valor int constante na aplicaçnao. Este método de callback utiliza o resultado do request
       }
 &rdquo;`</p>
@@ -307,13 +308,11 @@ int permissionCheckCoarse = ContextCompat.checkSelfPermission(thisActivity,
 <p>Handler para o resultado obtido pela permissão:
 &ldquo;`java
   @Override
-  public void onRequestPermissionsResult(int requestCode,
-                                         String permissions[], int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
     switch (requestCode) {
       case FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION: {
         // Se o request for cancelado, o vetor será vazio.
-        if (grantResults.length &gt; 0
-            &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length &gt; 0 &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           FourAll_Lib4all.getInstance().initLocationManager(this);
           // Foi aprovada a permissão. Faz as ações solicitadas.
         } else {
@@ -409,13 +408,6 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 <td>250</td>
 <td>não</td>
 </tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
 
 <p><strong>Observações</strong>:</p>
@@ -470,11 +462,11 @@ https://conta.api.4all.com/merchant/issueAuthorizedTransaction
 
 <p>Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
-        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h2 id="6-1-consultando-uma-transa-o">6.1 Consultando uma transação</h2>
@@ -493,8 +485,8 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 
 <p><strong>Descrição</strong>:  Retorna os detalhes de uma transação.</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"merchantKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyMzQ1Njc4OTAxMjMN..."</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="w">
+  </span><span class="nt">"merchantKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDEyMzQ1Njc4OTAxMjMN..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -532,17 +524,17 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 </tr>
 </tbody></table>
 <pre class="highlight javascript"><code><span class="p">{</span>
-    <span class="s2">"transactionId"</span><span class="err">:</span> <span class="s2">"854383518"</span><span class="p">,</span>
-    <span class="s2">"amount"</span><span class="err">:</span> <span class="mi">5000</span><span class="p">,</span>
-    <span class="s2">"status"</span><span class="err">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s2">"createdAt"</span><span class="err">:</span> <span class="s2">"2016-01-31T20:12:31Z"</span><span class="p">,</span>
-    <span class="s2">"paidAt"</span><span class="err">:</span> <span class="s2">"2016-01-31T20:33:12Z"</span><span class="p">,</span>
-    <span class="s2">"authorizationInfo"</span><span class="err">:</span> <span class="p">{</span>
-        <span class="s2">"acquirerId"</span><span class="err">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">"acquirerUsn"</span><span class="err">:</span> <span class="s2">"18318318"</span><span class="p">,</span>
-        <span class="s2">"acquirerTimestamp"</span><span class="err">:</span> <span class="s2">"20161231125959"</span><span class="p">,</span>
-        <span class="s2">"brandId"</span><span class="err">:</span> <span class="mi">1</span>
-    <span class="p">}</span>
+  <span class="s2">"transactionId"</span><span class="err">:</span> <span class="s2">"854383518"</span><span class="p">,</span>
+  <span class="s2">"amount"</span><span class="err">:</span> <span class="mi">5000</span><span class="p">,</span>
+  <span class="s2">"status"</span><span class="err">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">"createdAt"</span><span class="err">:</span> <span class="s2">"2016-01-31T20:12:31Z"</span><span class="p">,</span>
+  <span class="s2">"paidAt"</span><span class="err">:</span> <span class="s2">"2016-01-31T20:33:12Z"</span><span class="p">,</span>
+  <span class="s2">"authorizationInfo"</span><span class="err">:</span> <span class="p">{</span>
+    <span class="s2">"acquirerId"</span><span class="err">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"acquirerUsn"</span><span class="err">:</span> <span class="s2">"18318318"</span><span class="p">,</span>
+    <span class="s2">"acquirerTimestamp"</span><span class="err">:</span> <span class="s2">"20161231125959"</span><span class="p">,</span>
+    <span class="s2">"brandId"</span><span class="err">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -672,11 +664,11 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 
 <p>Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
-        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment Token inválido."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h1 id="7-ger-ncia-de-meios-de-pagamento">7 Gerência de Meios de Pagamento</h1>
@@ -686,8 +678,7 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 <h2 id="7-1-obtendo-informa-es-do-cart-o">7.1 Obtendo informações do cartão</h2>
 
 <p>Você pode exibir em seu aplicativo qual é a bandeira e os últimos 4 dígitos do cartão de crédito configurado pelo usuário utilizando a chamada <code class="prettyprint">pay4allObject.getUserData()</code>, como no exemplo abaixo:</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this);
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject = FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 DigitalCommerce_CreditCardInfo cardInfo =  pay4allObject.getUserData();
 
@@ -702,8 +693,7 @@ if (cardInfo != null) {
 <h2 id="7-2-troca-de-meio-de-pagamento">7.2 Troca de meio de Pagamento</h2>
 
 <p>Você pode adicionar ao seu aplicativo a opção para o usuário de alterar o cartão de crédito cadastrado para realizar pagamentos, através da chamada <code class="prettyprint">pay4allObject.changePaymentMethod()</code>, como no exemplo abaixo:</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this);
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject = FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 pay4allObject.changePaymentMethod();
 </code></pre>
@@ -713,8 +703,7 @@ pay4allObject.changePaymentMethod();
 <h2 id="7-3-logout">7.3 Logout</h2>
 
 <p>Quando o usuário do seu aplicativo efetuar logout, você pode apagar os dados de pagamento de usuário através da chamada <code class="prettyprint">pay4allObject.logout()</code>, como no exemplo abaixo:</p>
-<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject =
-FourAll_DigitalCommerce.newInstance(MainActivity.this);
+<pre class="highlight plaintext"><code>FourAll_DigitalCommerce pay4allObject = FourAll_DigitalCommerce.newInstance(MainActivity.this);
 
 pay4allObject.logout();
 </code></pre>
