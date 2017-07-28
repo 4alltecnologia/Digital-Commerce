@@ -12,7 +12,7 @@ includes:
 search: true
 ---
 
-# Digital Commerce - Android - 1.2
+# Digital Commerce - Android - 1.3
 
 # 1 Introdução
 
@@ -202,22 +202,22 @@ int permissionCheckFine = ContextCompat.checkSelfPermission(thisActivity,
         // Não exige explicação. Faz o request direto para a permissão do uso.
         ActivityCompat.requestPermissions(this,
             new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-            FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION);
-       // MY_PERMISSIONS_REQUEST_LOCATION é um valor int constante na aplicaçnao. Este método de callback utiliza o resultado do request
+            
+			
       }
 ```
 
 Handler para o resultado obtido pela permissão:
-```java
+```Java
   @Override
   public void onRequestPermissionsResult(int requestCode,
                                          String permissions[], int[] grantResults) {
     switch (requestCode) {
-      case FourAll_Lib4all.MY_PERMISSIONS_REQUEST_LOCATION: {
+      case MY_PERMISSIONS_REQUEST_LOCATION: {
         // Se o request for cancelado, o vetor será vazio.
         if (grantResults.length > 0
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          FourAll_Lib4all.getInstance().initLocationManager(this);
+          
           // Foi aprovada a permissão. Faz as ações solicitadas.
         } else {
           // A permissão não foi aprovada. Faz as ações de acordo.
