@@ -48,7 +48,7 @@ Clique no botão “Gerar Chaves” para obter um par de chaves, a Pública (**P
 
 # 3 Importando a Biblioteca de Mobile Payment
 
-1. Faça o download da [última versão do MobilePayment](https://lib.4all.com/mobile/ios/v1.1.0/MobilePayment.framework.zip) e extraia o arquivo zip.
+1. Faça o download da [última versão do MobilePayment](https://lib.4all.com/mobile/ios/v1.1.0/Pay4all.framework.zip) e extraia o arquivo zip.
 2.  Arraste o arquivo `MobilePayment.framework` extraído para o *File Navigator* do seu projeto no Xcode. Certifique-se de que a opção *Copy items if needed* está selecionada e clique em *Finish*.
 3. Clique no seu projeto no *File Navigator* do Xcode. Selecione o Target do seu aplicativo e clique na aba General. Abaixo de Embedded Binaries, clique em +, selecione o `MobilePayment.framework` e clique em Add.
 
