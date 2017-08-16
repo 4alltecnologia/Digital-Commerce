@@ -12,7 +12,7 @@ includes:
 search: true
 ---
 
-# Subscription - Web - 1.0
+# Subscription - Web - 1.0.1
 
 # 1 Introdução
 
@@ -100,7 +100,7 @@ Substitua o valor de cada atributo de acordo com a assinatura a ser contratada. 
 |**data-start-date**|Data em que os pagamentos periódicos terão início. Formato YYYY-MM-DD. É a data em que o primeiro pagamento recorrente será efetuado.|String|Sim
 |**data-recurring-amount**|Valor das cobranças periódicas. Em centavos. Ex: "1425" para R$ 14,25.|String|Sim
 |**data-recurrence-count**|Indica quantas cobranças periódicas serão feitas no total. O valor 0 indica infinitas cobranças (até o cancelamento da assinatura).|String|Sim
-|**data-interval-type**|Indica como o intervalo entre cobranças recorrentes é medido: 1-Dias 2-Semanas 3-Meses.|String|Sim
+|**data-interval-type**|Indica como o intervalo entre cobranças recorrentes é medido: 0-Dias 1-Semanas 2-Meses.|String|Sim
 |**data-interval-value**|Indica quantos dias/semanas/meses (dependendo do parâmetro **data-interval-type**) existem entre dois pagamentos recorrentes consecutivos.|String|Sim
 |**data-payment-tolerance**|Indica quantos dias a assinatura pode permanecer com pagamento em atraso antes de ser automáticamente cancelada.|String|Sim
 |**data-capture**|Caso seja passado o valor "*false*", para confirmar a contratação da assinatura (e cobrança de taxas de adesão), é necessário realizar a chamada "**issueAuthorizedSubscription**" a partir do *backend* do seu sistema. Caso seja passado o valor "*true*", a assinatura é contratada sem necessidade de confirmação.|String|Sim
@@ -156,7 +156,7 @@ Os parâmetros dessa função (atributos do objeto *options*) são:
 |**startDate**|Data em que os pagamentos periódicos terão início. Formato YYYY-MM-DD. É a data em que o primeiro pagamento recorrente será efetuado.|String|Sim
 |**recurringAmount**|Valor das cobranças periódicas. Em centavos. Ex: "1425" para R$ 14,25.|Number|Sim
 |**recurrenceCount**|Indica quantas cobranças periódicas serão feitas no total. O valor 0 indica infinitas cobranças (até o cancelamento da assinatura).|Number|Sim
-|**intervalType**|Indica como o intervalo entre cobranças recorrentes é medido: 1-Dias 2-Semanas 3-Meses.|Number|Sim
+|**intervalType**|Indica como o intervalo entre cobranças recorrentes é medido: 0-Dias 1-Semanas 2-Meses.|Number|Sim
 |**intervalValue**|Indica quantos dias/semanas/meses (dependendo do parâmetro **intervalType**) existem entre dois pagamentos recorrentes consecutivos.|String|Sim
 |**paymentTolerance**|Indica quantos dias a assinatura pode permanecer com pagamento em atraso antes de ser automáticamente cancelada.|String|Sim
 |**capture**|Caso seja passado o valor "*false*", para confirmar a contratação da assinatura (e cobrança de taxas de adesão), é necessário realizar a chamada "**issueAuthorizedSubscription**" a partir do *backend* do seu sistema. Caso seja passado o valor "*true*", a assinatura é contratada sem necessidade de confirmação.|Boolean|Sim
@@ -220,7 +220,7 @@ https://conta.api.4all.com/merchant/issueAuthorizedSubscription
 |Atributo        |Descrição  |Formato    |Tamanho|Obrigatório
 |----------------|-----------|-----------|-------|-------------
 |**merchantKey**|Chave de acesso do estabelecimento à API|String|44|Sim
-|**subscriptionToken**|Token da autorização de assinatura, obtido do Checkout.|String|44|Sim
+|**subscriptionAuthorizationToken**|Token da autorização de assinatura, obtido do Checkout.|String|44|Sim
 |**upfrontAmount**|Valor que deve ser pago imediatamente pela conta 4all, no momento em que aceitar a assinatura (taxa de adesão). Em centavos. Ex: "1425" para R$ 14,25. Passe "0" em caso que não há taxa de adesão.|Number|Sim
 |**startDate**|Data em que os pagamentos periódicos terão início. Formato YYYY-MM-DD. É a data em que o primeiro pagamento recorrente será efetuado.|String|Sim
 |**recurringAmount**|Valor das cobranças periódicas. Em centavos. Ex: "1425" para R$ 14,25.|Number|Sim
