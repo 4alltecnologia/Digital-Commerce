@@ -139,7 +139,21 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 	  paymentTolerance: 5,
 	  capture: false,
 	  successCallback: onSuccess,
-	  cancelCallback: onCancel
+	  cancelCallback: onCancel,
+
+		//se você já tem dados do usuário, você pode informar à biblioteca para acelerar o processo de cadastro
+		input: {
+			name: 'Fulano de tal',
+			phone: '51999998888', //ddd e telefone
+			email: 'fulano@gmail.com',
+			document: '00000000000', //cpf do usuário
+			birthdate: '10/02/1992' //data de nascimento no formato DD/MM/AAAA
+		},
+
+		//adicione este treixo se você deseja que a autenticação de usuário seja somente via código SMS
+		rules: {
+			smsOnly: true
+		}
 	};
 
 Subscription4all.startSubscription(options);
@@ -163,6 +177,22 @@ Os parâmetros dessa função (atributos do objeto *options*) são:
 |**successCallback** | Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o objeto *data* como parâmetro. | Função | Sim
 |**cancelCallback**| Função que será chamada caso o usuário cancele o processo de contratação sem concluí-lo, ou aconteça um erro no pagamento. | Função | Não
 |**debug**|Parâmetro usado para ativar os logs no console, útil para validação dos parâmetros passados à biblioteca. |Boolean||Não
+|**input**| Caso já tenha coletado dados do usuário, você pode acelerar o processo de login/cadastro fornecendo os dados do usuário neste objeto. | Objeto (olhar abaixo) | Não
+|**rules**| Objeto com opções para o funcionamento da biblioteca. | Objeto (olhar abaixo) | Não
+
+Objeto *input*:
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**name**| Nome completo do usuário.| String | Não
+|**phone**| Telefone do usuário, com DDD. | String | Não
+|**email**| Email do usuário, com DDD. | String | Não
+|**document**| CPF do usuário. | String | Não
+|**birthdate**| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não
+
+Objeto *rules*:
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**smsOnly**| Caso configurado como *true*, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não
 
 Caso o parâmetro *capture* seja enviado como *false*, após a validação dos dados, é adicionado ao formulário um token de assinatura, que deve ser confirmada pelo *backend* do seu sistema, para o registro da assinatura em sua base de dados.
 

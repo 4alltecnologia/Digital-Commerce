@@ -100,7 +100,21 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 	  amount: 2500,
 	  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
 	  successCallback: onSuccess,
-	  cancelCallback: onCancel
+	  cancelCallback: onCancel,
+		
+		//se você já tem dados do usuário, você pode informar à biblioteca para acelerar o processo de cadastro
+		input: {
+			name: 'Fulano de tal',
+			phone: '51999998888', //ddd e telefone
+			email: 'fulano@gmail.com',
+			document: '00000000000', //cpf do usuário
+			birthdate: '10/02/1992' //data de nascimento no formato DD/MM/AAAA
+		},
+
+		//adicione este treixo se você deseja que a autenticação de usuário seja somente via código SMS
+		rules: {
+			smsOnly: true
+		}
 	};
 
 Checkout4all.startCheckout(options);
@@ -108,7 +122,7 @@ Checkout4all.startCheckout(options);
 
 Após isso, a biblioteca está disponível em seu escopo global como 'Checkout4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startCheckout** da biblioteca, como demonstrado abaixo ou ao lado (código javascript).
 
-Os parâmetros dessa função são:
+Esta função recebe um objeto com os parâmetros:
 
 |Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
@@ -116,7 +130,22 @@ Os parâmetros dessa função são:
 |**publicApiKey**|Chave de API pública do Checkout 4all.|String|Sim
 |**successCallback** | Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o paymentToken como parâmetro. | Função | Sim
 |**cancelCallback**| Função que será chamada caso o usuário cancele o processo de pagamento sem concluí-lo. | Função | Não
+|**input**| Caso já tenha coletado dados do usuário, você pode acelerar o processo de login/cadastro fornecendo os dados do usuário neste objeto. | Objeto (olhar abaixo) | Não
+|**rules**| Objeto com opções para o funcionamento da biblioteca. | Objeto (olhar abaixo) | Não
 
+Objeto *input*:
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**name**| Nome completo do usuário.| String | Não
+|**phone**| Telefone do usuário, com DDD. | String | Não
+|**email**| Email do usuário, com DDD. | String | Não
+|**document**| CPF do usuário. | String | Não
+|**birthdate**| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não
+
+Objeto *rules*:
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**smsOnly**| Caso configurado como *true*, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não
 
 # 4 Capturando a transação
 
