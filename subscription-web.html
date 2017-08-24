@@ -336,7 +336,21 @@
       <span class="na">paymentTolerance</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
       <span class="na">capture</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
       <span class="na">successCallback</span><span class="p">:</span> <span class="nx">onSuccess</span><span class="p">,</span>
-      <span class="na">cancelCallback</span><span class="p">:</span> <span class="nx">onCancel</span>
+      <span class="na">cancelCallback</span><span class="p">:</span> <span class="nx">onCancel</span><span class="p">,</span>
+
+        <span class="c1">//se você já tem dados do usuário, você pode informar à biblioteca para acelerar o processo de cadastro</span>
+        <span class="na">input</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">name</span><span class="p">:</span> <span class="s1">'Fulano de tal'</span><span class="p">,</span>
+            <span class="na">phone</span><span class="p">:</span> <span class="s1">'51999998888'</span><span class="p">,</span> <span class="c1">//ddd e telefone</span>
+            <span class="na">email</span><span class="p">:</span> <span class="s1">'fulano@gmail.com'</span><span class="p">,</span>
+            <span class="na">document</span><span class="p">:</span> <span class="s1">'00000000000'</span><span class="p">,</span> <span class="c1">//cpf do usuário</span>
+            <span class="na">birthdate</span><span class="p">:</span> <span class="s1">'10/02/1992'</span> <span class="c1">//data de nascimento no formato DD/MM/AAAA</span>
+        <span class="p">},</span>
+
+        <span class="c1">//adicione este treixo se você deseja que a autenticação de usuário seja somente via código SMS</span>
+        <span class="na">rules</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">smsOnly</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
     <span class="p">};</span>
 
 <span class="nx">Subscription4all</span><span class="p">.</span><span class="nx">startSubscription</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
@@ -426,7 +440,33 @@
 <td>Boolean</td>
 <td></td>
 </tr>
+<tr>
+<td><strong>input</strong></td>
+<td>Caso já tenha coletado dados do usuário, você pode acelerar o processo de login/cadastro fornecendo os dados do usuário neste objeto.</td>
+<td>Objeto (olhar abaixo)</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>rules</strong></td>
+<td>Objeto com opções para o funcionamento da biblioteca.</td>
+<td>Objeto (olhar abaixo)</td>
+<td>Não</td>
+</tr>
 </tbody></table>
+
+<p>Objeto <em>input</em>:
+|Atributo    |Descrição  |Formato    |Obrigatório
+|&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;
+|<strong>name</strong>| Nome completo do usuário.| String | Não
+|<strong>phone</strong>| Telefone do usuário, com DDD. | String | Não
+|<strong>email</strong>| Email do usuário, com DDD. | String | Não
+|<strong>document</strong>| CPF do usuário. | String | Não
+|<strong>birthdate</strong>| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não</p>
+
+<p>Objeto <em>rules</em>:
+|Atributo    |Descrição  |Formato    |Obrigatório
+|&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;
+|<strong>smsOnly</strong>| Caso configurado como <em>true</em>, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não</p>
 
 <p>Caso o parâmetro <em>capture</em> seja enviado como <em>false</em>, após a validação dos dados, é adicionado ao formulário um token de assinatura, que deve ser confirmada pelo <em>backend</em> do seu sistema, para o registro da assinatura em sua base de dados.</p>
 
