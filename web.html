@@ -181,9 +181,9 @@
   <span class="c">&lt;!-- … demais inputs do formulário … --&gt;</span>
 
   <span class="nt">&lt;script
-    </span><span class="na">src=</span><span class="s">"https://lib.4all.com/lib/checkout-express.js"</span>
-    <span class="na">data-public-api-key=</span><span class="s">"pk_test_6pRNASCoBOKtIshFeQd4XMUh"</span>
-    <span class="na">data-amount=</span><span class="s">"5999"</span>
+    </span><span class="na">src=</span><span class="s">"https://lib.4all.com/lib/checkout-embed.js"</span>
+    <span class="na">data-public-api-key=</span><span class="s">"homolog_H7N2QqNoKTsjtBTTsuHXJ3jG9nARn0f06DxF8e3FXfA="</span>
+    <span class="na">data-amount=</span><span class="s">"5990"</span>
     <span class="nt">&gt;</span>
   <span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
@@ -232,9 +232,9 @@
       <span class="c1">// esta funcão será chamada caso o cliente cancele o checkout</span>
     <span class="p">}</span>
 
-    <span class="nx">Var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
       <span class="na">amount</span><span class="p">:</span> <span class="mi">2500</span><span class="p">,</span>
-      <span class="na">publicApiKey</span><span class="p">:</span> <span class="s2">"pk_test_6pRNASCoBOKtIshFeQd4XMUh"</span><span class="p">,</span>
+      <span class="na">publicApiKey</span><span class="p">:</span> <span class="s2">"homolog_H7N2QqNoKTsjtBTTsuHXJ3jG9nARn0f06DxF8e3FXfA="</span><span class="p">,</span>
       <span class="na">successCallback</span><span class="p">:</span> <span class="nx">onSuccess</span><span class="p">,</span>
       <span class="na">cancelCallback</span><span class="p">:</span> <span class="nx">onCancel</span><span class="p">,</span>
 
@@ -242,9 +242,9 @@
         <span class="na">input</span><span class="p">:</span> <span class="p">{</span>
             <span class="na">name</span><span class="p">:</span> <span class="s1">'Fulano de tal'</span><span class="p">,</span>
             <span class="na">phone</span><span class="p">:</span> <span class="s1">'51999998888'</span><span class="p">,</span> <span class="c1">//ddd e telefone</span>
-            <span class="na">email</span><span class="p">:</span> <span class="s1">'fulano@gmail.com'</span><span class="p">,</span>
-            <span class="na">document</span><span class="p">:</span> <span class="s1">'00000000000'</span><span class="p">,</span> <span class="c1">//cpf do usuário</span>
-            <span class="na">birthdate</span><span class="p">:</span> <span class="s1">'10/02/1992'</span> <span class="c1">//data de nascimento no formato DD/MM/AAAA</span>
+            <span class="na">email</span><span class="p">:</span> <span class="s1">'fulano@example.com'</span><span class="p">,</span>
+            <span class="na">document</span><span class="p">:</span> <span class="s1">'43253048004'</span><span class="p">,</span> <span class="c1">//cpf do usuário</span>
+            <span class="na">birthdate</span><span class="p">:</span> <span class="s1">'23/10/1992'</span> <span class="c1">//data de nascimento no formato DD/MM/AAAA</span>
         <span class="p">},</span>
 
         <span class="c1">//adicione este treixo se você deseja que a autenticação de usuário seja somente via código SMS</span>
