@@ -58,9 +58,9 @@ Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**,
   <!-- … demais inputs do formulário … -->
 
   <script
-    src="https://lib.4all.com/lib/checkout-express.js"
-    data-public-api-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-    data-amount="5999"
+    src="https://lib.4all.com/lib/checkout-embed.js"
+    data-public-api-key="homolog_H7N2QqNoKTsjtBTTsuHXJ3jG9nARn0f06DxF8e3FXfA="
+    data-amount="5990"
     >
   </script>
 </form>
@@ -96,9 +96,9 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 	  // esta funcão será chamada caso o cliente cancele o checkout
 	}
 
-	Var options = {
+	var options = {
 	  amount: 2500,
-	  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
+	  publicApiKey: "homolog_H7N2QqNoKTsjtBTTsuHXJ3jG9nARn0f06DxF8e3FXfA=",
 	  successCallback: onSuccess,
 	  cancelCallback: onCancel,
 		
@@ -106,9 +106,9 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 		input: {
 			name: 'Fulano de tal',
 			phone: '51999998888', //ddd e telefone
-			email: 'fulano@gmail.com',
-			document: '00000000000', //cpf do usuário
-			birthdate: '10/02/1992' //data de nascimento no formato DD/MM/AAAA
+			email: 'fulano@example.com',
+			document: '43253048004', //cpf do usuário
+			birthdate: '23/10/1992' //data de nascimento no formato DD/MM/AAAA
 		},
 
 		//adicione este treixo se você deseja que a autenticação de usuário seja somente via código SMS
@@ -134,6 +134,7 @@ Esta função recebe um objeto com os parâmetros:
 |**rules**| Objeto com opções para o funcionamento da biblioteca. | Objeto (olhar abaixo) | Não
 
 Objeto *input*:
+
 |Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
 |**name**| Nome completo do usuário.| String | Não
@@ -143,6 +144,7 @@ Objeto *input*:
 |**birthdate**| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não
 
 Objeto *rules*:
+
 |Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
 |**smsOnly**| Caso configurado como *true*, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não
