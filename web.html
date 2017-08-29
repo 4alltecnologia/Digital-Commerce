@@ -366,6 +366,120 @@
 </tr>
 </tbody></table>
 
+<h2 id="3-3-web-page">3.3 Web Page</h2>
+<pre class="highlight shell"><code>curl -X GET <span class="se">\</span>
+-d <span class="s1">'amount=1000&amp;publicApiKey=homolog_hUFYc38Q7qUnvcIBPqSrj3Cg59jcniyEpJaqMvIIMnQ=&amp;returnUrl=http://127.0.0.1/finish&amp;rules[smsOnly]=true'</span> <span class="se">\</span>
+https://lib.4all.com/checkout-web.html
+</code></pre>
+
+<p>Esta integração foi planejada para ser utilizada em aplicativos mobile, através da URL <code class="prettyprint">https://lib.4all.com/checkout-web.html</code>. Desta forma é disponibilizado uma página HTML com todos os componentes necessários para usar a biblioteca do Checkout.</p>
+
+<p>Os parâmetros devem ser passados por <a href="https://en.wikipedia.org/wiki/Query_string"><strong>query string</strong></a>, e devem estar no formato <a href="https://en.wikipedia.org/wiki/Percent-encoding"><strong>url enconding</strong></a>. Os subparâmetros de um objeto devem estar no seguinte formato: <code class="prettyprint">campo[subcampo]=valor</code>. A seguir esta a descrição dos parâmetros:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>amount</strong></td>
+<td>Valor da transação em centavos. Ex: &ldquo;1425&rdquo; para R$ 14,25.</td>
+<td>String</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>publicApiKey</strong></td>
+<td>Chave de API pública do Checkout 4all.</td>
+<td>String</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>returnUrl</strong></td>
+<td>URL que será chamada após o término da interação do usuário com o Checkout 4all</td>
+<td>String</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>input</strong></td>
+<td>Caso já tenha coletado dados do usuário, você pode acelerar o processo de login/cadastro fornecendo os dados do usuário neste objeto.</td>
+<td>Objeto (olhar abaixo)</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>rules</strong></td>
+<td>Objeto com opções para o funcionamento da biblioteca.</td>
+<td>Objeto (olhar abaixo)</td>
+<td>Não</td>
+</tr>
+</tbody></table>
+
+<p>Objeto <em>input</em>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>name</strong></td>
+<td>Nome completo do usuário.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>phone</strong></td>
+<td>Telefone do usuário, com DDD.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>email</strong></td>
+<td>Email do usuário, com DDD.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>document</strong></td>
+<td>CPF do usuário.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>birthdate</strong></td>
+<td>Data de nascimento do usuário, formato DD/MM/AAAA.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+</tbody></table>
+
+<p>Objeto <em>rules</em>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>smsOnly</strong></td>
+<td>Caso configurado como <em>true</em>, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário.</td>
+<td>Boolean</td>
+<td>Não</td>
+</tr>
+</tbody></table>
+<pre class="highlight plaintext"><code>http://127.0.01/finish?success=true&amp;paymentToken=Onp1RbooSTuuSQ5k0x5ldbecBan1pNmT6Ipa/hu5t08=
+</code></pre>
+
+<p>A URL de retorno pode ser utilizada tanto para comunicar diretamente um servidor,quanto para que o aplicativo possa saber que a interação com o usuário terminou. Na chamada à esta URL é informado se a interação foi concluida com sucesso, através do parâmetro <strong>success</strong>, e em caso positivo também informa o token de autorização da transação, através do parâmetro <strong>paymentToken</strong>.</p>
+
 <h1 id="4-capturando-a-transa-o">4 Capturando a transação</h1>
 
 <p>Com o <strong>payment_token</strong> em mãos, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.</p>
