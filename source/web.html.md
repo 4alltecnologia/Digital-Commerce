@@ -149,6 +149,48 @@ Objeto *rules*:
 |------------|-----------|-----------|--------------
 |**smsOnly**| Caso configurado como *true*, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não
 
+## 3.3 Web Page
+
+```shell
+curl -X GET \
+-d 'amount=1000&publicApiKey=homolog_hUFYc38Q7qUnvcIBPqSrj3Cg59jcniyEpJaqMvIIMnQ=&returnUrl=http://127.0.0.1/finish&rules[smsOnly]=true' \
+https://lib.4all.com/checkout-web.html
+```
+
+Esta integração foi planejada para ser utilizada em aplicativos mobile, através da URL `https://lib.4all.com/checkout-web.html`. Desta forma é disponibilizado uma página HTML com todos os componentes necessários para usar a biblioteca do Checkout.
+
+Os parâmetros devem ser passados por [**query string**](https://en.wikipedia.org/wiki/Query_string), e devem estar no formato [**url enconding**](https://en.wikipedia.org/wiki/Percent-encoding). Os subparâmetros de um objeto devem estar no seguinte formato: `campo[subcampo]=valor`. A seguir esta a descrição dos parâmetros:
+
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**amount**|Valor da transação em centavos. Ex: "1425" para R$ 14,25.|String|Sim
+|**publicApiKey**|Chave de API pública do Checkout 4all.|String|Sim
+|**returnUrl**| URL que será chamada após o término da interação do usuário com o Checkout 4all | String |Sim
+|**input**| Caso já tenha coletado dados do usuário, você pode acelerar o processo de login/cadastro fornecendo os dados do usuário neste objeto. | Objeto (olhar abaixo) | Não
+|**rules**| Objeto com opções para o funcionamento da biblioteca. | Objeto (olhar abaixo) | Não
+
+Objeto *input*:
+
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**name**| Nome completo do usuário.| String | Não
+|**phone**| Telefone do usuário, com DDD. | String | Não
+|**email**| Email do usuário, com DDD. | String | Não
+|**document**| CPF do usuário. | String | Não
+|**birthdate**| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não
+
+Objeto *rules*:
+
+|Atributo    |Descrição  |Formato    |Obrigatório
+|------------|-----------|-----------|--------------
+|**smsOnly**| Caso configurado como *true*, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não
+
+```
+http://127.0.01/finish?success=true&paymentToken=Onp1RbooSTuuSQ5k0x5ldbecBan1pNmT6Ipa/hu5t08=
+```
+
+A URL de retorno pode ser utilizada tanto para comunicar diretamente um servidor,quanto para que o aplicativo possa saber que a interação com o usuário terminou. Na chamada à esta URL é informado se a interação foi concluida com sucesso, através do parâmetro **success**, e em caso positivo também informa o token de autorização da transação, através do parâmetro **paymentToken**.
+
 # 4 Capturando a transação
 
 Com o **payment_token** em mãos, você pode capturar a transação (efetuar a cobrança) através de uma chamada à API Conta 4all.
