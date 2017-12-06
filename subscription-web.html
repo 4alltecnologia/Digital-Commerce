@@ -125,7 +125,7 @@
 
 <h1 id="1-introdu-o">1 Introdução</h1>
 
-<p>Com o Subscription, você pode configurar seu website para captar clientes de maneira fácil e rápida.</p>
+<p>Com o Subscription 4all, você pode configurar seu website para captar clientes de maneira fácil e rápida.</p>
 
 <p>Para que seus clientes contratem assinaturas em seu site, você precisa executar os passos:</p>
 
@@ -178,15 +178,14 @@
 
   <span class="nt">&lt;script
     </span><span class="na">src=</span><span class="s">"https://lib.4all.com/lib/subscription-embed.js"</span>
-    <span class="na">data-public-api-key=</span><span class="s">"pk_test_6pRNASCoBOKtIshFeQd4XMUh"</span>
+    <span class="na">data-public-api-key=</span><span class="s">"homolog_gR83LcKFXFOdZJgRjiv0FhEKFzsuYB0uAojq9PQcnV4="</span>
     <span class="na">data-upfront-amount=</span><span class="s">"3000"</span>
-    <span class="na">data-start-date=</span><span class="s">"2016-12-20"</span>
+    <span class="na">data-start-date=</span><span class="s">"2018-12-20"</span>
     <span class="na">data-recurring-amount=</span><span class="s">"6000"</span>
     <span class="na">data-recurrence-count=</span><span class="s">"0"</span>
-    <span class="na">data-interval-type=</span><span class="s">"3"</span>
+    <span class="na">data-interval-type=</span><span class="s">"2"</span>
     <span class="na">data-interval-value=</span><span class="s">"1"</span>
     <span class="na">data-payment-tolerance=</span><span class="s">"5"</span>
-    <span class="na">data-capture=</span><span class="s">"false"</span>
     <span class="nt">&gt;</span>
   <span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
@@ -195,8 +194,6 @@
 <p><strong>Como funciona:</strong> Nesta modalidade de checkout, você adiciona à sua página um formulário que efetua, de forma segura, todo o processo de captura e validação dos dados de pagamento do cliente, assim, as informações sensíveis do seu cliente nunca entram em contato com ambientes não-seguros.</p>
 
 <p>No evento de <em>submit</em> do seu formulário, a Janela de Checkout será apresentada para o cliente inserir os dados de pagamento e concordar com os termos da assinatura.</p>
-
-<p>Caso o parâmetro <em>data-capture</em> seja &ldquo;<em>false</em>&rdquo;, após a validação dos dados, é adicionado ao formulário um token de assinatura, que deve ser confirmada pelo <em>backend</em> do seu sistema, para o registro da assinatura em sua base de dados. Se o cliente aceitar os termos, um novo campo <code class="prettyprint">&lt;input type=&quot;hidden&quot; id=&quot;subscription_token&quot;&gt;</code> contendo o <strong>subscription_token</strong> é adicionado ao seu formulário, e o <em>submit</em> é efetuado.</p>
 
 <p>Além do <strong>subscription_token</strong>, os seguintes campos <code class="prettyprint">&lt;input type=&quot;hidden&quot;&gt;</code> também são adicionados ao formulário:</p>
 
@@ -239,8 +236,6 @@
 <td>Sempre</td>
 </tr>
 </tbody></table>
-
-<p>Caso você não tenha um sistema de controle de assinaturas, passando o parâmetro <em>data-capture</em> como &ldquo;<em>false</em>&rdquo;, não é necessário confirmação, e um email contendo as informações da assinatura contratada será enviado para os emails configurados no <strong>Portal do EC</strong>, na opção &ldquo;Alertas&rdquo; do submenu &ldquo;<em>Subscription</em>&rdquo;.</p>
 
 <p>Substitua o valor de cada atributo de acordo com a assinatura a ser contratada. Os atributos aceitos são:</p>
 
@@ -300,12 +295,6 @@
 <td>String</td>
 <td>Sim</td>
 </tr>
-<tr>
-<td><strong>data-capture</strong></td>
-<td>Caso seja passado o valor &ldquo;<em>false</em>&rdquo;, para confirmar a contratação da assinatura (e cobrança de taxas de adesão), é necessário realizar a chamada &ldquo;<strong>issueAuthorizedSubscription</strong>&rdquo; a partir do <em>backend</em> do seu sistema. Caso seja passado o valor &ldquo;<em>true</em>&rdquo;, a assinatura é contratada sem necessidade de confirmação.</td>
-<td>String</td>
-<td>Sim</td>
-</tr>
 </tbody></table>
 
 <h2 id="3-2-biblioteca-javascript">3.2 Biblioteca Javascript</h2>
@@ -325,16 +314,15 @@
       */</span>
     <span class="p">}</span>
 
-    <span class="nx">Var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="na">publicApiKey</span><span class="p">:</span> <span class="s2">"pk_test_6pRNASCoBOKtIshFeQd4XMUh"</span><span class="p">,</span>
+    <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">publicApiKey</span><span class="p">:</span> <span class="s2">"homolog_gR83LcKFXFOdZJgRjiv0FhEKFzsuYB0uAojq9PQcnV4="</span><span class="p">,</span>
       <span class="na">upfrontAmount</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
-      <span class="na">startDate</span><span class="p">:</span> <span class="s2">"2016-12-20"</span><span class="p">,</span>
+      <span class="na">startDate</span><span class="p">:</span> <span class="s2">"2018-12-20"</span><span class="p">,</span>
       <span class="na">recurringAmount</span><span class="p">:</span> <span class="mi">6000</span><span class="p">,</span>
       <span class="na">recurrenceCount</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="na">intervalType</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="na">intervalType</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
       <span class="na">intervalValue</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
       <span class="na">paymentTolerance</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-      <span class="na">capture</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
       <span class="na">successCallback</span><span class="p">:</span> <span class="nx">onSuccess</span><span class="p">,</span>
       <span class="na">cancelCallback</span><span class="p">:</span> <span class="nx">onCancel</span><span class="p">,</span>
 
@@ -356,7 +344,7 @@
 <span class="nx">Subscription4all</span><span class="p">.</span><span class="nx">startSubscription</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 </code></pre>
 
-<p>Após isso, a biblioteca está disponível em seu escopo global como &lsquo;Subscription4all&rsquo;. Para iniciar o processo de login/pagamento, basta chamar a função <strong>startCheckout</strong> da biblioteca, como demonstrado abaixo ou ao lado (código javascript).</p>
+<p>Após isso, a biblioteca está disponível em seu escopo global como &lsquo;Subscription4all&rsquo;. Para iniciar o processo de login/pagamento, basta chamar a função <strong>startSubscription</strong> da biblioteca, como demonstrado abaixo ou ao lado (código javascript).</p>
 
 <p>Os parâmetros dessa função (atributos do objeto <em>options</em>) são:</p>
 
@@ -417,12 +405,6 @@
 <td>Sim</td>
 </tr>
 <tr>
-<td><strong>capture</strong></td>
-<td>Caso seja passado o valor &ldquo;<em>false</em>&rdquo;, para confirmar a contratação da assinatura (e cobrança de taxas de adesão), é necessário realizar a chamada &ldquo;<strong>issueAuthorizedSubscription</strong>&rdquo; a partir do <em>backend</em> do seu sistema. Caso seja passado o valor &ldquo;<em>true</em>&rdquo;, a assinatura é contratada sem necessidade de confirmação.</td>
-<td>Boolean</td>
-<td>Sim</td>
-</tr>
-<tr>
 <td><strong>successCallback</strong></td>
 <td>Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o objeto <em>data</em> como parâmetro.</td>
 <td>Função</td>
@@ -454,21 +436,65 @@
 </tr>
 </tbody></table>
 
-<p>Objeto <em>input</em>:
-|Atributo    |Descrição  |Formato    |Obrigatório
-|&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;
-|<strong>name</strong>| Nome completo do usuário.| String | Não
-|<strong>phone</strong>| Telefone do usuário, com DDD. | String | Não
-|<strong>email</strong>| Email do usuário, com DDD. | String | Não
-|<strong>document</strong>| CPF do usuário. | String | Não
-|<strong>birthdate</strong>| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não</p>
+<p>Objeto <em>input</em>:</p>
 
-<p>Objeto <em>rules</em>:
-|Atributo    |Descrição  |Formato    |Obrigatório
-|&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;
-|<strong>smsOnly</strong>| Caso configurado como <em>true</em>, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não</p>
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>name</strong></td>
+<td>Nome completo do usuário.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>phone</strong></td>
+<td>Telefone do usuário, com DDD.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>email</strong></td>
+<td>Email do usuário, com DDD.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>document</strong></td>
+<td>CPF do usuário.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>birthdate</strong></td>
+<td>Data de nascimento do usuário, formato DD/MM/AAAA.</td>
+<td>String</td>
+<td>Não</td>
+</tr>
+</tbody></table>
 
-<p>Caso o parâmetro <em>capture</em> seja enviado como <em>false</em>, após a validação dos dados, é adicionado ao formulário um token de assinatura, que deve ser confirmada pelo <em>backend</em> do seu sistema, para o registro da assinatura em sua base de dados.</p>
+<p>Objeto <em>rules</em>:</p>
+
+<table><thead>
+<tr>
+<th>Atributo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>smsOnly</strong></td>
+<td>Caso configurado como <em>true</em>, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário.</td>
+<td>Boolean</td>
+<td>Não</td>
+</tr>
+</tbody></table>
 
 <p>Caso o cliente efetue o aceite na assinatura, o <em>successCallback</em> é chamado, recebendo um objeto <em>data</em> contendo as seguintes propriedades:</p>
 
@@ -522,11 +548,9 @@
 
 <h2 id="4-1-confirmando-uma-contrata-o">4.1 Confirmando uma contratação</h2>
 
-<p>Caso parâmetro <strong>data-capture</strong> (<em>embedded form</em>) ou <strong>capture</strong> (biblioteca javascript) seja passado como <em>false</em>, é necessário realizar esta chamada de API para confirmar a contratação da assinatura, utilizando o <strong>subscriptionToken</strong> gerado pelo <em>checkout</em>.</p>
+<p>Após o cliente autorizar a contratação da assinatura, o estabelecimento deverá realizar uma chamada através de seu servidor backend para confirmar a assinatura e obter o identificador da mesma. Será utilizado o <strong>subscriptionToken</strong> para identificar a autorização.</p>
 
-<aside class="notice">
-Nota:  por motivos de segurança, você deve informar todos os dados da assinatura novamente nesta chamada.
-</aside>
+<p>Os dados fornecidos nesta chamada devem ser os mesmos fornecidos para o cliente. Caso venham a divergir, a confirmação da assinatura falhará. Isto evita problemas em caso de divergencia.</p>
 
 <aside class="notice">
 Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da assinatura utilizando a chamada descrita na seção 4.2 para verificar se a assinatura foi confirmada com sucesso ou não.
@@ -694,20 +718,20 @@ https://conta.api.4all.com/merchant/issueAuthorizedSubscription
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subscription Token inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h2 id="4-2-consultando-uma-assinatura">4.2 Consultando uma assinatura</h2>
 
-<p>Em caso de erro na chamada de confirmação, ou caso você queira consultar o status de uma assinatura, você pode consultar o estado da assinatura através do Meta ID passado na chamada de Confirmação, ou pelo <em>subscriptionId</em>.</p>
+<p>Em caso de erro na chamada de confirmação, ou caso você queira consultar o status de uma assinatura, você pode consultar o estado da assinatura através do campo <strong>merchantMetaId</strong>, fornecido na chamada de confirmação. Também será possivel utilizar esta chamada para conferir o andamento da assinatura, e verificar se o pagamento esta em dia.</p>
 <pre class="highlight shell"><code>curl -H <span class="s2">"Content-Type: application/json"</span>
 -X POST
 -d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'</span>
-https://conta.api.4all.com/merchant/getTransactionDetails
+https://conta.api.4all.com/merchant/getSubscriptionDetails
 </code></pre>
 
 <p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/getSubscriptionDetails</code></p>
@@ -916,11 +940,11 @@ estiverem presentes, esta chamada falha com um erro específico.</p>
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subscription ID inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h2 id="4-3-alterando-o-valor-recorrente-de-uma-assinatura">4.3 Alterando o valor recorrente de uma assinatura</h2>
@@ -929,7 +953,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>2
 <pre class="highlight shell"><code>curl -H <span class="s2">"Content-Type: application/json"</span>
 -X POST
 -d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'</span>
-https://conta.api.4all.com/merchant/getTransactionDetails
+https://conta.api.4all.com/merchant/changeSubscriptionAmount
 </code></pre>
 
 <p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/changeSubscriptionAmount</code></p>
@@ -989,11 +1013,11 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subscription ID inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h1 id="4-4-cancelando-uma-assinatura">4.4 Cancelando uma assinatura</h1>
@@ -1001,8 +1025,8 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>2
 <p>Utilize esta chamada para cancelar uma assinatura. Ela permanecerá com estado &ldquo;em dia&rdquo; até a data da próxima cobrança recorrente.</p>
 <pre class="highlight shell"><code>curl -H <span class="s2">"Content-Type: application/json"</span>
 -X POST
--d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'</span>
-https://conta.api.4all.com/merchant/getTransactionDetails
+-d <span class="s1">'{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","subscriptionId":"73423624"}'</span>
+https://conta.api.4all.com/merchant/cancelSubscription
 </code></pre>
 
 <p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/cancelSubscription</code></p>
@@ -1050,11 +1074,11 @@ https://conta.api.4all.com/merchant/getTransactionDetails
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subscription ID inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h2 id="4-5-efetuando-uma-baixa-manual">4.5 Efetuando uma baixa manual</h2>
@@ -1136,11 +1160,11 @@ https://conta.api.4all.com/merchant/payUpSubscription
 <p><strong>Tratamento de Erro</strong>
 Em caso de erro na chamada, o status HTTP retornado será diferente de <strong>200</strong>,  e o corpo da mensagem conterá um objeto no formato JSON contendo um objeto <strong>error</strong> contendo um código(<strong>code</strong>) e uma mensagem(<strong>message</strong>).</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="err">error:</span><span class="w"> </span><span class="err">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">2318</span><span class="p">,</span><span class="w">
         </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subscription ID inválido."</span><span class="w">
     </span><span class="p">}</span><span class="w">
-</span><span class="err">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h1 id="5-estados-de-uma-assinatura">5. Estados de uma Assinatura</h1>
