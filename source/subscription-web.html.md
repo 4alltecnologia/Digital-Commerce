@@ -16,7 +16,7 @@ search: true
 
 # 1 Introdução
 
-Com o Subscription, você pode configurar seu website para captar clientes de maneira fácil e rápida.
+Com o Subscription 4all, você pode configurar seu website para captar clientes de maneira fácil e rápida.
 
 Para que seus clientes contratem assinaturas em seu site, você precisa executar os passos:
 
@@ -59,15 +59,14 @@ Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**,
 
   <script
     src="https://lib.4all.com/lib/subscription-embed.js"
-    data-public-api-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+    data-public-api-key="homolog_gR83LcKFXFOdZJgRjiv0FhEKFzsuYB0uAojq9PQcnV4="
     data-upfront-amount="3000"
-    data-start-date="2016-12-20"
+    data-start-date="2018-12-20"
     data-recurring-amount="6000"
     data-recurrence-count="0"
-    data-interval-type="3"
+    data-interval-type="2"
     data-interval-value="1"
     data-payment-tolerance="5"
-    data-capture="false"
     >
   </script>
 </form>
@@ -76,8 +75,6 @@ Você pode inserir o Dialog no seu site de duas maneiras: via **Embedded Form**,
 **Como funciona:** Nesta modalidade de checkout, você adiciona à sua página um formulário que efetua, de forma segura, todo o processo de captura e validação dos dados de pagamento do cliente, assim, as informações sensíveis do seu cliente nunca entram em contato com ambientes não-seguros.
 
 No evento de *submit* do seu formulário, a Janela de Checkout será apresentada para o cliente inserir os dados de pagamento e concordar com os termos da assinatura.
-
-Caso o parâmetro *data-capture* seja "*false*", após a validação dos dados, é adicionado ao formulário um token de assinatura, que deve ser confirmada pelo *backend* do seu sistema, para o registro da assinatura em sua base de dados. Se o cliente aceitar os termos, um novo campo `<input type="hidden" id="subscription_token">` contendo o **subscription_token** é adicionado ao seu formulário, e o *submit* é efetuado.
 
 Além do **subscription_token**, os seguintes campos `<input type="hidden">` também são adicionados ao formulário:
 
@@ -88,8 +85,6 @@ Além do **subscription_token**, os seguintes campos `<input type="hidden">` tam
 |**subscription_phonenumber**| Telefone celular informado pelo usuário. Com ddi e ddd, exemplo: "5511992392322". | string | Sempre
 |**subscription_cpfcnpj**| CPF ou CNPJ informado pelo usuário. Sem formatação. |string| Sempre
 |**subscription_birthdate**| Data de nascimento informado pelo usuário. Sem formatação. |string|Sempre
-
-Caso você não tenha um sistema de controle de assinaturas, passando o parâmetro *data-capture* como "*false*", não é necessário confirmação, e um email contendo as informações da assinatura contratada será enviado para os emails configurados no **Portal do EC**, na opção "Alertas" do submenu "*Subscription*".
 
 Substitua o valor de cada atributo de acordo com a assinatura a ser contratada. Os atributos aceitos são:
 
@@ -103,9 +98,6 @@ Substitua o valor de cada atributo de acordo com a assinatura a ser contratada. 
 |**data-interval-type**|Indica como o intervalo entre cobranças recorrentes é medido: 0-Dias 1-Semanas 2-Meses.|String|Sim
 |**data-interval-value**|Indica quantos dias/semanas/meses (dependendo do parâmetro **data-interval-type**) existem entre dois pagamentos recorrentes consecutivos.|String|Sim
 |**data-payment-tolerance**|Indica quantos dias a assinatura pode permanecer com pagamento em atraso antes de ser automáticamente cancelada.|String|Sim
-|**data-capture**|Caso seja passado o valor "*false*", para confirmar a contratação da assinatura (e cobrança de taxas de adesão), é necessário realizar a chamada "**issueAuthorizedSubscription**" a partir do *backend* do seu sistema. Caso seja passado o valor "*true*", a assinatura é contratada sem necessidade de confirmação.|String|Sim
-
-
 
 ## 3.2 Biblioteca Javascript
 
@@ -128,16 +120,15 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 	  */
 	}
 
-	Var options = {
-	  publicApiKey: "pk_test_6pRNASCoBOKtIshFeQd4XMUh",
+	var options = {
+	  publicApiKey: "homolog_gR83LcKFXFOdZJgRjiv0FhEKFzsuYB0uAojq9PQcnV4=",
 	  upfrontAmount: 3000,
-	  startDate: "2016-12-20",
+	  startDate: "2018-12-20",
 	  recurringAmount: 6000,
 	  recurrenceCount: 0,
-	  intervalType: 3,
+	  intervalType: 2,
 	  intervalValue: 1,
 	  paymentTolerance: 5,
-	  capture: false,
 	  successCallback: onSuccess,
 	  cancelCallback: onCancel,
 
@@ -159,7 +150,7 @@ Para fazer a integração via javascript, você deve primeiramente importar o ar
 Subscription4all.startSubscription(options);
 ```
 
-Após isso, a biblioteca está disponível em seu escopo global como 'Subscription4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startCheckout** da biblioteca, como demonstrado abaixo ou ao lado (código javascript).
+Após isso, a biblioteca está disponível em seu escopo global como 'Subscription4all'. Para iniciar o processo de login/pagamento, basta chamar a função **startSubscription** da biblioteca, como demonstrado abaixo ou ao lado (código javascript).
 
 Os parâmetros dessa função (atributos do objeto *options*) são:
 
@@ -173,7 +164,6 @@ Os parâmetros dessa função (atributos do objeto *options*) são:
 |**intervalType**|Indica como o intervalo entre cobranças recorrentes é medido: 0-Dias 1-Semanas 2-Meses.|Number|Sim
 |**intervalValue**|Indica quantos dias/semanas/meses (dependendo do parâmetro **intervalType**) existem entre dois pagamentos recorrentes consecutivos.|String|Sim
 |**paymentTolerance**|Indica quantos dias a assinatura pode permanecer com pagamento em atraso antes de ser automáticamente cancelada.|String|Sim
-|**capture**|Caso seja passado o valor "*false*", para confirmar a contratação da assinatura (e cobrança de taxas de adesão), é necessário realizar a chamada "**issueAuthorizedSubscription**" a partir do *backend* do seu sistema. Caso seja passado o valor "*true*", a assinatura é contratada sem necessidade de confirmação.|Boolean|Sim
 |**successCallback** | Função que será chamada quando o checkout estiver finalizado com sucesso. Recebe o objeto *data* como parâmetro. | Função | Sim
 |**cancelCallback**| Função que será chamada caso o usuário cancele o processo de contratação sem concluí-lo, ou aconteça um erro no pagamento. | Função | Não
 |**debug**|Parâmetro usado para ativar os logs no console, útil para validação dos parâmetros passados à biblioteca. |Boolean||Não
@@ -181,6 +171,7 @@ Os parâmetros dessa função (atributos do objeto *options*) são:
 |**rules**| Objeto com opções para o funcionamento da biblioteca. | Objeto (olhar abaixo) | Não
 
 Objeto *input*:
+
 |Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
 |**name**| Nome completo do usuário.| String | Não
@@ -190,11 +181,10 @@ Objeto *input*:
 |**birthdate**| Data de nascimento do usuário, formato DD/MM/AAAA. | String | Não
 
 Objeto *rules*:
+
 |Atributo    |Descrição  |Formato    |Obrigatório
 |------------|-----------|-----------|--------------
 |**smsOnly**| Caso configurado como *true*, não será solicitada senha ao usuário, e a autenticação é feita somente por código SMS enviado ao telefone do usuário. | Boolean | Não
-
-Caso o parâmetro *capture* seja enviado como *false*, após a validação dos dados, é adicionado ao formulário um token de assinatura, que deve ser confirmada pelo *backend* do seu sistema, para o registro da assinatura em sua base de dados.
 
 Caso o cliente efetue o aceite na assinatura, o *successCallback* é chamado, recebendo um objeto *data* contendo as seguintes propriedades:
 
@@ -211,11 +201,10 @@ Caso o cliente efetue o aceite na assinatura, o *successCallback* é chamado, re
 
 ##4.1 Confirmando uma contratação
 
-Caso parâmetro **data-capture** (*embedded form*) ou **capture** (biblioteca javascript) seja passado como *false*, é necessário realizar esta chamada de API para confirmar a contratação da assinatura, utilizando o **subscriptionToken** gerado pelo *checkout*.
+Após o cliente autorizar a contratação da assinatura, o estabelecimento deverá realizar uma chamada através de seu servidor backend para confirmar a assinatura e obter o identificador da mesma. Será utilizado o **subscriptionToken** para identificar a autorização.
 
-<aside class="notice">
-Nota:  por motivos de segurança, você deve informar todos os dados da assinatura novamente nesta chamada.
-</aside>
+Os dados fornecidos nesta chamada devem ser os mesmos fornecidos para o cliente. Caso venham a divergir, a confirmação da assinatura falhará. Isto evita problemas em caso de divergencia.
+
 <aside class="notice">
 Em caso de erro de comunicação ao executar esta chamada, você deve consultar o estado da assinatura utilizando a chamada descrita na seção 4.2 para verificar se a assinatura foi confirmada com sucesso ou não.
 </aside>
@@ -289,7 +278,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Subscription Token inválido."
 	}
@@ -298,13 +287,14 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 
 ## 4.2 Consultando uma assinatura
-Em caso de erro na chamada de confirmação, ou caso você queira consultar o status de uma assinatura, você pode consultar o estado da assinatura através do Meta ID passado na chamada de Confirmação, ou pelo *subscriptionId*.
+
+Em caso de erro na chamada de confirmação, ou caso você queira consultar o status de uma assinatura, você pode consultar o estado da assinatura através do campo **merchantMetaId**, fornecido na chamada de confirmação. Também será possivel utilizar esta chamada para conferir o andamento da assinatura, e verificar se o pagamento esta em dia.
 
 ```shell
 curl -H "Content-Type: application/json"
 -X POST
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'
-https://conta.api.4all.com/merchant/getTransactionDetails
+https://conta.api.4all.com/merchant/getSubscriptionDetails
 ```
 
 **Caminho**: `<endpoint>/merchant/getSubscriptionDetails`
@@ -384,7 +374,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Subscription ID inválido."
 	}
@@ -399,7 +389,7 @@ Utilize esta chamada para alterar o valor de cobrança recorrente de uma assinat
 curl -H "Content-Type: application/json"
 -X POST
 -d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'
-https://conta.api.4all.com/merchant/getTransactionDetails
+https://conta.api.4all.com/merchant/changeSubscriptionAmount
 ```
 
 **Caminho**: `<endpoint>/merchant/changeSubscriptionAmount`
@@ -436,7 +426,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Subscription ID inválido."
 	}
@@ -449,8 +439,8 @@ Utilize esta chamada para cancelar uma assinatura. Ela permanecerá com estado "
 ```shell
 curl -H "Content-Type: application/json"
 -X POST
--d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","transactionId":"73423624"}'
-https://conta.api.4all.com/merchant/getTransactionDetails
+-d '{"merchantKey":"MDEyMzQ1Njc4OTAxMjMN...","subscriptionId":"73423624"}'
+https://conta.api.4all.com/merchant/cancelSubscription
 ```
 
 **Caminho**: `<endpoint>/merchant/cancelSubscription`
@@ -482,7 +472,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Subscription ID inválido."
 	}
@@ -535,14 +525,12 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 
 ```json
 {
-	error: {
+	"error": {
 		"code": 2318,
 		"message": "Subscription ID inválido."
 	}
 }
 ```
-
-
 
 #5. Estados de uma Assinatura
 |Estado|Descrição
