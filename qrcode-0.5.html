@@ -1,0 +1,1402 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:300,500,700" rel=stylesheet>
+    <title>API Documentation</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all_nosearch.js"></script>
+  </head>
+
+  <body class="qrcode-0" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+        </div>
+      <div id="toc">
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="pagamento-integrado-via-qr-code-0-5">Pagamento Integrado via QR Code - 0.5</h1>
+
+<h1 id="1-introdu-o">1. Introdução</h1>
+
+<h2 id="1-1-chave-de-autentica-o">1.1. Chave de Autenticação</h2>
+
+<p>O acesso à API é restrito a parceiros comerciais previamente cadastrados, sendo necessário informar, em cada conexão, a chave de autenticação fornecida na interface de gerenciamento. A duração da chave é indeterminada, somente perdendo a validade caso a conta do EC seja desativada na interface de gerenciamento.</p>
+
+<h3 id="1-2-get-sobre-https">1.2. GET sobre HTTPS</h3>
+
+<p>Com capacidade de 1024 caracteres, este método é utilizado quando se quer passar poucas ou pequenas informações para realizar uma pesquisa ou simplesmente passar uma informação para outra página através da URL (de Uniform Resource Locator).
+Exemplo: https://api.4all.com/qrcode/payment?apiKey=&amp;amount=3000</p>
+
+<h3 id="1-3-par-metros-das-requisi-es-e-respostas">1.3. Parâmetros das Requisições e Respostas</h3>
+
+<p>O tamanho dos parâmetros pode ser fixo ou variável e segue a seguintes regras:
+  * <strong>String, URL e Datetime: tamanho medido em caracteres UTF-8;</strong>
+  * <strong>Number: Valores numéricos;</strong>
+  * <strong>Object: Não possui tamanho.</strong></p>
+
+<h3 id="1-4-respostas-de-sucesso">1.4. Respostas de Sucesso</h3>
+
+<p>O iframe será redirecionado para uma url <code class="prettyprint">endpoint/qrcode/paymentSuccess</code>. Na tela irá aparecer informações sobre o pagamento.</p>
+
+<h2 id="1-5-respostas-de-erro">1.5. Respostas de Erro</h2>
+
+<p>O iframe será redirecionado para uma url <code class="prettyprint">endpoint/qrcode/paymentFail</code>. Na tela irá aparecer informações sobre a falha do pagamento.</p>
+
+<h3 id="1-6-endere-os-dos-servidores-de-testes-e-de-produ-o">1.6. Endereços dos servidores de testes e de produção</h3>
+
+<p>Os seguintes endpoints devem ser usados para executar as chamadas:</p>
+
+<table><thead>
+<tr>
+<th>Ambiente</th>
+<th>URL</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Testes</strong></td>
+<td><a href="https://test.api.4all.com">https://test.api.4all.com</a></td>
+</tr>
+<tr>
+<td><strong>Produção</strong></td>
+<td><a href="https://api.4all.com">https://api.4all.com</a></td>
+</tr>
+</tbody></table>
+
+<p>Os serviços sempre devem ser acessados usando TLS, na porta 443. Na prática, os endpoints acima sempre serão precedidos de &ldquo;https://&rdquo;.</p>
+
+<h2 id="1-3-endere-os-dos-servidores-de-homologa-o-e-de-produ-o">1.3. Endereços dos servidores de Homologação e de Produção</h2>
+
+<p>Os seguintes endpoints devem ser usados para executar as chamadas:</p>
+
+<table><thead>
+<tr>
+<th>Ambiente</th>
+<th>URL</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Homologação</strong></td>
+<td><a href="https://loyalty.homolog.4all.com/api/">https://loyalty.homolog.4all.com/api/</a></td>
+</tr>
+<tr>
+<td><strong>Produção</strong></td>
+<td><a href="https://loyalty.homolog.4all.com/api/">https://loyalty.4all.com/api/</a></td>
+</tr>
+</tbody></table>
+
+<h1 id="2-chamadas-de-api">2. Chamadas de API</h1>
+
+<h2 id="2-1-qrcode">2.1. QrCode</h2>
+
+<h3 id="2-1-1-get-iframe">2.1.1. Get IFrame</h3>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/qrcode/payment</code></p>
+
+<p><strong>Método HTTP</strong>: GET</p>
+
+<p><strong>Descrição</strong>: Retorna uma página web desenvolvida na 4all para controlar todo o fluxo de geração de QRCode e confirmação do pagamento. Tamanho ideal do iframe 375 px x 400 px.</p>
+
+<p><strong>Fluxo</strong>: Após definido o valor do pagamento e as parcelas,deverá ser chamado<br>
+ <code class="prettyprint">&lt;endpoint&gt;/qrcode/payment</code>, será gerado um QR Code e o iframe ficará fazendo requisições de 3 em 3 segundos para o servidor da 4all verificando se o pagamento ja foi efetuado se confirmado o pagamento ele será redirecionado para <code class="prettyprint">endpoint/qrcode/paymentSucess</code>(item 1.4.) caso haja um pagamento mas ele não seja autorizado será redirecionado para <code class="prettyprint">endpoint/qrcode/paymentFail</code>(item 1.5).</p>
+
+<p><strong>Observação</strong>:
+* <strong>Todos os parâmetros devem ser devidamente escapados para serem enviados como querystring.</strong></p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>documentNumber</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>terminalId</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td>44</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>installment</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td>2</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>metaData</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td></td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>metaId</strong></td>
+<td>Tipo de credenciais que serão geradas</td>
+<td>String</td>
+<td>44</td>
+<td>Não</td>
+</tr>
+</tbody></table>
+
+<p><strong>Descrição</strong>: Retorna uma página web desenvolvida na 4all para controlar todo o fluxo de geração de QR Code e confirmação do pagamento. No endpoint ‘paymentSuccess’ vai constar no querystring seguintes dados da transação: </p>
+
+<p><strong>Resposta</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>message</strong></td>
+<td>Mensagem de confirmação.</td>
+<td>String</td>
+<td>String</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>brandId</strong></td>
+<td>Identificador da bandeira do cartão</td>
+<td>String</td>
+<td>2</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>acquirerUsn</strong></td>
+<td>Identificador/NSU do adquirente para a transação</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>issuerAuthCode</strong></td>
+<td>Código de autorização adquirente</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>id da transação na 4all</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:
+    <code class="prettyprint">&lt;endpoint&gt;/qrcode/payment?apiKey=0123456789ABCDEF01&amp;documentNumber=19201989000120&amp;terminalId=145&amp;amount=10000&amp;installment=6&amp;metaData=%7B%22UID%22%3A1523%7D&amp;metaId=abc123</code></p>
+
+<h3 id="2-1-2-get-data">2.1.2. Get data</h3>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/qrcode/getData</code></p>
+
+<p><strong>Método HTTP</strong>: POST</p>
+
+<p><strong>Descrição</strong>: Retorna um base64 para ser gerado o QR Code e transactionId da 4all.Utilizado quando parceiro deseja gerar o QR Code nativo em seu sistema.</p>
+
+<p><strong>Fluxo</strong>: Após definido o valor do pagamento e as parcelas,deverá ser chamado<br>
+ <code class="prettyprint">&lt;endpoint&gt;/qrcode/getData</code>, será gerado um base64 que deverá ser gerado um QR Code e id de transação da 4all, e deverá ser desenvolvido um pulling com a 4all para ficar validando o status da transação.</p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>Chave única do EC</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>documentNumber</strong></td>
+<td>CNPJ do estabelecimento comercial</td>
+<td>String</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>terminalId</strong></td>
+<td>Identificador do terminal PDV</td>
+<td>String</td>
+<td>44</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>VAlor da transação, em centavos</td>
+<td>Number</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>installment</strong></td>
+<td>Número de parcelas</td>
+<td>Number</td>
+<td>2</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>metaData</strong></td>
+<td>Dados do pagamento no EC</td>
+<td>Json/String</td>
+<td></td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>metaId</strong></td>
+<td>Usn do pagamento no EC</td>
+<td>String</td>
+<td>44</td>
+<td>Não</td>
+</tr>
+</tbody></table>
+
+<p><strong>Resposta</strong>: Retorna um json com base 64 para gerar o QR Code e id da transação.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>qrCode</strong></td>
+<td>QR Code para gerar imagem</td>
+<td>String</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Id da transação na 4all</td>
+<td>Int</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:</p>
+
+<p><strong>Requisição</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"documentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19201989000120"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"terminalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"145"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"installments"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"metaData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"UID"</span><span class="p">:</span><span class="mi">1523</span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"145"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"qrCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">3070</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="2-1-3-get-image">2.1.3. Get Image</h3>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/qrcode/getImage</code></p>
+
+<p><strong>Método HTTP</strong>: POST</p>
+
+<p><strong>Descrição</strong>: Retorna um base64 para ser gerado o QR Code e transactionId da 4all.</p>
+
+<p><strong>Fluxo</strong>: Após definido o valor do pagamento e as parcelas,deverá ser chamado<br>
+ <code class="prettyprint">&lt;endpoint&gt;/qrcode/getImage</code>, será gerado uma imagem contendo um QR Code e id de transação da 4all, e deverá ser desenvolvido um pulling com a 4all para ficar validando o status da transação.</p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>Chave única do EC</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>documentNumber</strong></td>
+<td>CNPJ do estabelecimento comercial</td>
+<td>String</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>terminalId</strong></td>
+<td>Identificador do terminal PDV</td>
+<td>String</td>
+<td>44</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>VAlor da transação, em centavos</td>
+<td>Number</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>installment</strong></td>
+<td>Número de parcelas</td>
+<td>Number</td>
+<td>2</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>metaData</strong></td>
+<td>Dados do pagamento no EC</td>
+<td>Json/String</td>
+<td></td>
+<td>Não</td>
+</tr>
+</tbody></table>
+
+<p><strong>Resposta</strong>: Retorna um json com base 64 para gerar o QR Code e id da transação.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>qrCode</strong></td>
+<td>QR Code para gerar imagem</td>
+<td>String</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Id da transação na 4all</td>
+<td>Int</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:</p>
+
+<p><strong>Requisição</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"documentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19201989000120"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"terminalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"145"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"installments"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"metaData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"UID"</span><span class="p">:</span><span class="mi">1523</span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"145"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"qrCodeImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"endpoint/qrcode/image/1641651681"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">3070</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="2-1-4-get-iframe-refund">2.1.4. Get IFrame - Refund</h3>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/qrcode/refund</code></p>
+
+<p><strong>Método HTTP</strong>: GET</p>
+
+<p><strong>Descrição</strong>: Retorna uma página web desenvolvida na 4all para controlar todo o fluxo de geração de QRCode e confirmação do cancelamento. Tamanho ideal do iframe 375 px x 400 px.</p>
+
+<p><strong>Fluxo</strong>: Deverá ser chamado <code class="prettyprint">&lt;endpoint&gt;/qrcode/refund</code>, será gerado um QR Code e o iframe ficará fazendo requisições de 3 em 3 segundos para o servidor da 4all verificando se o pagamento foi cancelado se confirmado o cancelamento ele será redirecionado para <code class="prettyprint">endpoint/qrcode/paymentSucess</code>(item 1.4.) caso haja um cancelamento mas ele não seja autorizado será redirecionado para <code class="prettyprint">endpoint/qrcode/paymentFail</code>(item 1.5).</p>
+
+<p><strong>Observação</strong>:
+* <strong>Todos os parâmetros devem ser devidamente escapados para serem enviados como querystring.</strong></p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>Chave única do EC</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transcationId</strong></td>
+<td>Id da transação na 4all</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>merchantMetaId</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa</td>
+<td>String</td>
+<td>44</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong>Resposta</strong>: Retorna uma página web desenvolvida na 4all para controlar todo o fluxo de geração de QR Code e confirmação do pagamento. No endpoint ‘paymentSuccess’ vai constar no querystring seguintes dados da transação:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>message</strong></td>
+<td>Mensagem de confirmação.</td>
+<td>String</td>
+<td>String</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>id da transação na 4all</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>Valor da transação, em centavos</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>merchantName</strong></td>
+<td>Nome do estabelecimento</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:
+    <code class="prettyprint">&lt;endpoint&gt;/qrcode/refund?apiKey=3%2FQIfSKOAK%2FR2mKFZSJNpUh0ozOuo89xThINGzrGKmE%3D&amp;transactionId=49747</code></p>
+
+<h3 id="2-1-5-get-data-refund">2.1.5. Get data - Refund</h3>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/qrcode/getDataRefund</code></p>
+
+<p><strong>Método HTTP</strong>: POST</p>
+
+<p><strong>Descrição</strong>: Retorna um base64 para ser gerado o QR Code e transactionId da 4all.Utilizado quando parceiro deseja gerar o QR Code nativo em seu sistema.</p>
+
+<p><strong>Fluxo</strong>: Deverá ser chamado <code class="prettyprint">&lt;endpoint&gt;/qrcode/getDataRefund</code>, será gerado um base64 que deverá ser gerado um QR Code e id de transação da 4all, e deverá ser desenvolvido um pulling com a 4all para ficar validando o status da transação.</p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>Chave única do EC</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transcationId</strong></td>
+<td>Id da transação na 4all</td>
+<td>String</td>
+<td>11</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>merchantMetaId</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa</td>
+<td>String</td>
+<td>44</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong>Resposta</strong>: Retorna um json com base 64 para gerar o QR Code e id da transação.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>qrCode</strong></td>
+<td>QR Code para gerar imagem</td>
+<td>String</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Id da transação na 4all</td>
+<td>Int</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:</p>
+
+<p><strong>Requisição</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"49747"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+
+</span><span class="err">ou</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"qrCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">49747</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="2-1-6-get-image">2.1.6. Get Image</h3>
+
+<p><strong>Caminho</strong>: <code class="prettyprint">&lt;endpoint&gt;/qrcode/getImageRefund</code></p>
+
+<p><strong>Método HTTP</strong>: POST</p>
+
+<p><strong>Descrição</strong>: Retorna um base64 para ser gerado o QR Code e transactionId da 4all.</p>
+
+<p><strong>Fluxo</strong>: Deverá ser chamado <code class="prettyprint">&lt;endpoint&gt;/qrcode/getImageRefund</code>, será gerado uma imagem contendo um QR Code e id de transação da 4all, e deverá ser desenvolvido um pulling com a 4all para ficar validando o status da transação.</p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>Chave única do EC</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transcationId</strong></td>
+<td>Id da transação na 4all</td>
+<td>String</td>
+<td>11</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>merchantMetaId</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa</td>
+<td>String</td>
+<td>44</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong>Resposta</strong>: Retorna um json com base 64 para gerar o QR Code e id da transação.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>qrCode</strong></td>
+<td>QR Code para gerar imagem</td>
+<td>String</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Id da transação na 4all</td>
+<td>Int</td>
+<td>11</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:</p>
+
+<p><strong>Requisição</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"49747"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+
+</span><span class="err">ou</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"merchantMetaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1259"</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"qrCodeImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"endpoint/qrcode/image/1641651681"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">49747</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h1 id="3-consulta-de-transa-es">3. Consulta de transações</h1>
+
+<h2 id="3-1-get-transaction-details">3.1. Get Transaction Details</h2>
+
+<p><strong>Caminho homolog</strong>: <code class="prettyprint">https://conta.homolog-interna.4all.com/merchant/getTransactionDetails</code></p>
+
+<p><strong>Caminho produção</strong>: <code class="prettyprint">https://conta.api.4all.com/merchant/getTransactionDetails</code></p>
+
+<p><strong>Método HTTP</strong>: POST</p>
+
+<p><strong>Descrição</strong>: Retorna os detalhes de uma transação.</p>
+
+<p><strong>Fluxo</strong>: Está chamada pode ser utilizada após realizar o fluxo 2.1.2 ou 2.1.3.</p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>merchantKey</strong></td>
+<td>Chave de acesso do merchant à API</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação</td>
+<td>String</td>
+<td>11</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>merchantMetaID</strong></td>
+<td>Identificador único, atribuído pelo estabelecimento comercial, que será usado como chave na pesquisa</td>
+<td>String</td>
+<td>44</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong>Resposta</strong>:
+Retorna um json com imagem e id da transação.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Chave de acesso do merchant à API</td>
+<td>String</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>Quando presente, informa o identificador da assinatura que gerou esta transação</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>Valor da transação, em centavos</td>
+<td>Number</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>fullAmount</strong></td>
+<td>Valor original da transação antes de aplicar o desconto, em centavos (Presente se foi aplicado alguma forma de desconto)</td>
+<td>Number</td>
+<td></td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>installments</strong></td>
+<td>Número de parcelas</td>
+<td>Number</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>InstallmentType</strong></td>
+<td>Tipo de parcelamento (1- à vista, 2 - parcelado lojista, 3 - parcelado emissor)</td>
+<td>Number</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>Estado da transação (conforme anexo A)</td>
+<td>Number</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>reasonMessage</strong></td>
+<td>Mensagem de autorização/recusa da transação (Presente se disponivel)</td>
+<td>String</td>
+<td>1-1024</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>createdAt</strong></td>
+<td>Data e hora UTC em que a transação foi criada no servidor 4all. Formato:YYYY-MM-DDThh:mm:ssZ</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>paidAt</strong></td>
+<td>Data e hora UTC em que a transação foi paga por uma conta 4all (formato YYYY-MM-DDThh:mm:ssZ). Presente somente se a transação já foi paga</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>authorizationInfo</strong></td>
+<td>Objeto contendo detalhes de autorização da transação. Presente somente se a transação já foi paga (ver abaixo)</td>
+<td>Object</td>
+<td>*</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>transactionToken</strong></td>
+<td>Chave para consulta da transação pela chamada “Wait For Transaction”</td>
+<td>String</td>
+<td>44</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>loyalty</strong></td>
+<td>Dados do sistema de fidelidade (Presente se foi aplicado alguma forma de desconto)</td>
+<td>Object</td>
+<td>*</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>receipt</strong></td>
+<td>Recibo do comprovante de pagamento / estorno. Retorna apenas se na requisição o indicador receipt for igual a true e se a transação encontra-se nos estados 3 - Pago, 5 - Estornado/Cancelado, e 20 - Autorizado</td>
+<td>String</td>
+<td>999</td>
+<td>Depende</td>
+</tr>
+</tbody></table>
+
+<p><strong>AuthorizationInfo</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>acquirerId</strong></td>
+<td>Identificador do adquirente (Tabela D)</td>
+<td>Number</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>acquirerUsn</strong></td>
+<td>Identificador/NSU do adquirente para a transação</td>
+<td>String</td>
+<td>50</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>acquirerTimestamp</strong></td>
+<td>Timestamp de pagamento conforme reportado pelo adquirente. O formato e timezone deste campo segue o formato usado pelo adquirente. Presente somente se o adquirente informar</td>
+<td>String</td>
+<td>50</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>brandId</strong></td>
+<td>Identificador da bandeira do cartão que foi usado no pagamento (Tabela C)</td>
+<td></td>
+<td></td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Loyalty</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>programId</strong></td>
+<td>Identificador do adquirente</td>
+<td>Number</td>
+<td></td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>campaignUUID</strong></td>
+<td>Identificador único da campanha</td>
+<td>String</td>
+<td>1-64</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>couponUUID</strong></td>
+<td>Identificador único do cupom</td>
+<td>String</td>
+<td>1-64</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>code</strong></td>
+<td>Código do cupom</td>
+<td>String</td>
+<td>1-64</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>discountType</strong></td>
+<td>Tipo do desconto, sendo percentual (&lsquo;PERCENT’) ou valor fixo (&#39;AMOUNT’)</td>
+<td>String</td>
+<td>1-64</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>discountValue</strong></td>
+<td>Valor do desconto aplicado</td>
+<td>String</td>
+<td>1-64</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>message</strong></td>
+<td>Mensagem descritiva do cupom</td>
+<td>String</td>
+<td>1024</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><strong>redeemAt</strong></td>
+<td>Data e hora em que o cupom foi utilizado (YYYY-MM-DDThh:mm:ssZ)</td>
+<td>String</td>
+<td>20</td>
+<td>Sim</td>
+</tr>
+</tbody></table>
+
+<p><strong>Observação</strong>:
+* <strong>Apenas um dos dois parâmetros, <code class="prettyprint">transactionId</code> ou <code class="prettyprint">merchantMetaId</code>, pode ser usado; se ambos estiverem presentes, esta chamada falha com um erro específico.</strong></p>
+
+<p><strong>Exemplo</strong>:</p>
+
+<p><strong>Requisição</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789ABCDEF01..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"documentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19201989000120"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"terminalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"145"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"installments"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"metaData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"UID"</span><span class="p">:</span><span class="mi">1523</span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metaId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"145"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"qrCodeImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"endpoint/qrcode/image/1641651681"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">3070</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="3-2-wait-for-transaction">3.2. Wait For Transaction</h2>
+
+<p><strong>Caminho homolog</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/waitForTransaction</code></p>
+
+<p><strong>Caminho produção</strong>: <code class="prettyprint">&lt;endpoint&gt;/merchant/waitForTransaction</code></p>
+
+<p><strong>Método HTTP</strong>: POST</p>
+
+<p><strong>Descrição</strong>: Esta rotina não retorna enquanto a transação estiver com status pendente de pagamento (estadis 0, 1 ou 2 - vide Anexo B tabela B.2). O chamador desta rotina deve estar preparado para lidar com tempos de resposta longos, de 30 segundos ou mais. O objetivo desta chamada é reduzir o overhead de múltiplas conexões fazendo polling enquanto aguardam uma transação ser paga.</p>
+
+<p><strong>Fluxo</strong>: Deverá ser chamado <code class="prettyprint">&lt;endpoint&gt;/merchant/waitForTransaction</code> e deverá ser retornado o status se a transação foi paga ou não.</p>
+
+<p><strong>Requisição</strong>:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>merchantKey</strong></td>
+<td>Chave de acesso do merchant à API</td>
+<td>String</td>
+<td>44</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>Identificador da transação</td>
+<td>String</td>
+<td>20</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>transactionToken</strong></td>
+<td>Chave de identificação da transação, retornado pela chamada createTransaction</td>
+<td>String</td>
+<td>44</td>
+<td>Depende</td>
+</tr>
+<tr>
+<td><strong>ignoreRefusedStatus</strong></td>
+<td>Indicador para continuar a espera e se o pagamento tiver sido negado. Por padrão, é considerado false</td>
+<td>Boolean</td>
+<td>*</td>
+<td>Não</td>
+</tr>
+</tbody></table>
+
+<p><strong>Observação</strong>:
+* <strong>Esta chamada pode ser executada usando o <code class="prettyprint">merchantKey</code> e o <code class="prettyprint">transactionId</code> (ambos são necessários), e neste caso o campo <code class="prettyprint">transactionToken</code> não deve ser usado.</strong>
+* <strong>Quando <code class="prettyprint">transactionToken</code> for usado, o <code class="prettyprint">merchantKey</code> e o <code class="prettyprint">transactionId</code> não devem ser informados.</strong></p>
+
+<p><strong>Resposta</strong>:
+Retorna um json com imagem e id da transação.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Formato</th>
+<th>Tam</th>
+<th>Obrigatório</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>status</strong></td>
+<td>Status da transação</td>
+<td>Number</td>
+<td>*</td>
+<td>Sempre</td>
+</tr>
+</tbody></table>
+
+<p><strong>Exemplo</strong>:</p>
+
+<p><strong>Requisição</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+ </span><span class="nt">"transactionToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NGFsbDRhbGw0YWxsNGFs..."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"ignoreRefusedStatus"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Resposta</strong>:</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h1 id="anexo-tabelas-de-dom-nio">Anexo - Tabelas de Domínio</h1>
+
+<h2 id="tabela-a-estados-de-uma-transa-o">Tabela A - Estados de uma Transação</h2>
+
+<table><thead>
+<tr>
+<th>Estado</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>Transação em processo de autorização</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Transação recusada</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Transação autorizada</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Transação em processo de captura</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transação capturada (paga)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Transação em processo de cancelamento</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Transação cancelada</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Transação paga - cancelamento falhou</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Transação contestada pelo portador do cartão (chargeback)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Transação paga - reapresentada após contestação (chargeback refund)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Transação falhou</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Transação com falha no processo de cancelamento</td>
+</tr>
+</tbody></table>
+
+<h2 id="tabela-b-forma-de-pagamento">Tabela B - Forma de Pagamento</h2>
+
+<table><thead>
+<tr>
+<th>paymentMode</th>
+<th>Modalidade do pagamento</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Crédito</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Débito</td>
+</tr>
+</tbody></table>
+
+<h2 id="tabela-c-bandeiras-de-cart-o">Tabela C - Bandeiras de Cartão</h2>
+
+<table><thead>
+<tr>
+<th>brandId</th>
+<th>Nome da Bandeira</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>Desconhecido</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Visa</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Mastercard</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Diners</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Elo</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Amex</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Discover</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Aura</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Jcb</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Hipercard</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Maestro</td>
+</tr>
+</tbody></table>
+
+<h2 id="tabela-d-adquirentes">Tabela D - Adquirentes</h2>
+
+<table><thead>
+<tr>
+<th>acquirerId</th>
+<th>Nome</th>
+<th>Observação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Stone</td>
+<td>Somente Crédito</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pagar me</td>
+<td>Somente Crédito</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GetNet</td>
+<td>Somente Crédito</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cielo</td>
+<td>Somente Crédito</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Rede</td>
+<td>Somente Crédito</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Cielo v3</td>
+<td>Somente Crédito</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
