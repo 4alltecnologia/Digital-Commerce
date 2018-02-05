@@ -155,6 +155,27 @@
 </tr>
 </tbody></table>
 
+<h2 id="1-2-postback">1.2. Postback</h2>
+
+<p>O postback é um mecanismo de comunicação com o merchant para informar sobre mudanças ocorridas no status de um pagamento ou assinatura.
+Quando um pagamento ou assinatura são criados pelo merchant, uma URL pode ser informada, para onde as mensagens de postback serão direcionadas. Esta URL deve estar num formato válido, apontar para um domínio autorizado no cadastro do merchant, e pode possuir até 250 caracteres.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17999999999999999999"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Sempre que ocorrer uma alteração no status de um pagamento ou assinatura que possuam as informações de postback configuradas, uma requisição POST será feita para a URL informada, contendo um corpo JSON (Contenttype:application/json) como pode ser visto no exemplo a seguir:</p>
+
+<p>O campo <strong><em>type</em></strong> pode assumir os valores 1 (para postback referente a pagamento) ou 2 (para assinatura).</p>
+
+<p>Para que seja considerado que a comunicação ocorreu com sucesso, o retorno dado à mensagem de postback deve possuir status 200 ou 204. Do contrário, serão efetuadas retentativas intervaladas entre si em pelo menos um minuto até um  máximo de cinco vezes. Caso ainda não se obtenha sucesso, NÃO serão feitas tentativas adicionais de comunicação da mudança de status.</p>
+
+<p>O recurso de postback é apenas uma conveniência para melhorar a integração com o sistema 4all, e está sujeito a falhas de comunicação, indisponibilidade de alguma das partes, etc. Desta forma, não elimina a necessidade de consultas periódicas ao status do pagamento ou da assinatura que se deseja monitorar.</p>
+
+<p>Para garantir a autenticidade da mensagem, é enviado no seu cabeçalho um campo <strong>Content-signature</strong>. Este contém um <em>hash</em> em <strong>HMAC-SHA-256</strong> em hexadecimal calculado sobre o corpo da mensagem, usando como chave a <em>signatureKey</em> do estabelecimento.</p>
+
 <h1 id="2-chaves-de-api">2 Chaves de API</h1>
 
 <p>Para obter as Chaves de API, acesse o <strong>Portal do EC</strong> (https://portal.4all.com) e faça seu login. No menu lateral, clique na opção “Chaves de API” no sub-menu “<em>Subscription</em>”.</p>
@@ -656,6 +677,13 @@ https://conta.api.4all.com/merchant/issueAuthorizedSubscription
 <td>Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta assinatura em caso de não recebimento da resposta desta chamada. Deve ser um valor numérico inteiro (representado como string).</td>
 <td>String</td>
 <td>20</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>postbackURL</strong></td>
+<td>Endereço a ser chamado quando o estado da assinatura mudar.</td>
+<td>URL</td>
+<td>1 - 250</td>
 <td>Não</td>
 </tr>
 <tr>
