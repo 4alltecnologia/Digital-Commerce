@@ -33,6 +33,29 @@ Os seguintes endpoints devem ser usados para executar as chamadas:
 |**Homologação**|conta.homolog.4all.com|
 |**Produção**|conta.api.4all.com|
 
+## 1.2. Postback
+O postback é um mecanismo de comunicação com o merchant para informar sobre mudanças ocorridas no status de um pagamento ou assinatura.
+Quando um pagamento ou assinatura são criados pelo merchant, uma URL pode ser informada, para onde as mensagens de postback serão direcionadas. Esta URL deve estar num formato válido, apontar para um domínio autorizado no cadastro do merchant, e pode possuir até 250 caracteres.
+
+
+```json
+{
+  "type": 1,
+  "id": "17999999999999999999",
+  "status": 1
+}
+```
+
+Sempre que ocorrer uma alteração no status de um pagamento ou assinatura que possuam as informações de postback configuradas, uma requisição POST será feita para a URL informada, contendo um corpo JSON (Contenttype:application/json) como pode ser visto no exemplo a seguir:
+
+O campo ***type*** pode assumir os valores 1 (para postback referente a pagamento) ou 2 (para assinatura).
+
+Para que seja considerado que a comunicação ocorreu com sucesso, o retorno dado à mensagem de postback deve possuir status 200 ou 204. Do contrário, serão efetuadas retentativas intervaladas entre si em pelo menos um minuto até um  máximo de cinco vezes. Caso ainda não se obtenha sucesso, NÃO serão feitas tentativas adicionais de comunicação da mudança de status.
+
+O recurso de postback é apenas uma conveniência para melhorar a integração com o sistema 4all, e está sujeito a falhas de comunicação, indisponibilidade de alguma das partes, etc. Desta forma, não elimina a necessidade de consultas periódicas ao status do pagamento ou da assinatura que se deseja monitorar.
+
+Para garantir a autenticidade da mensagem, é enviado no seu cabeçalho um campo **Content-signature**. Este contém um *hash* em **HMAC-SHA-256** em hexadecimal calculado sobre o corpo da mensagem, usando como chave a *signatureKey* do estabelecimento.
+
 
 # 2 Chaves de API
 
@@ -248,6 +271,7 @@ https://conta.api.4all.com/merchant/issueAuthorizedSubscription
 |**intervalValue**|Indica quantos dias/semanas/meses (dependendo do parâmetro **intervalType**) existem entre dois pagamentos recorrentes consecutivos.|String|Sim
 |**paymentTolerance**|Indica quantos dias a assinatura pode permanecer com pagamento em atraso antes de ser automáticamente cancelada.|String|Sim
 |**merchantMetaId**|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta assinatura em caso de não recebimento da resposta desta chamada. Deve ser um valor numérico inteiro (representado como string).|String|20|Não
+|**postbackURL**| Endereço a ser chamado quando o estado da assinatura mudar.	|URL	|1 - 250	|Não|
 |**returnImmediatly**|Quando presente e com valor **true** , a chamada retorna imediatamente. Neste caso, a assinatura estará com um status pendente (estados 0, 1 ou 2 vide **seção 6 desta documentação**). |Boolean||Não
 
 
