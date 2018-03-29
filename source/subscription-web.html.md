@@ -228,7 +228,7 @@ Caso o cliente efetue o aceite na assinatura, o *successCallback* é chamado, re
 
 # 4 Chamadas de API
 
-##4.1 Confirmando uma contratação
+## 4.1 Confirmando uma contratação
 
 Após o cliente autorizar a contratação da assinatura, o estabelecimento deverá realizar uma chamada através de seu servidor backend para confirmar a assinatura e obter o identificador da mesma. Será utilizado o **subscriptionToken** para identificar a autorização.
 
@@ -273,7 +273,7 @@ https://conta.api.4all.com/merchant/issueAuthorizedSubscription
 |**startDate**|Data em que os pagamentos periódicos terão início. Formato YYYY-MM-DD. É a data em que o primeiro pagamento recorrente será efetuado.|String|Sim
 |**recurringAmount**|Valor das cobranças periódicas. Em centavos. Ex: "1425" para R$ 14,25.|Number|Sim
 |**recurrenceCount**|Indica quantas cobranças periódicas serão feitas no total. O valor 0 indica infinitas cobranças (até o cancelamento da assinatura).|Number|Sim
-|**intervalType**|Indica como o intervalo entre cobranças recorrentes é medido: 1-Dias 2-Semanas 3-Meses.|Number|Sim
+|**intervalType**|Indica como o intervalo entre cobranças recorrentes é medido: 0-Dias 1-Semanas 2-Meses 3-Indefinido.|Number|Sim
 |**intervalValue**|Indica quantos dias/semanas/meses (dependendo do parâmetro **intervalType**) existem entre dois pagamentos recorrentes consecutivos.|String|Sim
 |**paymentTolerance**|Indica quantos dias a assinatura pode permanecer com pagamento em atraso antes de ser automáticamente cancelada.|String|Sim
 |**merchantMetaId**|Identificador único, atribuído pelo estabelecimento comercial, para poder pesquisar esta assinatura em caso de não recebimento da resposta desta chamada. Deve ser um valor numérico inteiro (representado como string).|String|20|Não
@@ -283,10 +283,11 @@ https://conta.api.4all.com/merchant/issueAuthorizedSubscription
 
 **Observações**:
 
- - O parâmetro "subscriptionToken" deve ser obtido através da Biblioteca Javascript ou Embedded Form.
+ - O parâmetro `subscriptionToken` deve ser obtido através da Biblioteca Javascript ou Embedded Form.
  - O chamador deve estar preparado para lidar com tempos de resposta longos, de até 30 segundos (a menos que o parâmetro `returnImmediatly` seja passado como `true`, neste caso, a chamada retorna imediatamente).
  - Caso o parâmetro `returnImmediatly` seja passado como `true`, a chamada retorna imediatamente, porém o resultado da assinatura deve ser consultada posteriormente utilizando a chamada descrita na seção 4.2.
  - O parâmetro `merchantMetaId` poderá ou não aceitar duplicidade de valor, esta configuração será definida por Estabelecimento.
+ - Se o parâmetro `intervalType` possuir valor igual a `3`, então a assinatura não terá intervalo definido e o valor definido para as recorrências é `R$ 0,00`. Isto é, o estabelecimento deverá controlar quando a assinatura deverá ser cobrada, quanto será cobrado naquela recorrência e qual a data base a ser contabilizada para a recorrência cobrada.
 
 ```json
 {
@@ -464,7 +465,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 }
 ```
 
-#4.4 Cancelando uma assinatura
+# 4.4 Cancelando uma assinatura
 Utilize esta chamada para cancelar uma assinatura. Ela permanecerá com estado "em dia" até a data da próxima cobrança recorrente.
 
 ```shell
@@ -511,7 +512,7 @@ Em caso de erro na chamada, o status HTTP retornado será diferente de **200**, 
 ```
 
 
-##4.5 Efetuando uma baixa manual
+## 4.5 Efetuando uma baixa manual
 
 Utilize esta chamada para registrar o pagamento de uma assinatura, quando este não foi feito pelo sistema da 4all (exemplo: pagamento feito em dinheiro). Ela atualizará a data do próximo pagamento de acordo com o número de recorrências dado como entrada. Caso existam recorrências em atraso, o estado da assinatura só irá mudar para "em dia" se o número de recorrências for maior que o número de recorrências atrasadas. Se não informado o número de recorrências, será registrado o pagamento de uma só recorrência. Também é possível dar baixa na cobrança da taxa de adesão.
 ```shell
